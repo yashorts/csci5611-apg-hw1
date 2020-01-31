@@ -1,62 +1,122 @@
 // Created for CSCI 5611
-
-// Here is a simple processing program that demonstrates the central math used in the check-in
-// to create a bouncing ball. The ball is integrated with basic Eulerian integration.
-// The ball is subject to a simple PDE of constant downward acceleration  (by default,
-// down is the positive y direction).
-
+// Here is a simple processing program that demonstrates the central math used in the check-in to create a bouncing ball.
+// The ball is integrated with basic Eulerian integration.
+// The ball is subject to a simple PDE of constant downward ay (by default, down is the positive y direction).
 // If you are new to processing, you can find an excellent tutorial that will quickly
 // introduce the key features here: https://processing.org/tutorials/p3d/
 
-String projectTitle = "Processing - Bouncing Ball";
+String projectTitle = "Bouncing Ball";
 
-//Animation Principle: Store object & world state in external variables that are used by both
-//                     the drawing code and simulation code.
-float position = 200;
-float velocity = 0;
-float radius = 40;
-float floor = 600;
+// Animation Principle: Store object & world state in external variables that are used by both the drawing code and simulation code.
+class Ball {
+  float sx;
+  float vx;
+  float ax;
 
-//Creates a 600x600 window for 3D graphics
-void setup() {
- size(600, 600, P3D);
- noStroke(); //Question: What does this do?
-}
+  float sy;
+  float vy;
+  float ay;
 
-//Animation Principle: Separate Physical Update
-void computePhysics(float dt){
-  float acceleration = 9.8;
+  float radius;
+  float squareBoundary;
 
-  //Eulerian Numerical Integration
-  position = position + velocity * dt;  //Question: Why update position before velocity? Does it matter?
-  velocity = velocity + acceleration * dt;
+  Ball (float squareBoundary) {
+    this.squareBoundary = squareBoundary;
+    sy = squareBoundary / 2;
+    vy = 80;
+    ay = 9.8;
 
-  //Collision Code (update velocity if we hit the floor)
-  if (position + radius > floor){
-    position = floor - radius; //Robust collision check
-    velocity *= -.95; //Coefficient of restitution (don't bounce back all the way)
+    sx = squareBoundary / 2;
+    vx = 50;
+    ax = 0;
+    radius = 80;
   }
+
+  // Animation Principle: Separate Physical Update
+  void update(float dt){
+
+    // Eulerian Numerical Integration
+    // Question: Why update sy before vy? Does it matter?
+    sx = sx + vx * dt;
+    vx = vx + ax * dt;
+
+    sy = sy + vy * dt;
+    vy = vy + ay * dt;
+
+    if (sx + radius > squareBoundary){
+      // Robust collision check
+      sx = squareBoundary - radius;
+      // Coefficient of restitution (don't bounce back all the way)
+      vx *= -.95;
+    }
+
+    if (sx - radius < 0){
+      // Robust collision check
+      sx = radius;
+      // Coefficient of restitution (don't bounce back all the way)
+      vx *= -.95;
+    }
+
+    // Collision Code (update vy if we hit the squareBoundary)
+    if (sy + radius > squareBoundary){
+      // Robust collision check
+      sy = squareBoundary - radius;
+      // Coefficient of restitution (don't bounce back all the way)
+      vy *= -.95;
+    }
+
+    if (sy - radius < 0){
+      // Robust collision check
+      sy = radius;
+      // Coefficient of restitution (don't bounce back all the way)
+      vy *= -.95;
+    }
+
+    radius = max(10, 80 * sy / squareBoundary);
+  }
+
+  float normalizedPositionX() {
+    return sx / sqrt(sx * sx + sy * sy);
+  }
+
+  float normalizedPositionY() {
+    return sy / sqrt(sx * sx + sy * sy);
+  }
+
 }
 
-//Animation Principle: Separate Draw Code
+Ball ball = new Ball(600);
+
+// Creates a 600 x 600 window for 3D graphics
+void setup() {
+  size(600, 600, P3D);
+  noStroke(); // Question: What does this do?
+  img = loadImage("backdrop.jpg");
+}
+
+PImage img;
+
+// Animation Principle: Separate Draw Code
 void drawScene(){
-  background(255,255,255);
-  fill(0,200,10);
+  background(img);
+  /* background(255, 255, 255); */
+  fill(255 * ball.sy / 600, 255 * (1- ball.sy / 600), 255 * (1- ball.sy / 600));
   lights();
-  translate(300,position);
-  sphere(radius);
+  translate(ball.sx, ball.sy);
+  sphere(ball.radius);
 }
 
-//Main function which is called every timestep. Here we compute the new physics and draw the scene.
-//Additionally, we also compute some timing performance numbers.
+// Main function which is called every timestep.
+// Here we compute the new state and draw the scene.
+// Additionally, we also compute some timing performance numbers.
 void draw() {
-  float startFrame = millis(); //Time how long various components are taking
+  float startFrame = millis(); // Time how long various components are taking
 
-  //Compute the physics update
-  computePhysics(0.15); //Question: Should this be a fixed number?
+  // Compute the physics update
+  ball.update(0.15); // Question: Should this be a fixed number?
   float endPhysics = millis();
 
-  //Draw the scene
+  // Draw the scene
   drawScene();
   float endFrame = millis();
 
@@ -64,6 +124,5 @@ void draw() {
         " Physics: "+ str(endPhysics-startFrame)+"ms,"+
         " FPS: "+ str(round(frameRate));
   surface.setTitle(projectTitle+ " - " +runtimeReport);
-  //print(runtimeReport);
 }
 
