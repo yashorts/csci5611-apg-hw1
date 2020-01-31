@@ -29,7 +29,7 @@ class Ball {
     sx = squareBoundary / 2;
     vx = 50;
     ax = 0;
-    radius = 80;
+    radius = 40;
   }
 
   // Animation Principle: Separate Physical Update
@@ -72,7 +72,7 @@ class Ball {
       vy *= -.95;
     }
 
-    radius = max(10, 80 * sy / squareBoundary);
+    /* radius = max(10, 80 * sy / squareBoundary); */
   }
 
   float normalizedPositionX() {
