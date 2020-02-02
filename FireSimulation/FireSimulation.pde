@@ -8,7 +8,15 @@ void setup() {
   surface.setTitle("Processing");
 }
 
+/* void moveCameraFromInput() { */
+/*   if (keyPressed && keyCode == UP) { */
+/*     camera(500, 500, 500, 500, 500, 0, 0, 1, 0); */
+/*   } */
+/* } */
+
 void draw() {
+  /* moveCameraFromInput(); */
+
   int frameStart = millis();
 
   // physics
@@ -31,4 +39,10 @@ void draw() {
   popMatrix();
 
 }
+
+/* static class CameraState { */
+/*   static V3D eye = new V3D(500, 500, 500); */
+/*   static V3D center = new V3D(500, 500, 0); */
+/*   static V3D up = new V3D(0, 1, 0); */
+/* } */
 

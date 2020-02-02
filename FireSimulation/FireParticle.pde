@@ -1,10 +1,10 @@
 class FireParticle {
-  V3d position;
-  V3d velocity;
-  V3d acceleration;
+  V3D position;
+  V3D velocity;
+  V3D acceleration;
   boolean isAlive;
 
-  FireParticle (V3d pos, V3d vel, V3d acc) {
+  FireParticle (V3D pos, V3D vel, V3D acc) {
     position = pos;
     velocity = vel;
     acceleration = acc;
