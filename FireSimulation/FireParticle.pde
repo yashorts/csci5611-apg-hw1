@@ -4,15 +4,14 @@ class FireParticle {
   V3d acceleration;
   boolean isAlive;
 
-  FireParticle () {
-    position = new V3d(200 + 100 * random(1), 200 + 10 * random(1), 0);
-    velocity = new V3d(10 + 10 * random(1), 10 * random(1), 0);
-    acceleration = new V3d(0, 10, 0);
+  FireParticle (V3d pos, V3d vel, V3d acc) {
+    position = pos;
+    velocity = vel;
+    acceleration = acc;
     isAlive = true;
   }
 
   void update(float dt){
-
     position = position.plus(velocity.scale(dt));
     velocity = velocity.plus(acceleration.scale(dt));
 
