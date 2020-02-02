@@ -1,14 +1,7 @@
-ArrayList<FireParticle> fireParticles;
+FireParticleSystem system;
 
 void setup() {
-  fireParticles = new ArrayList<FireParticle>();
-  for (int i = 0; i < 10000; ++i) {
-    fireParticles.add(new FireParticle(
-      new V3d(200 + 100 * random(1), 200 + 10 * random(1), 0),
-      new V3d(10 + 10 * random(1), 10 * random(1), 0),
-      new V3d(0, 10, 0)
-    ));
-  }
+  system = new FireParticleSystem(10000);
   size(1000, 1000, P3D);
   textSize(24);
   noStroke();
@@ -19,17 +12,13 @@ void draw() {
   int frameStart = millis();
 
   // physics
-  for (FireParticle p: fireParticles) {
-    p.update(0.05);
-  }
+  system.update();
 
   int physicsEnd = millis();
 
   // rendering
   background(0);
-  for (FireParticle p: fireParticles) {
-    p.render();
-  }
+  system.render();
 
   int frameEnd = millis();
 
