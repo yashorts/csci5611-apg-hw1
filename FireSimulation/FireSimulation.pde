@@ -1,5 +1,3 @@
-String projectTitle = "fire simulation";
-
 ArrayList<FireParticle> fireParticles;
 
 void setup() {
@@ -10,6 +8,7 @@ void setup() {
   size(1000, 1000, P3D);
   textSize(24);
   noStroke();
+  surface.setTitle("Processing");
 }
 
 void draw() {
