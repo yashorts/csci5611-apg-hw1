@@ -2,13 +2,13 @@ class FireParticle {
   V3d position;
   V3d velocity;
   V3d acceleration;
-  float radius;
+  boolean isAlive;
 
   FireParticle () {
-    position = new V3d(200, 200, 0);
-    velocity = new V3d(10, 0, 0);
+    position = new V3d(200 + 100 * random(1), 200 + 10 * random(1), 0);
+    velocity = new V3d(10 + 10 * random(1), 10 * random(1), 0);
     acceleration = new V3d(0, 10, 0);
-    radius = 10;
+    isAlive = true;
   }
 
   void update(float dt){
@@ -16,32 +16,32 @@ class FireParticle {
     position = position.plus(velocity.scale(dt));
     velocity = velocity.plus(acceleration.scale(dt));
 
-    if (position.x + radius > 1000){
-      position.x = 1000 - radius;
-      velocity.x *= -.95;
+    if (position.x > 1000){
+      isAlive = false;
     }
 
-    if (position.x - radius < 0){
-      position.x = radius;
-      velocity.x *= -.95;
+    if (position.x < 0){
+      isAlive = false;
     }
 
-    if (position.y + radius > 1000){
-      position.y = 1000 - radius;
-      velocity.y *= -.5;
+    if (position.y > 1000){
+      position.y = 1000;
+      velocity.y = -velocity.y;
     }
 
-    if (position.y - radius < 0){
-      position.y = radius;
-      velocity.y *= -.5;
+    if (position.y < 0){
+      isAlive = false;
     }
 
   }
 
   void render() {
-    fill(255);
-    translate(position.x, position.y);
-    sphere(radius);
+    if (isAlive) {
+      pushMatrix();
+      translate(position.x, position.y, position.z);
+      box(4);
+      popMatrix();
+    }
   }
 
 }
