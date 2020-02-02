@@ -1,6 +1,6 @@
 String projectTitle = "water simulation";
 
-WaterParticle waterParticle = new WaterParticle(1000);
+WaterParticle waterParticle = new WaterParticle();
 
 void setup() {
   size(1000, 1000, P3D);
@@ -23,9 +23,7 @@ void draw() {
   translate(0, 0);
   text("FPS: " + round(frameRate), 10, 30);
   // objects
-  fill(255);
-  translate(waterParticle.sx, waterParticle.sy);
-  sphere(waterParticle.radius);
+  waterParticle.render();
 
   float endFrame = millis();
   /* text("Physics: " + str(endPhysics - startFrame) + "ms", 10, 60); */

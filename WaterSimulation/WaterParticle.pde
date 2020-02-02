@@ -1,63 +1,48 @@
 class WaterParticle {
-  float sx;
-  float vx;
-  float ax;
-
-  float sy;
-  float vy;
-  float ay;
-
+  V3d position;
+  V3d velocity;
+  V3d acceleration;
   float radius;
-  float squareBoundary;
 
-  WaterParticle (float squareBoundary) {
-    this.squareBoundary = squareBoundary;
-    sy = squareBoundary / 2;
-    vy = 80;
-    ay = 9.8;
-
-    sx = squareBoundary / 2;
-    vx = 50;
-    ax = 0;
-    radius = 40;
+  WaterParticle () {
+    position = new V3d(200, 200, 0);
+    velocity = new V3d(10, 0, 0);
+    acceleration = new V3d(0, 10, 0);
+    radius = 10;
   }
 
   void update(float dt){
 
-    sx = sx + vx * dt;
-    vx = vx + ax * dt;
+    position = position.plus(velocity.scale(dt));
+    velocity = velocity.plus(acceleration.scale(dt));
+    println(velocity);
 
-    sy = sy + vy * dt;
-    vy = vy + ay * dt;
-
-    if (sx + radius > squareBoundary){
-      sx = squareBoundary - radius;
-      vx *= -.95;
+    if (position.x + radius > 1000){
+      position.x = 1000 - radius;
+      velocity.x *= -.95;
     }
 
-    if (sx - radius < 0){
-      sx = radius;
-      vx *= -.95;
+    if (position.x - radius < 0){
+      position.x = radius;
+      velocity.x *= -.95;
     }
 
-    if (sy + radius > squareBoundary){
-      sy = squareBoundary - radius;
-      vy *= -.95;
+    if (position.y + radius > 1000){
+      position.y = 1000 - radius;
+      velocity.y *= -.5;
     }
 
-    if (sy - radius < 0){
-      sy = radius;
-      vy *= -.95;
+    if (position.y - radius < 0){
+      position.y = radius;
+      velocity.y *= -.5;
     }
 
   }
 
-  float normalizedPositionX() {
-    return sx / sqrt(sx * sx + sy * sy);
-  }
-
-  float normalizedPositionY() {
-    return sy / sqrt(sx * sx + sy * sy);
+  void render() {
+    fill(255);
+    translate(position.x, position.y);
+    sphere(radius);
   }
 
 }
