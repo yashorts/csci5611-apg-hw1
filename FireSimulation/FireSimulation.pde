@@ -1,6 +1,6 @@
-String projectTitle = "water simulation";
+String projectTitle = "fire simulation";
 
-WaterParticle waterParticle = new WaterParticle();
+FireParticle waterParticle = new FireParticle();
 
 void setup() {
   size(1000, 1000, P3D);
