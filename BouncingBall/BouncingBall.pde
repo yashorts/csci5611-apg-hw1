@@ -85,11 +85,11 @@ class Ball {
 
 }
 
-Ball ball = new Ball(600);
+Ball ball = new Ball(1000);
 
-// Creates a 600 x 600 window for 3D graphics
+// Creates a 1000 x 1000 window for 3D graphics
 void setup() {
-  size(600, 600, P3D);
+  size(1000, 1000, P3D);
   noStroke(); // Question: What does this do?
   img = loadImage("backdrop.jpg");
 }
@@ -98,9 +98,9 @@ PImage img;
 
 // Animation Principle: Separate Draw Code
 void drawScene(){
-  background(img);
-  /* background(255, 255, 255); */
-  fill(255 * ball.sy / 600, 255 * (1- ball.sy / 600), 255 * (1- ball.sy / 600));
+  /* background(img); */
+  background(255, 255, 255);
+  fill(255 * ball.sy / 1000, 255 * (1- ball.sy / 1000), 255 * (1- ball.sy / 1000));
   lights();
   translate(ball.sx, ball.sy);
   sphere(ball.radius);
