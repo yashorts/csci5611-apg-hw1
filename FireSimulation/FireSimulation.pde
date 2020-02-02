@@ -1,21 +1,47 @@
+static class CameraState {
+  static float ex = 500;
+  static float ey = 500;
+  static float ez = 500;
+
+  static float cx = 500;
+  static float cy = 500;
+  static float cz = 0;
+
+  static float ux = 0;
+  static float uy = 1;
+  static float uz = 0;
+}
+
 FireParticleSystem system;
 
 void setup() {
   system = new FireParticleSystem(10000);
+  camera(
+    CameraState.ex, CameraState.ey, CameraState.ez,
+    CameraState.cx, CameraState.cy, CameraState.cz,
+    CameraState.ux, CameraState.uy, CameraState.uz
+    );
   size(1000, 1000, P3D);
   textSize(24);
   noStroke();
   surface.setTitle("Processing");
 }
 
-/* void moveCameraFromInput() { */
-/*   if (keyPressed && keyCode == UP) { */
-/*     camera(500, 500, 500, 500, 500, 0, 0, 1, 0); */
-/*   } */
-/* } */
+void moveCameraFromInput() {
+  if (keyPressed && keyCode == UP) {
+    CameraState.ez -= 5;
+  } else if (keyPressed && keyCode == DOWN) {
+    CameraState.ez += 5;
+  }
+  camera(
+    CameraState.ex, CameraState.ey, CameraState.ez,
+    CameraState.cx, CameraState.cy, CameraState.cz,
+    CameraState.ux, CameraState.uy, CameraState.uz
+    );
+}
 
 void draw() {
-  /* moveCameraFromInput(); */
+  moveCameraFromInput();
 
   int frameStart = millis();
 
@@ -39,10 +65,4 @@ void draw() {
   popMatrix();
 
 }
-
-/* static class CameraState { */
-/*   static V3D eye = new V3D(500, 500, 500); */
-/*   static V3D center = new V3D(500, 500, 0); */
-/*   static V3D up = new V3D(0, 1, 0); */
-/* } */
 
