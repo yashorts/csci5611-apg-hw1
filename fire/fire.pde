@@ -1,65 +1,79 @@
-static class CameraState {
-  static float ex = 500;
-  static float ey = 500;
-  static float ez = 500;
+class CameraState {
+  Vector3D eye;
+  Vector3D center;
+  Vector3D up;
 
-  static float cx = 500;
-  static float cy = 500;
-  static float cz = 0;
+  CameraState(Vector3D eye, Vector3D center, Vector3D up) {
+    this.eye = eye;
+    this.center = center;
+    this.up = up;
+    apply();
+  }
 
-  static float ux = 0;
-  static float uy = 1;
-  static float uz = 0;
+  void apply() {
+    camera(
+        eye.x, eye.y, eye.z,
+        center.x, center.y, center.z,
+        up.x, up.y, up.z
+        );
+  }
 }
 
-FireParticleSystem system;
+FireParticleSystem ps;
+CameraState cs;
+PShape s;
 
 void setup() {
-  system = new FireParticleSystem(10000);
-  camera(
-    CameraState.ex, CameraState.ey, CameraState.ez,
-    CameraState.cx, CameraState.cy, CameraState.cz,
-    CameraState.ux, CameraState.uy, CameraState.uz
-    );
-  size(1000, 1000, P3D);
-  textSize(24);
+  size(1000, 700, P3D);
+  ps = new FireParticleSystem(1);
+  cs = new CameraState(
+      new Vector3D(1000 / 2.0, 700 / 2.0, (700 / 2.0) / tan(PI * 30.0 / 180.0)),
+      new Vector3D(1000 / 2.0, 700 / 2.0, 0),
+      new Vector3D(0, 1, 0)
+      );
   noStroke();
   surface.setTitle("Processing");
+  s = loadShape("BirchTree_1.obj");
+  /* s.rotate(3.14, 0.0, 0.0, 1.0); */
+  s.rotate(3.14, 0.0, 1.0, 0.0);
 }
 
 void moveCameraFromInput() {
+  Vector3D viewDir = cs.center.minus(cs.eye).unit();
+  Vector3D sideDir = new Vector3D(viewDir.z, 0, -viewDir.x);
   if (keyPressed && keyCode == UP) {
-    CameraState.ez -= 5;
+    cs.eye = cs.eye.plus(viewDir.scale(4));
   } else if (keyPressed && keyCode == DOWN) {
-    CameraState.ez += 5;
+    cs.eye = cs.eye.plus(viewDir.scale(-4));
+  } else if (keyPressed && keyCode == LEFT) {
+    cs.eye = cs.eye.plus(sideDir.scale(-4));
+    s.rotate(0.1, 0.0, 1.0, 0.0);
+  } else if (keyPressed && keyCode == RIGHT) {
+    cs.eye = cs.eye.plus(sideDir.scale(4));
+    s.rotate(-0.1, 0.0, 1.0, 0.0);
   }
-  camera(
-    CameraState.ex, CameraState.ey, CameraState.ez,
-    CameraState.cx, CameraState.cy, CameraState.cz,
-    CameraState.ux, CameraState.uy, CameraState.uz
-    );
+
+  cs.apply();
 }
 
 void draw() {
+  // camera
   moveCameraFromInput();
-
   int frameStart = millis();
-
   // physics
-  system.update();
-
+  ps.update();
   int physicsEnd = millis();
-
   // rendering
-  background(0);
-  system.render();
-
+  background(255);
+  lights();
+  shape(s, width * 0.5, height * 0.6, 200, 200);
+  fill(255, 0, 0);
+  ps.render();
   int frameEnd = millis();
-
   // text overlay
   surface.setTitle("Processing"
-                    + " FPS: " + round(frameRate)
-                    + " Phy: " + round(physicsEnd - frameStart) + "ms"
-                    + " Ren: " + round(frameEnd - physicsEnd) + "ms");
+      + " FPS: " + round(frameRate)
+      + " Phy: " + round(physicsEnd - frameStart) + "ms"
+      + " Ren: " + round(frameEnd - physicsEnd) + "ms");
 }
 

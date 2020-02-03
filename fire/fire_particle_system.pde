@@ -7,9 +7,9 @@ class FireParticleSystem {
     fireParticles = new ArrayList<FireParticle>();
     for (int i = 0; i < numParticles; ++i) {
       fireParticles.add(new FireParticle(
-        new V3D(200 + 100 * random(1), 200 + 10 * random(1), 0),
-        new V3D(10 + 10 * random(1), 10 * random(1), 0),
-        new V3D(0, 10, 0)
+        new Vector3D(200 + 100 * random(1), 200 + 10 * random(1), 0),
+        new Vector3D(10 + 10 * random(1), 10 * random(1), 0),
+        new Vector3D(0, 10, 0)
       ));
     }
   }

@@ -1,10 +1,10 @@
 class FireParticle {
-  V3D position;
-  V3D velocity;
-  V3D acceleration;
+  Vector3D position;
+  Vector3D velocity;
+  Vector3D acceleration;
   boolean isAlive;
 
-  FireParticle (V3D pos, V3D vel, V3D acc) {
+  FireParticle (Vector3D pos, Vector3D vel, Vector3D acc) {
     position = pos;
     velocity = vel;
     acceleration = acc;
@@ -25,7 +25,7 @@ class FireParticle {
 
     if (position.y > 1000){
       position.y = 1000;
-      velocity.y = -velocity.y;
+      velocity.y = -velocity.y * 0.4;
     }
 
     if (position.y < 0){
