@@ -11,7 +11,7 @@ public class FireParticleSystem {
     FireParticleSystem(PApplet parent, int numParticles) {
         this.parent = parent;
         this.numParticles = numParticles;
-        fireParticles = new ArrayList<FireParticle>();
+        fireParticles = new ArrayList<>();
         for (int i = 0; i < numParticles; ++i) {
             fireParticles.add(new FireParticle(
                     parent,

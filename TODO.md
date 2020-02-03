@@ -1,7 +1,16 @@
+# Check in
+- [ ] checkin
+
 # Central
 - [ ] () Decide simulation contexts
 - [ ] (30) Fire simulation
 - [ ] (30) Water simulation
+    - [ ] more squished particles
+    - [ ] color changes
+    - [ ] change water direction using
+    - [ ] interact with objects
+    - [ ] context
+    - [ ] speed
  
 # Other Required Features 
 - [x] (5) 3D user-controlled camera (must allow rotation and translation) 

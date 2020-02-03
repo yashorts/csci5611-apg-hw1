@@ -9,6 +9,7 @@ public class Fire extends PApplet {
     QueasyCam cam;
     FireParticleSystem ps;
     PShape tree;
+    PShape terrain;
 
     @Override
     public void settings() {
@@ -17,12 +18,14 @@ public class Fire extends PApplet {
 
     @Override
     public void setup() {
-        ps = new FireParticleSystem(this, 1);
+        ps = new FireParticleSystem(this, 10000);
         noStroke();
         cam = new QueasyCam(this);
         surface.setTitle("Processing");
         tree = loadShape("BirchTree_1.obj");
+        terrain = loadShape("grass_1.obj");
         tree.rotate(PI, 0.0f, 0.0f, 1.0f);
+        terrain.rotate(PI, 0.0f, 0.0f, 1.0f);
     }
 
     @Override
@@ -38,14 +41,19 @@ public class Fire extends PApplet {
         background(255);
         lights();
         translate(100, 20, 0);
+        pushMatrix();
+        shape(terrain);
+        translate(0, 0, 10);
+        shape(terrain);
+        popMatrix();
         scale(20);
         shape(tree);
         translate(0, 0, 10);
         shape(tree);
         translate(10, 0, 0);
         shape(tree);
-//        fill(255, 0, 0);
-//        ps.render();
+        fill(255, 0, 0);
+        ps.render();
         int frameEnd = millis();
         // text overlay
         surface.setTitle("Processing"
