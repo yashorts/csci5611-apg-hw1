@@ -57,12 +57,9 @@ void draw() {
   int frameEnd = millis();
 
   // text overlay
-  pushMatrix();
-  translate(0, 0, 0);
-  text("FPS: " + round(frameRate), 10, 30);
-  text("Physics: " + round(physicsEnd - frameStart) + "ms", 10, 50);
-  text("Rendering: " + round(frameEnd - physicsEnd) + "ms", 10, 70);
-  popMatrix();
-
+  surface.setTitle("Processing"
+                    + " FPS: " + round(frameRate)
+                    + " Phy: " + round(physicsEnd - frameStart) + "ms"
+                    + " Ren: " + round(frameEnd - physicsEnd) + "ms");
 }
 
