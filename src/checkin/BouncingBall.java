@@ -1,3 +1,5 @@
+package checkin;
+
 import processing.core.PApplet;
 import processing.core.PImage;
 
@@ -96,7 +98,7 @@ public class BouncingBall extends PApplet {
     public void setup() {
 
         noStroke(); // Question: What does this do?
-        img = loadImage("backdrop.jpg");
+        img = loadImage("checkin/backdrop.jpg");
     }
 
     PImage img;
