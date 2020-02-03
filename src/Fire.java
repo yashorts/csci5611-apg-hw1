@@ -4,13 +4,16 @@ import processing.core.PShape;
 import queasycam.*;
 
 public class Fire extends PApplet {
+    final int WIDTH = 1000;
+    final int HEIGHT = 700;
     QueasyCam cam;
     FireParticleSystem ps;
     PShape tree;
+    PShape tree2;
 
     @Override
     public void settings() {
-        size(1000, 700, P3D);
+        size(WIDTH, HEIGHT, P3D);
     }
 
     @Override
@@ -20,8 +23,9 @@ public class Fire extends PApplet {
         cam = new QueasyCam(this);
         surface.setTitle("Processing");
         tree = loadShape("BirchTree_1.obj");
+        tree2 = loadShape("BirchTree_1.obj");
         tree.rotate(3.14f, 0.0f, 0.0f, 1.0f);
-        tree.rotate(3.14f, 0.0f, 1.0f, 0.0f);
+        tree2.rotate(3.14f, 0.0f, 0.0f, 1.0f);
     }
 
     @Override
@@ -33,7 +37,11 @@ public class Fire extends PApplet {
         // rendering
         background(255);
         lights();
-        shape(tree, width * 0.5f, height * 0.6f, 200, 200);
+        translate(100, 0, 100);
+        scale(10);
+        shape(tree);
+        translate(10, 0, 0);
+        shape(tree2);
         fill(255, 0, 0);
         ps.render();
         int frameEnd = millis();
