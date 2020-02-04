@@ -7,7 +7,7 @@
     - [x] particle with lifespan
     - [x] generation rate
     - [x] point particles
-    - [ ] conical plume with slight upward acc
+    - [x] conical plume with slight upward acc
     - [ ] color change
     - [ ] smoke particle change
     - [ ] spark and trails

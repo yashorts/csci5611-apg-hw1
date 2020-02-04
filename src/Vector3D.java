@@ -11,6 +11,12 @@ public class Vector3D {
         this.z = z;
     }
 
+    Vector3D(float c) {
+        this.x = c;
+        this.y = c;
+        this.z = c;
+    }
+
     Vector3D(Vector3D c) {
         this.x = c.x;
         this.y = c.y;

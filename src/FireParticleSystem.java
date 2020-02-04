@@ -32,7 +32,7 @@ public class FireParticleSystem {
             if (particles.size() >= MAX_PARTICLES) {
                 break;
             }
-            Vector3D generalVelocity = shootDir.scale(70);
+            Vector3D generalVelocity = shootDir.scale(50);
             float theta = parent.random(2 * parent.PI);
             float radius = 1 * (float) Math.sqrt(parent.random(1));
             Vector3D coneRandomness = new Vector3D(radius * Math.cos(theta), radius * Math.sin(theta), 0).minus(new Vector3D(0, 0, 1)).scale(20);
