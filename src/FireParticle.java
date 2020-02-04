@@ -9,6 +9,7 @@ public class FireParticle {
     final PApplet parent;
     Vec3 position;
     Vec3 velocity;
+    Vec3 initialShootDir;
     Vec3 acceleration;
     Vec3 color;
     float totalLifeSpan;
@@ -20,6 +21,7 @@ public class FireParticle {
         this.parent = parent;
         this.position = position;
         this.velocity = velocity;
+        this.initialShootDir = velocity.unit();
         this.acceleration = acceleration;
         this.stage = Stage.JET;
         this.remainingLifespan = remainingLifespan;
@@ -32,6 +34,12 @@ public class FireParticle {
             case JET:
                 position = position.plus(velocity.scale(dt)).plus(Vec3.uniformRandomInUnitSphere().scale(0.1f));
                 velocity = velocity.plus(acceleration.scale(dt));
+                if (parent.random(1) < 0.05) {
+                    acceleration = Vec3.uniformRandomInUnitSphere().scale(5f).plus(initialShootDir.scale(10));
+                }
+                if (parent.random(1) < 0.001) {
+                    acceleration = acceleration.plus(initialShootDir.scale(50));
+                }
                 color = gradientColor();
                 // very small portion of initial particles turning into smog
                 if (parent.random(1) < 0.0001) {
@@ -70,7 +78,11 @@ public class FireParticle {
                 position = position.plus(velocity.scale(dt)).plus(Vec3.uniformRandomInUnitSphere().scale(0.5f));
                 velocity = velocity.plus(acceleration.scale(dt));
                 acceleration = acceleration.plus(Vec3.of(parent.random(-5, 5), -0.5, 0));
-                color = gradientColor();
+                if (parent.random(1) < 0.05) {
+                    color = Vec3.of(0);
+                } else {
+                    color = gradientColor();
+                }
                 // small portion of ball particles turning into smog
                 if (parent.random(1) < 0.002) {
                     // smog particles come out of jet and slow down due to high air resistance
@@ -84,7 +96,7 @@ public class FireParticle {
             case SMOG:
                 position = position.plus(velocity.scale(dt)).plus(Vec3.uniformRandomInUnitSphere().scale((float) Math.pow((2 * (1 - remainingLifespan / totalLifeSpan)), 3)));
                 velocity = velocity.plus(acceleration.scale(dt));
-                acceleration = acceleration.plus(Vec3.of(parent.random(-5, 5), -1, 0));
+                acceleration = acceleration.plus(Vec3.of(parent.random(-5, 5), parent.random(-5, 2), 0));
                 color = Vec3.of(parent.random(100, 200 + 55 * (1 - remainingLifespan / totalLifeSpan)));
                 break;
             case SMOKE:
