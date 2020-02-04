@@ -29,11 +29,22 @@ public class FireParticle {
     }
 
     public void render() {
-        parent.pushMatrix();
-        parent.stroke(255, 255 * (lifespan / initialLifeSpan), 255 * PApplet.max(2 * lifespan / initialLifeSpan - 1, 0));
+        float sample = parent.random(1);
         parent.fill(255, 255 * (lifespan / initialLifeSpan), 255 * PApplet.max(2 * lifespan / initialLifeSpan - 1, 0));
-        parent.point(position.x, position.y, position.z);
-        parent.popMatrix();
+        if (sample < 0.0001) {
+            parent.pushMatrix();
+            parent.translate(position.x, position.y, position.z);
+            parent.sphere(0.5f);
+            parent.popMatrix();
+        } else if (sample < 0.005) {
+            parent.pushMatrix();
+            parent.translate(position.x, position.y, position.z);
+            parent.box(0.5f);
+            parent.popMatrix();
+        } else {
+            parent.stroke(255, 255 * (lifespan / initialLifeSpan), 255 * PApplet.max(2 * lifespan / initialLifeSpan - 1, 0));
+            parent.point(position.x, position.y, position.z);
+        }
     }
 
 }

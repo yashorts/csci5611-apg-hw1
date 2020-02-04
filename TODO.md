@@ -5,10 +5,11 @@
 - [x] Decide simulation contexts (waterfall & flamethrower)
 - [ ] (30) Fire simulation
     - [x] particle with lifespan
-    - [x] generation rate
+    - [x] particle with generation rate
     - [x] point particles
-    - [x] conical plume with slight upward acc
-    - [ ] color change
+    - [x] conical plume
+    - [x] slight upward acc
+    - [x] color change
     - [ ] smoke particle change
     - [ ] spark and trails
     - [ ] collision detection
