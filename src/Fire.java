@@ -7,9 +7,14 @@ class FlameThrower {
     PShape object;
     FireParticleSystem fireParticleSystem;
 
-    public FlameThrower(PApplet parent, Vector3D origin, Vector3D aim, int generationRate, int lifeSpan, int maxParticles, PShape object) {
+    public FlameThrower(PApplet parent, Vector3D origin, Vector3D aim, int generationRate, int lifeSpan, int maxParticles, String objFile) {
         this.parent = parent;
-        this.object = object;
+        this.object = parent.loadShape(objFile);
+        object.scale(10);
+        object.rotate(parent.PI, 0, 0, 1);
+        object.setStroke(parent.color(255));
+        object.setFill(parent.color(0, 0, 128));
+
         fireParticleSystem = new FireParticleSystem(parent, origin, aim, generationRate, lifeSpan, maxParticles);
     }
 
@@ -19,11 +24,15 @@ class FlameThrower {
 
     public void render() {
         parent.pushMatrix();
-        parent.translate(300, 10, 180);
+        parent.translate(fireParticleSystem.origin.x, fireParticleSystem.origin.y + 10, fireParticleSystem.origin.z + 30);
         parent.fill(0, 0, 255);
         parent.shape(object);
         parent.popMatrix();
         fireParticleSystem.render();
+    }
+
+    public void moveOrigin(Vector3D newOrigin) {
+        fireParticleSystem.origin = fireParticleSystem.origin.plus(newOrigin);
     }
 }
 
@@ -58,26 +67,24 @@ public class Fire extends PApplet {
         tree.rotate(PI, 0, 0, 1);
         tree.scale(60);
         // flame thrower
-        PShape flameThrowerObj = loadShape("LongPistol.obj");
-        flameThrowerObj.scale(10);
-        flameThrowerObj.rotate(PI, 0, 0, 1);
-        flameThrowerObj.setStroke(color(255));
-        flameThrowerObj.setFill(color(0, 0, 128));
         flameThrower = new FlameThrower(this,
                 Vector3D.of(300, 0, 150), Vector3D.of(0, 0, -1),
-                100, 200, 35000, flameThrowerObj);
+                100, 200, 35000, "LongPistol.obj");
     }
 
     @Override
     public void draw() {
         if (keyPressed && keyCode == RIGHT) {
-            flameThrower.fireParticleSystem.origin = flameThrower.fireParticleSystem.origin.plus(Vector3D.of(0, 0, 1));
-        } else if (keyPressed && keyCode == LEFT) {
-            flameThrower.fireParticleSystem.origin = flameThrower.fireParticleSystem.origin.plus(Vector3D.of(0, 0, -1));
-        } else if (keyPressed && keyCode == UP) {
-            flameThrower.fireParticleSystem.origin = flameThrower.fireParticleSystem.origin.plus(Vector3D.of(1, 0, 1));
-        } else if (keyPressed && keyCode == DOWN) {
-            flameThrower.fireParticleSystem.origin = flameThrower.fireParticleSystem.origin.plus(Vector3D.of(-1d, 0, 0));
+            flameThrower.moveOrigin(Vector3D.of(0, 0, 1));
+        }
+        if (keyPressed && keyCode == LEFT) {
+            flameThrower.moveOrigin(Vector3D.of(0, 0, -1));
+        }
+        if (keyPressed && keyCode == UP) {
+            flameThrower.moveOrigin(Vector3D.of(1, 0, 0));
+        }
+        if (keyPressed && keyCode == DOWN) {
+            flameThrower.moveOrigin(Vector3D.of(-1, 0, 0));
         }
 
         // background
