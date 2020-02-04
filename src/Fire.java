@@ -1,15 +1,48 @@
 import processing.core.PApplet;
-import processing.core.PShape;
+import processing.core.PImage;
 
 import queasycam.*;
+
+class Ground {
+    final PApplet parent;
+    final PImage texture;
+    final Vector3D iCap;
+    final Vector3D jCap;
+    final Vector3D center;
+    final Vector3D ul;
+    final Vector3D ll;
+    final Vector3D lr;
+    final Vector3D ur;
+
+    Ground(final PApplet parent, final Vector3D center, final Vector3D iCap, final Vector3D jCap, int width, int height, final PImage texture) {
+        this.parent = parent;
+        this.iCap = iCap;
+        this.jCap = jCap;
+        this.texture = texture;
+        this.center = center;
+        ul = center.plus(iCap.scale(width / 2f)).minus(jCap.scale(height / 2f));
+        ll = center.minus(iCap.scale(width / 2f)).minus(jCap.scale(height / 2f));
+        lr = center.minus(iCap.scale(width / 2f)).plus(jCap.scale(height / 2f));
+        ur = center.plus(iCap.scale(width / 2f)).plus(jCap.scale(height / 2f));
+    }
+
+    void render() {
+        parent.beginShape();
+        parent.texture(texture);
+        parent.vertex(ul.x, ul.y, ul.z, 0, 0);
+        parent.vertex(ll.x, ll.y, ll.z, 0, texture.height);
+        parent.vertex(lr.x, lr.y, lr.z, texture.width, texture.height);
+        parent.vertex(ur.x, ur.y, ur.z, texture.width, 0);
+        parent.endShape();
+    }
+}
 
 public class Fire extends PApplet {
     final int WIDTH = 1000;
     final int HEIGHT = 700;
     QueasyCam cam;
+    Ground ground;
     FireParticleSystem ps;
-    PShape tree;
-    PShape terrain;
 
     @Override
     public void settings() {
@@ -18,42 +51,27 @@ public class Fire extends PApplet {
 
     @Override
     public void setup() {
-        ps = new FireParticleSystem(this, 10000);
-        noStroke();
-        cam = new QueasyCam(this);
         surface.setTitle("Processing");
-        tree = loadShape("BirchTree_1.obj");
-        terrain = loadShape("grass_1.obj");
-        tree.rotate(PI, 0.0f, 0.0f, 1.0f);
-        terrain.rotate(PI, 0.0f, 0.0f, 1.0f);
+        noStroke();
+        ps = new FireParticleSystem(this, 10000);
+        cam = new QueasyCam(this);
+        cam.sensitivity = 0.5f;
+        cam.speed = 1f;
+        ground = new Ground(this,
+                new Vector3D(100, 20, 0), new Vector3D(0, 0, 1), new Vector3D(1, 0, 0),
+                1024, 786,
+                loadImage("ground2.jpg"));
     }
 
     @Override
     public void draw() {
         background(255);
-        lights();
+        ground.render();
 
         int frameStart = millis();
         // physics
-        ps.update();
         int physicsEnd = millis();
         // rendering
-        background(255);
-        lights();
-        translate(100, 20, 0);
-        pushMatrix();
-        shape(terrain);
-        translate(0, 0, 10);
-        shape(terrain);
-        popMatrix();
-        scale(20);
-        shape(tree);
-        translate(0, 0, 10);
-        shape(tree);
-        translate(10, 0, 0);
-        shape(tree);
-        fill(255, 0, 0);
-        ps.render();
         int frameEnd = millis();
         // text overlay
         surface.setTitle("Processing"

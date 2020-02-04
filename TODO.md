@@ -1,8 +1,8 @@
 # Check in
-- [ ] checkin
+- [x] checkin
 
 # Central
-- [ ] () Decide simulation contexts
+- [ ] Decide simulation contexts
 - [ ] (30) Fire simulation
 - [ ] (30) Water simulation
     - [ ] more squished particles
