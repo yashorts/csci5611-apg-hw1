@@ -34,10 +34,10 @@ public class FireParticleSystem {
             }
             Vector3D generalVelocity = shootDir.scale(50);
             float theta = parent.random(2 * parent.PI);
-            float radius = 1 * (float) Math.sqrt(parent.random(1));
+            float radius = 0.5f * (float) Math.sqrt(parent.random(1));
             Vector3D coneRandomness = Vector3D.of(radius * Math.cos(theta), radius * Math.sin(theta), 0).minus(Vector3D.of(0, 0, 1)).scale(20);
             Vector3D vel = generalVelocity.plus(coneRandomness);
-            Vector3D acc = Vector3D.of(0, -20, 0);
+            Vector3D acc = Vector3D.of(0, -30, 0);
             particles.put(newParticleId, new FireParticle(
                     parent,
                     sourcePos,
