@@ -37,7 +37,7 @@ public class Fire extends PApplet {
         flameThrower.setFill(color(128, 0, 0));
         ps = new FireParticleSystem(this,
                 Vector3D.of(300, 0, 120), Vector3D.of(0, 0, -1),
-                300, 100, 35000);
+                100, 100, 35000);
     }
 
     @Override

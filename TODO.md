@@ -4,15 +4,16 @@
 # Central
 - [x] Decide simulation contexts (waterfall & flamethrower)
 - [ ] (30) Fire simulation
-    - [x] particle with lifespan
-    - [x] particle with generation rate
+    - [x] particle with lifespan, generation rate
     - [x] point particles
-    - [x] conical plume
+    - [x] conical velocity
     - [x] slight upward acc
     - [x] color change
-    - [ ] smoke particle change
+    - [ ] more realistic fire
+    - [ ] particle types - 2 fire types, 2 smoke types
     - [ ] spark and trails
     - [ ] collision detection
+    - [ ] fired tree, smoke from tree, tree disappear
     - [ ] textured sprites for fire particles
 - [ ] (30) Water simulation
     - [ ] more squished particles

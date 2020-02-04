@@ -7,32 +7,32 @@ import java.util.Map;
 
 
 public class FireParticleSystem {
+    final int maxParticles;
     final PApplet parent;
-    final int MAX_PARTICLES;
-    final Vector3D sourcePos;
-    final Vector3D shootDir;
+    final Vector3D origin;
+    final Vector3D aim;
     final int generationRate;
     final int lifespan;
     Map<Long, FireParticle> particles = new HashMap<>();
     private List<Long> deadParticleIndices = new ArrayList<>();
     private Long newParticleId = 0L;
 
-    FireParticleSystem(PApplet parent, Vector3D sourcePos, Vector3D shootDir, int generationRate, int lifespan, int MAX_PARTICLES) {
+    FireParticleSystem(PApplet parent, Vector3D origin, Vector3D aim, int generationRate, int lifespan, int maxParticles) {
+        this.maxParticles = maxParticles;
         this.parent = parent;
-        this.MAX_PARTICLES = MAX_PARTICLES;
         this.generationRate = generationRate;
-        this.sourcePos = sourcePos;
-        this.shootDir = shootDir;
+        this.origin = origin;
+        this.aim = aim;
         this.lifespan = lifespan;
     }
 
     public void physics(float dt) {
         // add new particles
         for (int i = 0; i < generationRate; ++i) {
-            if (particles.size() >= MAX_PARTICLES) {
+            if (particles.size() >= maxParticles) {
                 break;
             }
-            Vector3D generalVelocity = shootDir.scale(50);
+            Vector3D generalVelocity = aim.scale(50);
             float theta = parent.random(2 * parent.PI);
             float radius = 0.5f * (float) Math.sqrt(parent.random(1));
             Vector3D coneRandomness = Vector3D.of(radius * Math.cos(theta), radius * Math.sin(theta), 0).minus(Vector3D.of(0, 0, 1)).scale(20);
@@ -40,7 +40,7 @@ public class FireParticleSystem {
             Vector3D acc = Vector3D.of(0, -30, 0);
             particles.put(newParticleId, new FireParticle(
                     parent,
-                    sourcePos,
+                    origin,
                     vel,
                     acc,
                     lifespan
