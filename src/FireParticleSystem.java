@@ -8,8 +8,8 @@ public class FireParticleSystem {
     // window
     final PApplet parent;
     // pose
-    final Vector3D origin;
-    final Vector3D aim;
+    Vector3D origin;
+    Vector3D aim;
     // flow
     final int generationRate;
     final int lifespan;

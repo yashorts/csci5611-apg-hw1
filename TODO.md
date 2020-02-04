@@ -18,6 +18,7 @@
     - [ ] spark and trails
     - [ ] collision detection
     - [ ] fired tree, smoke from tree, tree disappear
+    - [ ] more textured sprites for fire particles
 - [ ] (30) Water simulation
     - [ ] more squished particles
     - [ ] color changes

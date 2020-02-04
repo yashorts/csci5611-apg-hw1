@@ -2,14 +2,38 @@ import processing.core.PApplet;
 import processing.core.PShape;
 import queasycam.QueasyCam;
 
+class FlameThrower {
+    PApplet parent;
+    PShape object;
+    FireParticleSystem fireParticleSystem;
+
+    public FlameThrower(PApplet parent, Vector3D origin, Vector3D aim, int generationRate, int lifeSpan, int maxParticles, PShape object) {
+        this.parent = parent;
+        this.object = object;
+        fireParticleSystem = new FireParticleSystem(parent, origin, aim, generationRate, lifeSpan, maxParticles);
+    }
+
+    public void physics(float dt) {
+        fireParticleSystem.physics(dt);
+    }
+
+    public void render() {
+        parent.pushMatrix();
+        parent.translate(300, 10, 180);
+        parent.fill(0, 0, 255);
+        parent.shape(object);
+        parent.popMatrix();
+        fireParticleSystem.render();
+    }
+}
+
 public class Fire extends PApplet {
     final int WIDTH = 1500;
     final int HEIGHT = 1000;
     QueasyCam cam;
     Ground ground;
     PShape tree;
-    PShape flameThrower;
-    FireParticleSystem ps;
+    FlameThrower flameThrower;
 
     @Override
     public void settings() {
@@ -33,19 +57,29 @@ public class Fire extends PApplet {
         tree = loadShape("BirchTree_Autumn_1.obj");
         tree.rotate(PI, 0, 0, 1);
         tree.scale(60);
-        // flamethrower
-        flameThrower = loadShape("LongPistol.obj");
-        flameThrower.scale(10);
-        flameThrower.rotate(PI, 0, 0, 1);
-        flameThrower.setStroke(color(255));
-        flameThrower.setFill(color(128, 0, 0));
-        ps = new FireParticleSystem(this,
+        // flame thrower
+        PShape flameThrowerObj = loadShape("LongPistol.obj");
+        flameThrowerObj.scale(10);
+        flameThrowerObj.rotate(PI, 0, 0, 1);
+        flameThrowerObj.setStroke(color(255));
+        flameThrowerObj.setFill(color(0, 0, 128));
+        flameThrower = new FlameThrower(this,
                 Vector3D.of(300, 0, 150), Vector3D.of(0, 0, -1),
-                100, 200, 35000);
+                100, 200, 35000, flameThrowerObj);
     }
 
     @Override
     public void draw() {
+        if (keyPressed && keyCode == RIGHT) {
+            flameThrower.fireParticleSystem.origin = flameThrower.fireParticleSystem.origin.plus(Vector3D.of(0, 0, 1));
+        } else if (keyPressed && keyCode == LEFT) {
+            flameThrower.fireParticleSystem.origin = flameThrower.fireParticleSystem.origin.plus(Vector3D.of(0, 0, -1));
+        } else if (keyPressed && keyCode == UP) {
+            flameThrower.fireParticleSystem.origin = flameThrower.fireParticleSystem.origin.plus(Vector3D.of(1, 0, 1));
+        } else if (keyPressed && keyCode == DOWN) {
+            flameThrower.fireParticleSystem.origin = flameThrower.fireParticleSystem.origin.plus(Vector3D.of(-1d, 0, 0));
+        }
+
         // background
         background(220);
         // ground and tree
@@ -57,22 +91,17 @@ public class Fire extends PApplet {
 
         int frameStart = millis();
         // flamethrower physics
-        ps.physics(0.015f);
+        flameThrower.physics(0.015f);
         int physicsEnd = millis();
         // flamethrower rendering
-        pushMatrix();
-        translate(300, 10, 180);
-        fill(0, 0, 255);
-        shape(flameThrower);
-        popMatrix();
-        ps.render();
+        flameThrower.render();
         int frameEnd = millis();
         // text overlay
         surface.setTitle("Processing"
                 + " FPS: " + round(frameRate)
                 + " Phy: " + round(physicsEnd - frameStart) + "ms"
                 + " Ren: " + round(frameEnd - physicsEnd) + "ms"
-                + " #par: " + ps.particles.size()
+                + " #par: " + flameThrower.fireParticleSystem.particles.size()
         );
     }
 
