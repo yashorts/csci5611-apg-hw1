@@ -4,33 +4,17 @@
 # Central
 - [x] Decide simulation contexts (waterfall & flamethrower)
 - [ ] (30) Fire simulation
-    - [ ] collision detection, fired tree, smoke from tree, tree disappear
-    - [ ] click on ground to produce tree
-    - [ ] realistic fire
-        - [x] particle with lifespan, stages, generation rate
-        - [x] some highly accelerated particles in jet
-        - [x] some randomized jerks in jet
-        - [x] small amounts of smog comes from jet
-        - [x] billowing motion of smog particles - random jerks and random displacements
-        - [x] increased lifespan of smog particles
-        - [x] gradual stage change to smog
-        - [x] spread of fireball
-        - [x] rotating sprites in fireball
-        - [x] black quads in fireball
-        - [x] ball to smog stage
-        - [x] color change with lifespan for all particles
-        - [x] point particles
-        - [x] spherical velocity
-        - [x] slight upward acc
-        - [x] textured sprites for fire particles
-        - [x] more textured sprites for fire particles
-        - [x] increasing size of particles with lifespan
-        - [ ] spark and trails
-        - [ ] better billowing motion
-        - [ ] faster flame
-        - [ ] intelligent creation of particles
-        - [ ] remove initial stuttering
-        - [ ] move the flame thrower
+    - [x] particle with lifespan, stages, generation rate
+    - [x] some highly accelerated particles in jet, some randomized jerks in jet
+    - [x] small amounts of smog comes from jet
+    - [x] smog motion - random jerks and random displacements, increased lifespan of smog particles, increasing size of particles with lifespan
+    - [x] gradual stage change to smog
+    - [x] spread of fireball, rotating sprites in fireball, black quads in fireball
+    - [x] color change with lifespan for all particles
+    - [x] point particles, spherical init position and acc,  slight upward acc
+    - [ ] better billowing motion
+    - [ ] spark and trails
+    - [ ] intelligent creation of particles
 - [ ] (30) Water simulation
     - [ ] more squished particles
     - [ ] color changes
@@ -42,6 +26,7 @@
 # Other Required Features 
 - [x] (5) 3D user-controlled camera (must allow rotation and translation) 
 - [ ] (5) Particle-obstacle interactions besides the floor (in at least one simulation) 
+    - [ ] collision detection, fired tree, smoke from tree, tree disappear
  
 # Rendering 
 - [ ] (5) Tails on particles 
@@ -58,6 +43,8 @@
 # Additional Features
 - [x] (5) Write your own vector library (dot & cross prod, addition, multiplication, etc.) 
 - [ ] (10) Continuous user interaction with the system (mouse-based for full credit) 
+    - [ ] click on ground to produce tree
+    - [ ] translate and rotate the flame thrower in 2d
 - [ ] (10) Continuous Collision Detection (must show a visible difference) 
 - [ ] (10) Simulation-driven audio (only partial points for short, simple sounds) 
 - [ ] (10) Multiple interacting particle systems (submit a separate video) 
