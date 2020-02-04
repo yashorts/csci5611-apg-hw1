@@ -30,12 +30,16 @@ public class FireParticle {
     public void physics(float dt) {
         switch (stage) {
             case JET:
-                position = position.plus(velocity.scale(dt)).plus(Vec3.unitUniformRandom().scale(0.1f));
+                position = position.plus(velocity.scale(dt)).plus(Vec3.uniformRandomInUnitSphere().scale(0.1f));
                 velocity = velocity.plus(acceleration.scale(dt));
                 color = gradientColor();
                 // very small portion of initial particles turning into smog
                 if (parent.random(1) < 0.0001) {
+                    // smog particles come out of jet and slow down due to high air resistance
                     velocity = velocity.scale(parent.random(1));
+                    // their lifespan is increased to show their effects
+                    remainingLifespan += 200;
+                    totalLifeSpan += 200;
                     stage = Stage.SMOG;
                 }
                 // jet stage ends after some lifespan
@@ -44,7 +48,7 @@ public class FireParticle {
                 }
                 break;
             case JET_TO_BALL_OR_SMOG:
-                position = position.plus(velocity.scale(dt)).plus(Vec3.unitUniformRandom().scale(0.1f));
+                position = position.plus(velocity.scale(dt)).plus(Vec3.uniformRandomInUnitSphere().scale(0.1f));
                 velocity = velocity.plus(acceleration.scale(dt));
                 color = gradientColor();
                 if (parent.random(1) < (0.54 - remainingLifespan / totalLifeSpan)) {
@@ -63,18 +67,22 @@ public class FireParticle {
                 }
                 break;
             case BALL:
-                position = position.plus(velocity.scale(dt)).plus(Vec3.unitUniformRandom().scale(0.5f));
+                position = position.plus(velocity.scale(dt)).plus(Vec3.uniformRandomInUnitSphere().scale(0.5f));
                 velocity = velocity.plus(acceleration.scale(dt));
                 acceleration = acceleration.plus(Vec3.of(parent.random(-5, 5), -0.5, 0));
                 color = gradientColor();
-                // very small portion of initial particles turning into smog
+                // small portion of ball particles turning into smog
                 if (parent.random(1) < 0.002) {
+                    // smog particles come out of jet and slow down due to high air resistance
                     velocity = velocity.scale(parent.random(1));
+                    // their lifespan is increased to show their effects
+                    remainingLifespan += 200;
+                    totalLifeSpan += 200;
                     stage = Stage.SMOG;
                 }
                 break;
             case SMOG:
-                position = position.plus(velocity.scale(dt)).plus(Vec3.unitUniformRandom().scale(0.5f));
+                position = position.plus(velocity.scale(dt)).plus(Vec3.uniformRandomInUnitSphere().scale(0.5f));
                 velocity = velocity.plus(acceleration.scale(dt));
                 acceleration = acceleration.plus(Vec3.of(parent.random(-5, 5), -1, 0));
                 color = Vec3.of(parent.random(100, 200));

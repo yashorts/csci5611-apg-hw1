@@ -1,7 +1,7 @@
 public class Vec3 {
     float x, y, z;
 
-    public static Vec3 unitUniformRandom() {
+    public static Vec3 uniformRandomInUnitSphere() {
         return new Vec3((float) Math.random() * 2 - 1, (float) Math.random() * 2 - 1, (float) Math.random() * 2 - 1).unit();
     }
 

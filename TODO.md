@@ -15,6 +15,7 @@
     - [ ] move the flame thrower
     - [ ] intelligent creation of particles
     - [ ] particle types - 2 fire types, 2 smoke types
+    - [ ] faster flame
     - [ ] spark and trails
     - [ ] collision detection
     - [ ] fired tree, smoke from tree, tree disappear

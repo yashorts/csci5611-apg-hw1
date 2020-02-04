@@ -45,16 +45,14 @@ public class FireParticleSystem {
             if (particles.size() >= maxParticles) {
                 break;
             }
-            float theta = parent.random(2 * parent.PI);
-            float radius = 1f * (float) Math.sqrt(parent.random(1));
-            Vec3 discRandomness = Vec3.of(radius * Math.cos(theta), radius * Math.sin(theta), 0);
+            Vec3 sphereRandomness = Vec3.uniformRandomInUnitSphere();
             Vec3 generalVelocity = aim.scale(50);
             Vec3 acc = Vec3.of(0, 0, 0);
             particles.put(newParticleId, new FireParticle(
                     parent,
-                    origin.plus(discRandomness),
+                    origin.plus(sphereRandomness),
                     generalVelocity,
-                    acc.plus(discRandomness.scale(2)),
+                    acc.plus(sphereRandomness.scale(2)),
                     lifespan,
                     texture
             ));

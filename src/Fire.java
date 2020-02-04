@@ -3,8 +3,8 @@ import processing.core.PShape;
 import queasycam.QueasyCam;
 
 public class Fire extends PApplet {
-    final int WIDTH = 1500;
-    final int HEIGHT = 1000;
+    final int WIDTH = 1000;
+    final int HEIGHT = 700;
     QueasyCam cam;
     Ground ground;
     PShape tree;
@@ -21,7 +21,7 @@ public class Fire extends PApplet {
         noStroke();
         // camera
         cam = new QueasyCam(this);
-        cam.sensitivity = 1f;
+        cam.sensitivity = 2f;
         cam.speed = 2f;
         // ground
         ground = new Ground(this,
