@@ -4,13 +4,14 @@
 # Central
 - [x] Decide simulation contexts (waterfall & flamethrower)
 - [ ] (30) FlameThrower simulation
-    - [ ] one particle with parabolic arc and lifespan
+    - [x] particle with lifespan
     - [x] generation rate
-    - [ ] many particles
+    - [x] point particles
+    - [ ] conical plume with slight upward acc
     - [ ] color change
-    - [ ] collision detection
-    - [ ] smoke motion
+    - [ ] smoke particle change
     - [ ] spark and trails
+    - [ ] collision detection
     - [ ] textured sprites for fire particles
 - [ ] (30) Water simulation
     - [ ] more squished particles
