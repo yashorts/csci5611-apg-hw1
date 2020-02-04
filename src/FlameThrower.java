@@ -2,7 +2,7 @@ import processing.core.PApplet;
 import processing.core.PShape;
 import queasycam.QueasyCam;
 
-public class Fire extends PApplet {
+public class FlameThrower extends PApplet {
     final int WIDTH = 1500;
     final int HEIGHT = 1000;
     QueasyCam cam;
@@ -37,7 +37,7 @@ public class Fire extends PApplet {
         flameThrower.setFill(color(128, 0, 0));
         ps = new FireParticleSystem(this,
                 new Vector3D(300, 8, 125), new Vector3D(0, 0, -1),
-                100, 90, 10000);
+                100, 200, 100000);
     }
 
     @Override
@@ -67,11 +67,13 @@ public class Fire extends PApplet {
         surface.setTitle("Processing"
                 + " FPS: " + round(frameRate)
                 + " Phy: " + round(physicsEnd - frameStart) + "ms"
-                + " Ren: " + round(frameEnd - physicsEnd) + "ms");
+                + " Ren: " + round(frameEnd - physicsEnd) + "ms"
+                + " #par: " + ps.particles.size()
+        );
     }
 
     static public void main(String[] passedArgs) {
-        String[] appletArgs = new String[]{"Fire"};
+        String[] appletArgs = new String[]{"FlameThrower"};
         if (passedArgs != null) {
             PApplet.main(concat(appletArgs, passedArgs));
         } else {

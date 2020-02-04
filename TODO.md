@@ -3,9 +3,9 @@
 
 # Central
 - [x] Decide simulation contexts (waterfall & flamethrower)
-- [ ] (30) Fire simulation
+- [ ] (30) FlameThrower simulation
     - [ ] one particle with parabolic arc and lifespan
-    - [ ] generation rate
+    - [x] generation rate
     - [ ] many particles
     - [ ] color change
     - [ ] collision detection
