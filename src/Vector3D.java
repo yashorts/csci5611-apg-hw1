@@ -1,8 +1,12 @@
 public class Vector3D {
     float x, y, z;
 
-    public static Vector3D randomUnit() {
-        return new Vector3D((float) Math.random(), (float) Math.random(), (float) Math.random()).unit();
+    public static Vector3D unitUniformRandom() {
+        return new Vector3D((float) Math.random() * 2 - 1, (float) Math.random() * 2 - 1, (float) Math.random() * 2 - 1).unit();
+    }
+
+    public static Vector3D of(float c) {
+        return new Vector3D(c, c, c);
     }
 
     public static Vector3D of(float x, float y, float z) {

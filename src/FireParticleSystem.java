@@ -32,17 +32,16 @@ public class FireParticleSystem {
             if (particles.size() >= maxParticles) {
                 break;
             }
-            Vector3D generalVelocity = aim.scale(50);
             float theta = parent.random(2 * parent.PI);
-            float radius = 0.5f * (float) Math.sqrt(parent.random(1));
-            Vector3D coneRandomness = Vector3D.of(radius * Math.cos(theta), radius * Math.sin(theta), 0).minus(Vector3D.of(0, 0, 1)).scale(20);
-            Vector3D vel = generalVelocity.plus(coneRandomness);
-            Vector3D acc = Vector3D.of(0, -30, 0);
+            float radius = 1f * (float) Math.sqrt(parent.random(1));
+            Vector3D discRandomness = Vector3D.of(radius * Math.cos(theta), radius * Math.sin(theta), 0);
+            Vector3D generalVelocity = aim.scale(50);
+            Vector3D acc = Vector3D.of(0, 0, 0);
             particles.put(newParticleId, new FireParticle(
                     parent,
-                    origin,
-                    vel,
-                    acc,
+                    origin.plus(discRandomness),
+                    generalVelocity,
+                    acc.plus(discRandomness.scale(2)),
                     lifespan
             ));
             newParticleId++;
@@ -50,7 +49,7 @@ public class FireParticleSystem {
         // update states and remove dead particles
         deadParticleIndices.clear();
         for (Map.Entry<Long, FireParticle> p : particles.entrySet()) {
-            if (!p.getValue().isAlive) {
+            if (p.getValue().stage == Stage.DEAD) {
                 deadParticleIndices.add(p.getKey());
                 continue;
             }

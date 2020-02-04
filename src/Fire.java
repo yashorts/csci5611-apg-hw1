@@ -19,7 +19,6 @@ public class Fire extends PApplet {
     @Override
     public void setup() {
         surface.setTitle("Processing");
-        noStroke();
         cam = new QueasyCam(this);
         cam.sensitivity = 1f;
         cam.speed = 2f;
@@ -36,8 +35,8 @@ public class Fire extends PApplet {
         flameThrower.setStroke(color(255));
         flameThrower.setFill(color(128, 0, 0));
         ps = new FireParticleSystem(this,
-                Vector3D.of(300, 0, 120), Vector3D.of(0, 0, -1),
-                100, 100, 35000);
+                Vector3D.of(300, 0, 150), Vector3D.of(0, 0, -1),
+                100, 200, 35000);
     }
 
     @Override
@@ -52,7 +51,7 @@ public class Fire extends PApplet {
         popMatrix();
         // flame thrower
         pushMatrix();
-        translate(300, 10, 150);
+        translate(300, 10, 180);
         shape(flameThrower);
         popMatrix();
 
