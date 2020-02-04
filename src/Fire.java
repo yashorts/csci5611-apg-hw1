@@ -33,10 +33,11 @@ public class Fire extends PApplet {
         flameThrower = loadShape("LongPistol.obj");
         flameThrower.scale(10);
         flameThrower.rotate(PI, 0, 0, 1);
+        flameThrower.setStroke(color(255));
         flameThrower.setFill(color(128, 0, 0));
         ps = new FireParticleSystem(this,
-                new Vector3D(300, 10, 150), new Vector3D(0, 0, -1),
-                10, 100);
+                new Vector3D(300, 8, 125), new Vector3D(0, 0, -1),
+                100, 90, 10000);
     }
 
     @Override
@@ -57,7 +58,7 @@ public class Fire extends PApplet {
 
         int frameStart = millis();
         // physics
-        ps.physics();
+        ps.physics(0.015f);
         int physicsEnd = millis();
         // rendering
         ps.render();

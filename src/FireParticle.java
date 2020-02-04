@@ -1,13 +1,12 @@
 import processing.core.PApplet;
 
-import javax.swing.*;
-
 public class FireParticle {
     final PApplet parent;
     Vector3D position;
     Vector3D velocity;
     Vector3D acceleration;
     int lifespan;
+    final float initialLifeSpan;
     boolean isAlive;
 
     FireParticle(PApplet parent, Vector3D position, Vector3D velocity, Vector3D acceleration, int lifespan) {
@@ -17,6 +16,7 @@ public class FireParticle {
         this.acceleration = acceleration;
         this.isAlive = true;
         this.lifespan = lifespan;
+        this.initialLifeSpan = lifespan;
     }
 
     public void physics(float dt) {
@@ -30,9 +30,9 @@ public class FireParticle {
 
     public void render() {
         parent.pushMatrix();
-        parent.fill(255, 2, 0);
+        parent.fill(255, 255 * (lifespan / initialLifeSpan), 255 * (lifespan / initialLifeSpan));
         parent.translate(position.x, position.y, position.z);
-        parent.box(2);
+        parent.box(1);
         parent.popMatrix();
     }
 
