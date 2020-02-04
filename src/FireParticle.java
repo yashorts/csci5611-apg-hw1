@@ -77,7 +77,7 @@ public class FireParticle {
                 position = position.plus(velocity.scale(dt)).plus(Vec3.unitUniformRandom().scale(0.5f));
                 velocity = velocity.plus(acceleration.scale(dt));
                 acceleration = acceleration.plus(Vec3.of(parent.random(-5, 5), -1, 0));
-                color = Vec3.of(parent.random(50));
+                color = Vec3.of(parent.random(100, 200));
                 break;
             case SMOKE:
                 break;
@@ -99,6 +99,18 @@ public class FireParticle {
                 parent.pushMatrix();
                 parent.translate(position.x, position.y, position.z);
                 parent.box(0.75f * (1 - remainingLifespan / totalLifeSpan) * Math.min(acceleration.abs(), 1));
+                parent.popMatrix();
+            } else {
+                parent.stroke(color.x, color.y, color.z);
+                parent.point(position.x, position.y, position.z);
+            }
+        } else if (stage == Stage.BALL) {
+            if (sample < 0.1) {
+                parent.fill(color.x, color.y, color.z);
+                parent.stroke(color.x, color.y, color.z);
+                parent.pushMatrix();
+                parent.translate(position.x, position.y, position.z);
+                parent.box(1f * (1 - remainingLifespan / totalLifeSpan) * Math.min(acceleration.abs(), 1));
                 parent.popMatrix();
             } else {
                 parent.stroke(color.x, color.y, color.z);

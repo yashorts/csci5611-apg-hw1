@@ -22,9 +22,10 @@ public class FireParticleSystem {
     PImage texture;
 
     static {
-        textureFiles.add("fire1.jpg");
-        textureFiles.add("fire2.jpg");
-        textureFiles.add("fire3.jpg");
+        textureFiles.add("fire-yellow-1.jpg");
+        textureFiles.add("fire-red-4.jpg");
+        textureFiles.add("fire-red-5.jpg");
+        textureFiles.add("fire-red-6.png");
     }
 
     FireParticleSystem(PApplet parent, Vec3 origin, Vec3 aim, int generationRate, int lifespan, int maxParticles) {
