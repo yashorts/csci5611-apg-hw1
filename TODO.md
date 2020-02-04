@@ -25,8 +25,9 @@
         - [x] textured sprites for fire particles
         - [x] more textured sprites for fire particles
         - [x] increasing size of particles with lifespan
-        - [ ] faster flame
         - [ ] spark and trails
+        - [ ] better billowing motion
+        - [ ] faster flame
         - [ ] intelligent creation of particles
         - [ ] remove initial stuttering
         - [ ] move the flame thrower
@@ -45,7 +46,7 @@
 # Rendering 
 - [ ] (5) Tails on particles 
 - [ ] (5) Translucent particles 
-- [ ] (5) Textured sprites for particles 
+- [x] (5) Textured sprites for particles 
  
 # Performance Benchmarking (cumulative) 
 ## Measure the speed of the faster of the two required simulations. Feel free test on a fast  computer such as the ones in the basement graphics lab (KH 1-254).  
@@ -55,7 +56,7 @@
 - [ ] (10) Benchmark-4: 100,000 particles simulated and rendered at over 30 FPS 
  
 # Additional Features
-- [ ] (5) Write your own vector library (dot & cross prod, addition, multiplication, etc.) 
+- [x] (5) Write your own vector library (dot & cross prod, addition, multiplication, etc.) 
 - [ ] (10) Continuous user interaction with the system (mouse-based for full credit) 
 - [ ] (10) Continuous Collision Detection (must show a visible difference) 
 - [ ] (10) Simulation-driven audio (only partial points for short, simple sounds) 
@@ -70,4 +71,3 @@
 - [ ] (35) Galaxy Simulation (particles must attract each other and look nice) 
 - [ ] (50) Real-time implementation of the Genesis Device effect  
 - [ ] (100) SPH Fluid Simulation 
- 

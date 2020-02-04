@@ -46,8 +46,8 @@ public class FireParticle {
                     // smog particles come out of jet and slow down due to high air resistance
                     velocity = velocity.scale(parent.random(1));
                     // their lifespan is increased to show their effects
-                    remainingLifespan += 200;
-                    totalLifeSpan += 200;
+                    remainingLifespan += 100;
+                    totalLifeSpan += 100;
                     stage = Stage.SMOG;
                 }
                 // jet stage ends after some lifespan
@@ -63,8 +63,8 @@ public class FireParticle {
                     // smog particles come out of jet and slow down due to high air resistance
                     velocity = velocity.scale(parent.random(1));
                     // their lifespan is increased to show their effects
-                    remainingLifespan += 200;
-                    totalLifeSpan += 200;
+                    remainingLifespan += 100;
+                    totalLifeSpan += 100;
                     stage = Stage.SMOG;
                 } else {
 //                    float theta = parent.random(2 * parent.PI);
@@ -88,8 +88,8 @@ public class FireParticle {
                     // smog particles come out of jet and slow down due to high air resistance
                     velocity = velocity.scale(parent.random(1));
                     // their lifespan is increased to show their effects
-                    remainingLifespan += 200;
-                    totalLifeSpan += 200;
+                    remainingLifespan += 100;
+                    totalLifeSpan += 100;
                     stage = Stage.SMOG;
                 }
                 break;
@@ -112,7 +112,29 @@ public class FireParticle {
 
     public void render() {
         float sample = parent.random(1);
-        if (stage == Stage.BALL) {
+        if (stage == Stage.JET) {
+            if (sample < 0.005) {
+                parent.fill(color.x, color.y, color.z);
+                parent.stroke(color.x, color.y, color.z);
+                parent.pushMatrix();
+                parent.translate(position.x, position.y, position.z);
+
+                parent.rotate(remainingLifespan / totalLifeSpan * parent.PI * 20, 0, 1, 0);
+                parent.beginShape();
+                parent.texture(texture);
+                float sideLen = 0.5f * (1.5f - remainingLifespan / totalLifeSpan) * Math.min(acceleration.abs(), 1);
+                parent.vertex(-sideLen, -sideLen, 0, 0, 0);
+                parent.vertex(sideLen, -sideLen, 0, texture.width, 0);
+                parent.vertex(sideLen, sideLen, 0, texture.width, texture.height);
+                parent.vertex(-sideLen, sideLen, 0, 0, texture.height);
+                parent.endShape();
+
+                parent.popMatrix();
+            } else {
+                parent.stroke(color.x, color.y, color.z);
+                parent.point(position.x, position.y, position.z);
+            }
+        } else if (stage == Stage.BALL) {
             if (sample < 0.1) {
                 parent.fill(color.x, color.y, color.z);
                 parent.stroke(color.x, color.y, color.z);
