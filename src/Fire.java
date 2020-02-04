@@ -34,7 +34,9 @@ public class Fire extends PApplet {
         flameThrower.scale(10);
         flameThrower.rotate(PI, 0, 0, 1);
         flameThrower.setFill(color(128, 0, 0));
-        ps = new FireParticleSystem(this, new Vector3D(300, 10, 150), new Vector3D(0, 0, -1), 10, 1);
+        ps = new FireParticleSystem(this,
+                new Vector3D(300, 10, 150), new Vector3D(0, 0, -1),
+                10, 1);
     }
 
     @Override

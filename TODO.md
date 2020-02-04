@@ -41,7 +41,8 @@
 - [ ] (10) Continuous Collision Detection (must show a visible difference) 
 - [ ] (10) Simulation-driven audio (only partial points for short, simple sounds) 
 - [ ] (10) Multiple interacting particle systems (submit a separate video) 
-- [ ] (10) Thread-parallel implementation (must document performance gain) 
+- [ ] (10) Thread-parallel implementation (must document performance gain)
+    - [ ] foreachordered vs foreach
 - [ ] (10) SIMD implementation (must document performance gain) 
  
 # More things to simulate 
