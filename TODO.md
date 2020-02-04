@@ -5,6 +5,7 @@
 - [x] Decide simulation contexts (waterfall & flamethrower)
 - [ ] (30) Fire simulation
     - [ ] one particle with parabolic arc and lifespan
+    - [ ] generation rate
     - [ ] many particles
     - [ ] color change
     - [ ] collision detection
