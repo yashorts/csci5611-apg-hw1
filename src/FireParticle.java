@@ -20,7 +20,7 @@ public class FireParticle {
     }
 
     public void physics(float dt) {
-        position = position.plus(velocity.scale(dt)).plus(new Vector3D(parent.random(1), parent.random(1), parent.random(1)).unit().scale(0.2f));
+        position = position.plus(velocity.scale(dt)).plus(Vector3D.randomUnit().scale(0.2f));
         velocity = velocity.plus(acceleration.scale(dt));
         lifespan -= 1;
         if (lifespan < 0) {

@@ -3,7 +3,7 @@
 
 # Central
 - [x] Decide simulation contexts (waterfall & flamethrower)
-- [ ] (30) FlameThrower simulation
+- [ ] (30) Fire simulation
     - [x] particle with lifespan
     - [x] generation rate
     - [x] point particles

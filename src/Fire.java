@@ -2,7 +2,7 @@ import processing.core.PApplet;
 import processing.core.PShape;
 import queasycam.QueasyCam;
 
-public class FlameThrower extends PApplet {
+public class Fire extends PApplet {
     final int WIDTH = 1500;
     final int HEIGHT = 1000;
     QueasyCam cam;
@@ -24,8 +24,8 @@ public class FlameThrower extends PApplet {
         cam.sensitivity = 1f;
         cam.speed = 2f;
         ground = new Ground(this,
-                new Vector3D(0, 0, 0), new Vector3D(0, 0, 1), new Vector3D(1, 0, 0),
-                2048, 2048,
+                Vector3D.of(0, 0, 0), Vector3D.of(0, 0, 1), Vector3D.of(1, 0, 0),
+                1024, 1024,
                 loadImage("grass.jpg"));
         tree = loadShape("BirchTree_Autumn_1.obj");
         tree.rotate(PI, 0, 0, 1);
@@ -36,7 +36,7 @@ public class FlameThrower extends PApplet {
         flameThrower.setStroke(color(255));
         flameThrower.setFill(color(128, 0, 0));
         ps = new FireParticleSystem(this,
-                new Vector3D(300, 8, 125), new Vector3D(0, 0, -1),
+                Vector3D.of(300, 0, 120), Vector3D.of(0, 0, -1),
                 100, 200, 100000);
     }
 
@@ -73,7 +73,7 @@ public class FlameThrower extends PApplet {
     }
 
     static public void main(String[] passedArgs) {
-        String[] appletArgs = new String[]{"FlameThrower"};
+        String[] appletArgs = new String[]{"Fire"};
         if (passedArgs != null) {
             PApplet.main(concat(appletArgs, passedArgs));
         } else {

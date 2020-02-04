@@ -1,32 +1,16 @@
 public class Vector3D {
     float x, y, z;
 
-    Vector3D() {
-        x = y = z = 0;
+    public static Vector3D randomUnit() {
+        return new Vector3D((float) Math.random(), (float) Math.random(), (float) Math.random()).unit();
     }
 
-    Vector3D(float x, float y, float z) {
-        this.x = x;
-        this.y = y;
-        this.z = z;
+    public static Vector3D of(float x, float y, float z) {
+        return new Vector3D(x, y, z);
     }
 
-    Vector3D(float c) {
-        this.x = c;
-        this.y = c;
-        this.z = c;
-    }
-
-    Vector3D(Vector3D c) {
-        this.x = c.x;
-        this.y = c.y;
-        this.z = c.z;
-    }
-
-    public Vector3D(double x, double y, double z) {
-        this.x = (float) x;
-        this.y = (float) y;
-        this.z = (float) z;
+    public static Vector3D of(double x, double y, double z) {
+        return new Vector3D((float) x, (float) y, (float) z);
     }
 
     public boolean equals(Vector3D b) {
@@ -72,5 +56,27 @@ public class Vector3D {
 
     public String toString() {
         return "V3D (" + x + ", " + y + ", " + z + ")";
+    }
+
+    private Vector3D() {
+        x = y = z = 0;
+    }
+
+    private Vector3D(float x, float y, float z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
+
+    private Vector3D(float c) {
+        this.x = c;
+        this.y = c;
+        this.z = c;
+    }
+
+    private Vector3D(Vector3D c) {
+        this.x = c.x;
+        this.y = c.y;
+        this.z = c.z;
     }
 }
