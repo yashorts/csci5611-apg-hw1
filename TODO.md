@@ -10,6 +10,7 @@
     - [x] slight upward acc
     - [x] color change
     - [x] textured sprites for fire particles
+    - [x] more textured sprites for fire particles
     - [x] increasing size of particles with lifespan
     - [ ] more realistic fire
     - [ ] move the flame thrower
@@ -19,7 +20,8 @@
     - [ ] spark and trails
     - [ ] collision detection
     - [ ] fired tree, smoke from tree, tree disappear
-    - [ ] more textured sprites for fire particles
+    - [ ] click on ground to produce tree
+    - [ ] remove initial stuttering
 - [ ] (30) Water simulation
     - [ ] more squished particles
     - [ ] color changes

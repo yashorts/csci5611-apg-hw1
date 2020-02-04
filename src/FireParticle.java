@@ -82,10 +82,10 @@ public class FireParticle {
                 }
                 break;
             case SMOG:
-                position = position.plus(velocity.scale(dt)).plus(Vec3.uniformRandomInUnitSphere().scale(0.5f));
+                position = position.plus(velocity.scale(dt)).plus(Vec3.uniformRandomInUnitSphere().scale((float) Math.pow((2 * (1 - remainingLifespan / totalLifeSpan)), 3)));
                 velocity = velocity.plus(acceleration.scale(dt));
                 acceleration = acceleration.plus(Vec3.of(parent.random(-5, 5), -1, 0));
-                color = Vec3.of(parent.random(100, 200));
+                color = Vec3.of(parent.random(100, 200 + 55 * (1 - remainingLifespan / totalLifeSpan)));
                 break;
             case SMOKE:
                 break;
@@ -100,19 +100,7 @@ public class FireParticle {
 
     public void render() {
         float sample = parent.random(1);
-        if (stage == Stage.SMOG) {
-            if (sample < 0.1) {
-                parent.fill(color.x, color.y, color.z);
-                parent.stroke(color.x, color.y, color.z);
-                parent.pushMatrix();
-                parent.translate(position.x, position.y, position.z);
-                parent.box(0.75f * (1 - remainingLifespan / totalLifeSpan) * Math.min(acceleration.abs(), 1));
-                parent.popMatrix();
-            } else {
-                parent.stroke(color.x, color.y, color.z);
-                parent.point(position.x, position.y, position.z);
-            }
-        } else if (stage == Stage.BALL) {
+        if (stage == Stage.BALL) {
             if (sample < 0.1) {
                 parent.fill(color.x, color.y, color.z);
                 parent.stroke(color.x, color.y, color.z);
@@ -124,10 +112,22 @@ public class FireParticle {
                 parent.stroke(color.x, color.y, color.z);
                 parent.point(position.x, position.y, position.z);
             }
+        } else if (stage == Stage.SMOG) {
+            if (sample < 0.1) {
+                parent.fill(color.x, color.y, color.z);
+                parent.stroke(color.x, color.y, color.z);
+                parent.pushMatrix();
+                parent.translate(position.x, position.y, position.z);
+                parent.box(0.75f * (1 - remainingLifespan / totalLifeSpan) * Math.min(acceleration.abs(), 1));
+                parent.popMatrix();
+            } else {
+                parent.stroke(color.x, color.y, color.z);
+                parent.point(position.x, position.y, position.z);
+            }
         } else {
             if (sample < 0.005) {
-                parent.fill(color.x, color.y, color.z, 0.8f);
-                parent.stroke(color.x, color.y, color.z, 0.8f);
+                parent.fill(color.x, color.y, color.z);
+                parent.stroke(color.x, color.y, color.z);
                 parent.pushMatrix();
                 parent.translate(position.x, position.y, position.z);
 
