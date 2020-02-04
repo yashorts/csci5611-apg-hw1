@@ -8,6 +8,7 @@ public class Fire extends PApplet {
     QueasyCam cam;
     Ground ground;
     PShape tree;
+    PShape flameThrower;
     FireParticleSystem ps;
 
     @Override
@@ -25,19 +26,32 @@ public class Fire extends PApplet {
         cam.speed = 1f;
         ground = new Ground(this,
                 new Vector3D(0, 0, 0), new Vector3D(0, 0, 1), new Vector3D(1, 0, 0),
-                1024, 786,
-                loadImage("grass2.jpg"));
+                2048, 2048,
+                loadImage("grass.jpg"));
         tree = loadShape("BirchTree_1.obj");
         tree.rotate(PI, 0, 0, 1);
-        tree.scale(50);
+        tree.scale(60);
+        flameThrower = loadShape("LongPistol.obj");
+        flameThrower.scale(10);
+        flameThrower.rotate(PI, 0, 0, 1);
+        flameThrower.setFill(color(128, 0, 0));
     }
 
     @Override
     public void draw() {
+        // background
         background(255);
+        // ground and tree
+        pushMatrix();
         translate(300, 100, 0);
         ground.render();
         shape(tree);
+        popMatrix();
+        // flame thrower
+        pushMatrix();
+        translate(300, 10, 150);
+        shape(flameThrower);
+        popMatrix();
 
         int frameStart = millis();
         // physics
