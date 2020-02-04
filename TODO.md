@@ -4,24 +4,32 @@
 # Central
 - [x] Decide simulation contexts (waterfall & flamethrower)
 - [ ] (30) Fire simulation
-    - [x] particle with lifespan, generation rate
-    - [x] point particles
-    - [x] conical velocity
-    - [x] slight upward acc
-    - [x] color change
-    - [x] textured sprites for fire particles
-    - [x] more textured sprites for fire particles
-    - [x] increasing size of particles with lifespan
-    - [ ] more realistic fire
-    - [ ] move the flame thrower
-    - [ ] intelligent creation of particles
-    - [ ] particle types - 2 fire types, 2 smoke types
-    - [ ] faster flame
-    - [ ] spark and trails
-    - [ ] collision detection
-    - [ ] fired tree, smoke from tree, tree disappear
+    - [ ] collision detection, fired tree, smoke from tree, tree disappear
     - [ ] click on ground to produce tree
-    - [ ] remove initial stuttering
+    - [ ] realistic fire
+        - [x] particle with lifespan, stages, generation rate
+        - [x] some highly accelerated particles in jet
+        - [x] some randomized jerks in jet
+        - [x] small amounts of smog comes from jet
+        - [x] billowing motion of smog particles - random jerks and random displacements
+        - [x] increased lifespan of smog particles
+        - [x] gradual stage change to smog
+        - [x] spread of fireball
+        - [x] rotating sprites in fireball
+        - [x] black quads in fireball
+        - [x] ball to smog stage
+        - [x] color change with lifespan for all particles
+        - [x] point particles
+        - [x] spherical velocity
+        - [x] slight upward acc
+        - [x] textured sprites for fire particles
+        - [x] more textured sprites for fire particles
+        - [x] increasing size of particles with lifespan
+        - [ ] faster flame
+        - [ ] spark and trails
+        - [ ] intelligent creation of particles
+        - [ ] remove initial stuttering
+        - [ ] move the flame thrower
 - [ ] (30) Water simulation
     - [ ] more squished particles
     - [ ] color changes
