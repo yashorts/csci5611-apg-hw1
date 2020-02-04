@@ -30,9 +30,9 @@ public class FireParticle {
 
     public void render() {
         parent.pushMatrix();
-        parent.fill(255, 0, 0);
+        parent.fill(255, 2, 0);
         parent.translate(position.x, position.y, position.z);
-        parent.box(10);
+        parent.box(2);
         parent.popMatrix();
     }
 
