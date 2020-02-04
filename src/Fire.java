@@ -19,6 +19,7 @@ public class Fire extends PApplet {
     @Override
     public void setup() {
         surface.setTitle("Processing");
+        noStroke();
         cam = new QueasyCam(this);
         cam.sensitivity = 1f;
         cam.speed = 2f;
@@ -42,7 +43,7 @@ public class Fire extends PApplet {
     @Override
     public void draw() {
         // background
-        background(0);
+        background(220);
         // ground and tree
         pushMatrix();
         translate(300, 100, 0);
