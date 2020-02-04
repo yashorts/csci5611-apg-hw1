@@ -9,8 +9,9 @@
     - [x] conical velocity
     - [x] slight upward acc
     - [x] color change
-    - [x] more realistic fire
-    - [ ] textured sprites for fire particles
+    - [x] textured sprites for fire particles
+    - [x] increasing size of particles with lifespan
+    - [ ] more realistic fire
     - [ ] move the flame thrower
     - [ ] intelligent creation of particles
     - [ ] particle types - 2 fire types, 2 smoke types

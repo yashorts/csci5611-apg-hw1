@@ -62,6 +62,7 @@ public class Fire extends PApplet {
         // flamethrower rendering
         pushMatrix();
         translate(300, 10, 180);
+        fill(0, 0, 255);
         shape(flameThrower);
         popMatrix();
         ps.render();

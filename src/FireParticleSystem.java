@@ -1,9 +1,7 @@
 import processing.core.PApplet;
+import processing.core.PImage;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 public class FireParticleSystem {
@@ -19,6 +17,15 @@ public class FireParticleSystem {
     Map<Long, FireParticle> particles = new HashMap<>();
     private List<Long> deadParticleIndices = new ArrayList<>();
     private Long newParticleId = 0L;
+    // texture
+    static List<String> textureFiles = new ArrayList<>();
+    PImage texture;
+
+    static {
+        textureFiles.add("fire1.jpg");
+        textureFiles.add("fire2.jpg");
+        textureFiles.add("fire3.jpg");
+    }
 
     FireParticleSystem(PApplet parent, Vector3D origin, Vector3D aim, int generationRate, int lifespan, int maxParticles) {
         this.parent = parent;
@@ -27,6 +34,8 @@ public class FireParticleSystem {
         this.generationRate = generationRate;
         this.lifespan = lifespan;
         this.maxParticles = maxParticles;
+        Collections.shuffle(textureFiles);
+        this.texture = parent.loadImage(textureFiles.get(0));
     }
 
     public void physics(float dt) {
@@ -45,7 +54,8 @@ public class FireParticleSystem {
                     origin.plus(discRandomness),
                     generalVelocity,
                     acc.plus(discRandomness.scale(2)),
-                    lifespan
+                    lifespan,
+                    texture
             ));
             newParticleId++;
         }

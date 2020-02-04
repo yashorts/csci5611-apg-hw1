@@ -1,4 +1,5 @@
 import processing.core.PApplet;
+import processing.core.PImage;
 
 enum Stage {
     JET, JET_TO_BALL_OR_SMOG, BALL, SMOG, SMOKE, DEAD
@@ -13,8 +14,9 @@ public class FireParticle {
     float totalLifeSpan;
     int remainingLifespan;
     Stage stage;
+    final PImage texture;
 
-    FireParticle(PApplet parent, Vector3D position, Vector3D velocity, Vector3D acceleration, int remainingLifespan) {
+    FireParticle(PApplet parent, Vector3D position, Vector3D velocity, Vector3D acceleration, int remainingLifespan, PImage texture) {
         this.parent = parent;
         this.position = position;
         this.velocity = velocity;
@@ -22,6 +24,7 @@ public class FireParticle {
         this.stage = Stage.JET;
         this.remainingLifespan = remainingLifespan;
         this.totalLifeSpan = remainingLifespan;
+        this.texture = texture;
     }
 
     public void physics(float dt) {
@@ -95,7 +98,7 @@ public class FireParticle {
                 parent.stroke(color.x, color.y, color.z);
                 parent.pushMatrix();
                 parent.translate(position.x, position.y, position.z);
-                parent.box(0.75f  * (1 - remainingLifespan / totalLifeSpan) * Math.min(acceleration.abs(), 1));
+                parent.box(0.75f * (1 - remainingLifespan / totalLifeSpan) * Math.min(acceleration.abs(), 1));
                 parent.popMatrix();
             } else {
                 parent.stroke(color.x, color.y, color.z);
@@ -103,11 +106,21 @@ public class FireParticle {
             }
         } else {
             if (sample < 0.005) {
-                parent.fill(color.x, color.y, color.z);
-                parent.stroke(color.x, color.y, color.z);
+                parent.fill(color.x, color.y, color.z, 0.8f);
+                parent.stroke(color.x, color.y, color.z, 0.8f);
                 parent.pushMatrix();
                 parent.translate(position.x, position.y, position.z);
-                parent.box(0.5f);
+
+                parent.rotate(remainingLifespan / totalLifeSpan * parent.PI * 20, 0, 1, 0);
+                parent.beginShape();
+                parent.texture(texture);
+                float sideLen = 0.5f * (1.5f - remainingLifespan / totalLifeSpan) * Math.min(acceleration.abs(), 1);
+                parent.vertex(-sideLen, -sideLen, 0, 0, 0);
+                parent.vertex(sideLen, -sideLen, 0, texture.width, 0);
+                parent.vertex(sideLen, sideLen, 0, texture.width, texture.height);
+                parent.vertex(-sideLen, sideLen, 0, 0, texture.height);
+                parent.endShape();
+
                 parent.popMatrix();
             } else {
                 parent.stroke(color.x, color.y, color.z);
