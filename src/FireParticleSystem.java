@@ -8,29 +8,32 @@ public class FireParticleSystem {
     final int numParticles;
     final ArrayList<FireParticle> fireParticles;
 
-    FireParticleSystem(PApplet parent, int numParticles) {
+    FireParticleSystem(PApplet parent, Vector3D eye, Vector3D shootDir, float generationRate, int numParticles) {
         this.parent = parent;
         this.numParticles = numParticles;
         fireParticles = new ArrayList<>();
         for (int i = 0; i < numParticles; ++i) {
             fireParticles.add(new FireParticle(
                     parent,
-                    new Vector3D(200 + 100 * parent.random(1), 200 + 10 * parent.random(1), 0),
-                    new Vector3D(10 + 10 * parent.random(1), 10 * parent.random(1), 0),
-                    new Vector3D(0, 10, 0)
+                    eye,
+                    shootDir.scale(10),
+                    new Vector3D(),
+                    1000
             ));
         }
     }
 
-    public void update() {
+    public void physics() {
         for (FireParticle p : fireParticles) {
-            p.update(0.05f);
+            p.physics(0.05f);
         }
     }
 
     public void render() {
         for (FireParticle p : fireParticles) {
-            p.render();
+            if (p.isAlive) {
+                p.render();
+            }
         }
     }
 

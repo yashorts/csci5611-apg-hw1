@@ -2,8 +2,15 @@
 - [x] checkin
 
 # Central
-- [ ] Decide simulation contexts
+- [x] Decide simulation contexts (waterfall & flamethrower)
 - [ ] (30) Fire simulation
+    - [ ] one particle with parabolic arc and lifespan
+    - [ ] many particles
+    - [ ] color change
+    - [ ] collision detection
+    - [ ] smoke motion
+    - [ ] spark and trails
+    - [ ] textured sprites for fire particles
 - [ ] (30) Water simulation
     - [ ] more squished particles
     - [ ] color changes
