@@ -10,18 +10,18 @@ public class FireParticle {
     Vector3D velocity;
     Vector3D acceleration;
     Vector3D color;
-    final float initialLifeSpan;
-    int lifespan;
+    float totalLifeSpan;
+    int remainingLifespan;
     Stage stage;
 
-    FireParticle(PApplet parent, Vector3D position, Vector3D velocity, Vector3D acceleration, int lifespan) {
+    FireParticle(PApplet parent, Vector3D position, Vector3D velocity, Vector3D acceleration, int remainingLifespan) {
         this.parent = parent;
         this.position = position;
         this.velocity = velocity;
         this.acceleration = acceleration;
         this.stage = Stage.JET;
-        this.lifespan = lifespan;
-        this.initialLifeSpan = lifespan;
+        this.remainingLifespan = remainingLifespan;
+        this.totalLifeSpan = remainingLifespan;
     }
 
     public void physics(float dt) {
@@ -36,17 +36,20 @@ public class FireParticle {
                     stage = Stage.SMOG;
                 }
                 // jet stage ends after some lifespan
-                if (lifespan / initialLifeSpan <= 0.5) {
+                if (remainingLifespan / totalLifeSpan <= 0.6) {
                     stage = Stage.JET_TO_BALL_OR_SMOG;
                 }
                 break;
             case JET_TO_BALL_OR_SMOG:
+                position = position.plus(velocity.scale(dt)).plus(Vector3D.unitUniformRandom().scale(0.1f));
+                velocity = velocity.plus(acceleration.scale(dt));
                 color = gradientColor();
-                if (parent.random(1) < 0.1) {
+                if (parent.random(1) < (0.54 - remainingLifespan / totalLifeSpan)) {
                     // smog particles come out of jet and slow down due to high air resistance
                     velocity = velocity.scale(parent.random(1));
                     // their lifespan is increased to show their effects
-                    lifespan += 100;
+                    remainingLifespan += 200;
+                    totalLifeSpan += 200;
                     stage = Stage.SMOG;
                 } else {
 //                    float theta = parent.random(2 * parent.PI);
@@ -78,8 +81,8 @@ public class FireParticle {
             case DEAD:
                 return;
         }
-        lifespan -= 1;
-        if (lifespan <= 0) {
+        remainingLifespan -= 1;
+        if (remainingLifespan <= 0) {
             stage = Stage.DEAD;
         }
     }
@@ -92,7 +95,7 @@ public class FireParticle {
                 parent.stroke(color.x, color.y, color.z);
                 parent.pushMatrix();
                 parent.translate(position.x, position.y, position.z);
-                parent.box(0.5f);
+                parent.box(0.75f  * (1 - remainingLifespan / totalLifeSpan) * Math.min(acceleration.abs(), 1));
                 parent.popMatrix();
             } else {
                 parent.stroke(color.x, color.y, color.z);
@@ -114,6 +117,6 @@ public class FireParticle {
     }
 
     private Vector3D gradientColor() {
-        return Vector3D.of(255, 255 * (lifespan / initialLifeSpan), 255 * Math.max(2 * lifespan / initialLifeSpan - 1, 0));
+        return Vector3D.of(255, 255 * (remainingLifespan / totalLifeSpan), 255 * Math.max(2 * remainingLifespan / totalLifeSpan - 1, 0));
     }
 }
