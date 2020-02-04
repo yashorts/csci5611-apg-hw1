@@ -8,8 +8,8 @@ public class FireParticleSystem {
     // window
     final PApplet parent;
     // pose
-    Vector3D origin;
-    Vector3D aim;
+    Vec3 origin;
+    Vec3 aim;
     // flow
     final int generationRate;
     final int lifespan;
@@ -27,7 +27,7 @@ public class FireParticleSystem {
         textureFiles.add("fire3.jpg");
     }
 
-    FireParticleSystem(PApplet parent, Vector3D origin, Vector3D aim, int generationRate, int lifespan, int maxParticles) {
+    FireParticleSystem(PApplet parent, Vec3 origin, Vec3 aim, int generationRate, int lifespan, int maxParticles) {
         this.parent = parent;
         this.origin = origin;
         this.aim = aim;
@@ -46,9 +46,9 @@ public class FireParticleSystem {
             }
             float theta = parent.random(2 * parent.PI);
             float radius = 1f * (float) Math.sqrt(parent.random(1));
-            Vector3D discRandomness = Vector3D.of(radius * Math.cos(theta), radius * Math.sin(theta), 0);
-            Vector3D generalVelocity = aim.scale(50);
-            Vector3D acc = Vector3D.of(0, 0, 0);
+            Vec3 discRandomness = Vec3.of(radius * Math.cos(theta), radius * Math.sin(theta), 0);
+            Vec3 generalVelocity = aim.scale(50);
+            Vec3 acc = Vec3.of(0, 0, 0);
             particles.put(newParticleId, new FireParticle(
                     parent,
                     origin.plus(discRandomness),

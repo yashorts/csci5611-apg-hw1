@@ -7,7 +7,7 @@ class FlameThrower {
     PShape object;
     FireParticleSystem fireParticleSystem;
 
-    public FlameThrower(PApplet parent, Vector3D origin, Vector3D aim, int generationRate, int lifeSpan, int maxParticles, String objFile) {
+    public FlameThrower(PApplet parent, Vec3 origin, Vec3 aim, int generationRate, int lifeSpan, int maxParticles, String objFile) {
         this.parent = parent;
         this.object = parent.loadShape(objFile);
         object.scale(10);
@@ -31,8 +31,12 @@ class FlameThrower {
         fireParticleSystem.render();
     }
 
-    public void moveOrigin(Vector3D newOrigin) {
-        fireParticleSystem.origin = fireParticleSystem.origin.plus(newOrigin);
+    public void moveOrigin(Vec3 dOrigin) {
+        fireParticleSystem.origin = fireParticleSystem.origin.plus(dOrigin);
+    }
+
+    public void setOrigin(Vec3 newOrigin) {
+        fireParticleSystem.origin = newOrigin;
     }
 }
 
@@ -59,7 +63,7 @@ public class Fire extends PApplet {
         cam.speed = 2f;
         // ground
         ground = new Ground(this,
-                Vector3D.of(0, 0, 0), Vector3D.of(0, 0, 1), Vector3D.of(1, 0, 0),
+                Vec3.of(0, 0, 0), Vec3.of(0, 0, 1), Vec3.of(1, 0, 0),
                 1024, 1024,
                 loadImage("grass.jpg"));
         // tree
@@ -68,24 +72,25 @@ public class Fire extends PApplet {
         tree.scale(60);
         // flame thrower
         flameThrower = new FlameThrower(this,
-                Vector3D.of(300, 0, 150), Vector3D.of(0, 0, -1),
+                Vec3.of(300, 0, 150), Vec3.of(0, 0, -1),
                 100, 200, 35000, "LongPistol.obj");
     }
 
     @Override
     public void draw() {
         if (keyPressed && keyCode == RIGHT) {
-            flameThrower.moveOrigin(Vector3D.of(0, 0, 1));
+            flameThrower.moveOrigin(Vec3.of(0, 0, 1));
         }
         if (keyPressed && keyCode == LEFT) {
-            flameThrower.moveOrigin(Vector3D.of(0, 0, -1));
+            flameThrower.moveOrigin(Vec3.of(0, 0, -1));
         }
         if (keyPressed && keyCode == UP) {
-            flameThrower.moveOrigin(Vector3D.of(1, 0, 0));
+            flameThrower.moveOrigin(Vec3.of(1, 0, 0));
         }
         if (keyPressed && keyCode == DOWN) {
-            flameThrower.moveOrigin(Vector3D.of(-1, 0, 0));
+            flameThrower.moveOrigin(Vec3.of(-1, 0, 0));
         }
+//        flameThrower.setOrigin(Vector3D.of(cam.position.x, cam.position.y, cam.position.z));
 
         // background
         background(220);

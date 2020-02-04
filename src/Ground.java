@@ -4,15 +4,15 @@ import processing.core.PImage;
 public class Ground {
     final PApplet parent;
     final PImage texture;
-    final Vector3D iCap;
-    final Vector3D jCap;
-    final Vector3D center;
-    final Vector3D ul;
-    final Vector3D ll;
-    final Vector3D lr;
-    final Vector3D ur;
+    final Vec3 iCap;
+    final Vec3 jCap;
+    final Vec3 center;
+    final Vec3 ul;
+    final Vec3 ll;
+    final Vec3 lr;
+    final Vec3 ur;
 
-    Ground(final PApplet parent, final Vector3D center, final Vector3D iCap, final Vector3D jCap, int width, int height, final PImage texture) {
+    Ground(final PApplet parent, final Vec3 center, final Vec3 iCap, final Vec3 jCap, int width, int height, final PImage texture) {
         this.parent = parent;
         this.iCap = iCap;
         this.jCap = jCap;

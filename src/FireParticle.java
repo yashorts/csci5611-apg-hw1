@@ -7,16 +7,16 @@ enum Stage {
 
 public class FireParticle {
     final PApplet parent;
-    Vector3D position;
-    Vector3D velocity;
-    Vector3D acceleration;
-    Vector3D color;
+    Vec3 position;
+    Vec3 velocity;
+    Vec3 acceleration;
+    Vec3 color;
     float totalLifeSpan;
     int remainingLifespan;
     Stage stage;
     final PImage texture;
 
-    FireParticle(PApplet parent, Vector3D position, Vector3D velocity, Vector3D acceleration, int remainingLifespan, PImage texture) {
+    FireParticle(PApplet parent, Vec3 position, Vec3 velocity, Vec3 acceleration, int remainingLifespan, PImage texture) {
         this.parent = parent;
         this.position = position;
         this.velocity = velocity;
@@ -30,7 +30,7 @@ public class FireParticle {
     public void physics(float dt) {
         switch (stage) {
             case JET:
-                position = position.plus(velocity.scale(dt)).plus(Vector3D.unitUniformRandom().scale(0.1f));
+                position = position.plus(velocity.scale(dt)).plus(Vec3.unitUniformRandom().scale(0.1f));
                 velocity = velocity.plus(acceleration.scale(dt));
                 color = gradientColor();
                 // very small portion of initial particles turning into smog
@@ -44,7 +44,7 @@ public class FireParticle {
                 }
                 break;
             case JET_TO_BALL_OR_SMOG:
-                position = position.plus(velocity.scale(dt)).plus(Vector3D.unitUniformRandom().scale(0.1f));
+                position = position.plus(velocity.scale(dt)).plus(Vec3.unitUniformRandom().scale(0.1f));
                 velocity = velocity.plus(acceleration.scale(dt));
                 color = gradientColor();
                 if (parent.random(1) < (0.54 - remainingLifespan / totalLifeSpan)) {
@@ -63,9 +63,9 @@ public class FireParticle {
                 }
                 break;
             case BALL:
-                position = position.plus(velocity.scale(dt)).plus(Vector3D.unitUniformRandom().scale(0.5f));
+                position = position.plus(velocity.scale(dt)).plus(Vec3.unitUniformRandom().scale(0.5f));
                 velocity = velocity.plus(acceleration.scale(dt));
-                acceleration = acceleration.plus(Vector3D.of(parent.random(-5, 5), -0.5, 0));
+                acceleration = acceleration.plus(Vec3.of(parent.random(-5, 5), -0.5, 0));
                 color = gradientColor();
                 // very small portion of initial particles turning into smog
                 if (parent.random(1) < 0.002) {
@@ -74,10 +74,10 @@ public class FireParticle {
                 }
                 break;
             case SMOG:
-                position = position.plus(velocity.scale(dt)).plus(Vector3D.unitUniformRandom().scale(0.5f));
+                position = position.plus(velocity.scale(dt)).plus(Vec3.unitUniformRandom().scale(0.5f));
                 velocity = velocity.plus(acceleration.scale(dt));
-                acceleration = acceleration.plus(Vector3D.of(parent.random(-5, 5), -1, 0));
-                color = Vector3D.of(parent.random(50));
+                acceleration = acceleration.plus(Vec3.of(parent.random(-5, 5), -1, 0));
+                color = Vec3.of(parent.random(50));
                 break;
             case SMOKE:
                 break;
@@ -129,7 +129,7 @@ public class FireParticle {
         }
     }
 
-    private Vector3D gradientColor() {
-        return Vector3D.of(255, 255 * (remainingLifespan / totalLifeSpan), 255 * Math.max(2 * remainingLifespan / totalLifeSpan - 1, 0));
+    private Vec3 gradientColor() {
+        return Vec3.of(255, 255 * (remainingLifespan / totalLifeSpan), 255 * Math.max(2 * remainingLifespan / totalLifeSpan - 1, 0));
     }
 }
