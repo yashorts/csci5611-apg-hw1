@@ -17,6 +17,12 @@ public class Vector3D {
         this.z = c.z;
     }
 
+    public Vector3D(double x, double y, double z) {
+        this.x = (float) x;
+        this.y = (float) y;
+        this.z = (float) z;
+    }
+
     public boolean equals(Vector3D b) {
         return this.x == b.x && this.y == b.y && this.z == b.z;
     }

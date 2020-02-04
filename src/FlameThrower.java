@@ -27,7 +27,7 @@ public class FlameThrower extends PApplet {
                 new Vector3D(0, 0, 0), new Vector3D(0, 0, 1), new Vector3D(1, 0, 0),
                 2048, 2048,
                 loadImage("grass.jpg"));
-        tree = loadShape("BirchTree_1.obj");
+        tree = loadShape("BirchTree_Autumn_1.obj");
         tree.rotate(PI, 0, 0, 1);
         tree.scale(60);
         flameThrower = loadShape("LongPistol.obj");
@@ -43,7 +43,7 @@ public class FlameThrower extends PApplet {
     @Override
     public void draw() {
         // background
-        background(255);
+        background(0);
         // ground and tree
         pushMatrix();
         translate(300, 100, 0);
