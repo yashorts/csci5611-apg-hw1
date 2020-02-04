@@ -20,16 +20,20 @@ public class Fire extends PApplet {
     public void setup() {
         surface.setTitle("Processing");
         noStroke();
+        // camera
         cam = new QueasyCam(this);
         cam.sensitivity = 1f;
         cam.speed = 2f;
+        // ground
         ground = new Ground(this,
                 Vector3D.of(0, 0, 0), Vector3D.of(0, 0, 1), Vector3D.of(1, 0, 0),
                 1024, 1024,
                 loadImage("grass.jpg"));
+        // tree
         tree = loadShape("BirchTree_Autumn_1.obj");
         tree.rotate(PI, 0, 0, 1);
         tree.scale(60);
+        // flamethrower
         flameThrower = loadShape("LongPistol.obj");
         flameThrower.scale(10);
         flameThrower.rotate(PI, 0, 0, 1);
@@ -50,17 +54,16 @@ public class Fire extends PApplet {
         ground.render();
         shape(tree);
         popMatrix();
-        // flame thrower
+
+        int frameStart = millis();
+        // flamethrower physics
+        ps.physics(0.015f);
+        int physicsEnd = millis();
+        // flamethrower rendering
         pushMatrix();
         translate(300, 10, 180);
         shape(flameThrower);
         popMatrix();
-
-        int frameStart = millis();
-        // physics
-        ps.physics(0.015f);
-        int physicsEnd = millis();
-        // rendering
         ps.render();
         int frameEnd = millis();
         // text overlay

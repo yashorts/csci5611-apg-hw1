@@ -9,12 +9,14 @@
     - [x] conical velocity
     - [x] slight upward acc
     - [x] color change
-    - [ ] more realistic fire
+    - [x] more realistic fire
+    - [ ] textured sprites for fire particles
+    - [ ] move the flame thrower
+    - [ ] intelligent creation of particles
     - [ ] particle types - 2 fire types, 2 smoke types
     - [ ] spark and trails
     - [ ] collision detection
     - [ ] fired tree, smoke from tree, tree disappear
-    - [ ] textured sprites for fire particles
 - [ ] (30) Water simulation
     - [ ] more squished particles
     - [ ] color changes

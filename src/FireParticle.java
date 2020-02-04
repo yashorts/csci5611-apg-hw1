@@ -87,7 +87,7 @@ public class FireParticle {
     public void render() {
         float sample = parent.random(1);
         if (stage == Stage.SMOG) {
-            if (sample < 0.01) {
+            if (sample < 0.1) {
                 parent.fill(color.x, color.y, color.z);
                 parent.stroke(color.x, color.y, color.z);
                 parent.pushMatrix();

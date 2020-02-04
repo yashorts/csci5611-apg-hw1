@@ -7,23 +7,26 @@ import java.util.Map;
 
 
 public class FireParticleSystem {
-    final int maxParticles;
+    // window
     final PApplet parent;
+    // pose
     final Vector3D origin;
     final Vector3D aim;
+    // flow
     final int generationRate;
     final int lifespan;
+    final int maxParticles;
     Map<Long, FireParticle> particles = new HashMap<>();
     private List<Long> deadParticleIndices = new ArrayList<>();
     private Long newParticleId = 0L;
 
     FireParticleSystem(PApplet parent, Vector3D origin, Vector3D aim, int generationRate, int lifespan, int maxParticles) {
-        this.maxParticles = maxParticles;
         this.parent = parent;
-        this.generationRate = generationRate;
         this.origin = origin;
         this.aim = aim;
+        this.generationRate = generationRate;
         this.lifespan = lifespan;
+        this.maxParticles = maxParticles;
     }
 
     public void physics(float dt) {
@@ -46,7 +49,7 @@ public class FireParticleSystem {
             ));
             newParticleId++;
         }
-        // update states and remove dead particles
+        // remove dead particles, update states of live particles
         deadParticleIndices.clear();
         for (Map.Entry<Long, FireParticle> p : particles.entrySet()) {
             if (p.getValue().stage == Stage.DEAD) {
