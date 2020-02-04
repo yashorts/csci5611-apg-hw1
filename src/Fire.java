@@ -1,6 +1,7 @@
 import processing.core.PApplet;
 import processing.core.PImage;
 
+import processing.core.PShape;
 import queasycam.*;
 
 class Ground {
@@ -38,10 +39,11 @@ class Ground {
 }
 
 public class Fire extends PApplet {
-    final int WIDTH = 1000;
-    final int HEIGHT = 700;
+    final int WIDTH = 1500;
+    final int HEIGHT = 1000;
     QueasyCam cam;
     Ground ground;
+    PShape tree;
     FireParticleSystem ps;
 
     @Override
@@ -58,15 +60,20 @@ public class Fire extends PApplet {
         cam.sensitivity = 0.5f;
         cam.speed = 1f;
         ground = new Ground(this,
-                new Vector3D(100, 20, 0), new Vector3D(0, 0, 1), new Vector3D(1, 0, 0),
+                new Vector3D(100, 0, 0), new Vector3D(0, 0, 1), new Vector3D(1, 0, 0),
                 1024, 786,
-                loadImage("ground2.jpg"));
+                loadImage("grass2.jpg"));
+        tree = loadShape("BirchTree_1.obj");
+        tree.rotate(PI, 0, 0, 1);
+        tree.scale(50);
     }
 
     @Override
     public void draw() {
         background(255);
+        translate(200, 150, 0);
         ground.render();
+        shape(tree);
 
         int frameStart = millis();
         // physics
