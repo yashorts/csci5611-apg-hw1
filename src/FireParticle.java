@@ -2,7 +2,11 @@ import processing.core.PApplet;
 import processing.core.PImage;
 
 enum Stage {
-    JET, JET_TO_BALL_OR_SMOG, BALL, SMOG, SMOKE, DEAD
+    INIT, JET, JET_TO_BALL_OR_SMOG, BALL, SMOG, SMOKE, DEAD
+}
+
+enum Shape {
+    POINT, BOX
 }
 
 public class FireParticle {
@@ -15,6 +19,7 @@ public class FireParticle {
     float totalLifeSpan;
     int remainingLifespan;
     Stage stage;
+    Shape shape;
     final PImage texture;
 
     FireParticle(PApplet parent, Vec3 position, Vec3 velocity, Vec3 acceleration, int remainingLifespan, PImage texture) {
@@ -23,7 +28,8 @@ public class FireParticle {
         this.velocity = velocity;
         this.initialShootDir = velocity.unit();
         this.acceleration = acceleration;
-        this.stage = Stage.JET;
+        this.stage = Stage.INIT;
+        this.shape = Shape.POINT;
         this.remainingLifespan = remainingLifespan;
         this.totalLifeSpan = remainingLifespan;
         this.texture = texture;
@@ -31,6 +37,13 @@ public class FireParticle {
 
     public void physics(float dt) {
         switch (stage) {
+            case INIT:
+                if (parent.random(1) < 0.005) {
+                    shape = Shape.BOX;
+                }
+                stage = Stage.JET;
+                color = gradientColor();
+                break;
             case JET:
                 position = position.plus(velocity.scale(dt)).plus(Vec3.uniformRandomInUnitSphere().scale(0.1f));
                 velocity = velocity.plus(acceleration.scale(dt));
@@ -49,6 +62,9 @@ public class FireParticle {
                     remainingLifespan += 100;
                     totalLifeSpan += 100;
                     stage = Stage.SMOG;
+                    if (parent.random(1) < 0.1) {
+                        shape = Shape.BOX;
+                    }
                 }
                 // jet stage ends after some lifespan
                 if (remainingLifespan / totalLifeSpan <= 0.6) {
@@ -66,12 +82,18 @@ public class FireParticle {
                     remainingLifespan += 100;
                     totalLifeSpan += 100;
                     stage = Stage.SMOG;
+                    if (parent.random(1) < 0.1) {
+                        shape = Shape.BOX;
+                    }
                 } else {
 //                    float theta = parent.random(2 * parent.PI);
 //                    float radius = 0.5f * (float) Math.sqrt(parent.random(1));
 //                    Vector3D coneRandomness = Vector3D.of(radius * Math.cos(theta), radius * Math.sin(theta), 0).minus(Vector3D.of(0, 0, 1)).scale(20);
 //                    velocity = velocity.plus(coneRandomness);
                     stage = Stage.BALL;
+                    if (parent.random(1) < 0.1) {
+                        shape = Shape.BOX;
+                    }
                 }
                 break;
             case BALL:
@@ -91,12 +113,15 @@ public class FireParticle {
                     remainingLifespan += 100;
                     totalLifeSpan += 100;
                     stage = Stage.SMOG;
+                    if (parent.random(1) < 0.1) {
+                        shape = Shape.BOX;
+                    }
                 }
                 break;
             case SMOG:
                 position = position.plus(velocity.scale(dt)).plus(Vec3.uniformRandomInUnitSphere().scale((float) Math.pow((2 * (1 - remainingLifespan / totalLifeSpan)), 3)));
                 velocity = velocity.plus(acceleration.scale(dt));
-                acceleration = acceleration.plus(Vec3.of(parent.random(-5, 5), parent.random(-5, 2), 0));
+                acceleration = acceleration.plus(Vec3.of(parent.random(-1, 1), parent.random(-5, 2), 0));
                 color = Vec3.of(parent.random(100, 200 + 55 * (1 - remainingLifespan / totalLifeSpan)));
                 break;
             case SMOKE:
@@ -111,9 +136,8 @@ public class FireParticle {
     }
 
     public void render() {
-        float sample = parent.random(1);
         if (stage == Stage.JET) {
-            if (sample < 0.005) {
+            if (shape == Shape.BOX) {
                 parent.fill(color.x, color.y, color.z);
                 parent.stroke(color.x, color.y, color.z);
                 parent.pushMatrix();
@@ -135,7 +159,7 @@ public class FireParticle {
                 parent.point(position.x, position.y, position.z);
             }
         } else if (stage == Stage.BALL) {
-            if (sample < 0.1) {
+            if (shape == Shape.BOX) {
                 parent.fill(color.x, color.y, color.z);
                 parent.stroke(color.x, color.y, color.z);
                 parent.pushMatrix();
@@ -147,7 +171,7 @@ public class FireParticle {
                 parent.point(position.x, position.y, position.z);
             }
         } else if (stage == Stage.SMOG) {
-            if (sample < 0.1) {
+            if (shape == Shape.BOX) {
                 parent.fill(color.x, color.y, color.z);
                 parent.stroke(color.x, color.y, color.z);
                 parent.pushMatrix();
@@ -159,7 +183,7 @@ public class FireParticle {
                 parent.point(position.x, position.y, position.z);
             }
         } else {
-            if (sample < 0.005) {
+            if (shape == Shape.BOX) {
                 parent.fill(color.x, color.y, color.z);
                 parent.stroke(color.x, color.y, color.z);
                 parent.pushMatrix();
