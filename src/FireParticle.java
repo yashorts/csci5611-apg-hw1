@@ -5,8 +5,8 @@ public class FireParticle {
     Vector3D position;
     Vector3D velocity;
     Vector3D acceleration;
-    int lifespan;
     final float initialLifeSpan;
+    int lifespan;
     boolean isAlive;
 
     FireParticle(PApplet parent, Vector3D position, Vector3D velocity, Vector3D acceleration, int lifespan) {

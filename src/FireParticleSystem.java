@@ -7,21 +7,21 @@ import java.util.Map;
 
 
 public class FireParticleSystem {
-    final int MAX_PARTICLES;
     final PApplet parent;
-    final int generationRate;
-    final Vector3D source;
+    final int MAX_PARTICLES;
+    final Vector3D sourcePos;
     final Vector3D shootDir;
-    Map<Long, FireParticle> particles = new HashMap<>();
-    List<Long> deadParticleIndices = new ArrayList<>();
-    Long newParticleId = 0L;
+    final int generationRate;
     final int lifespan;
+    Map<Long, FireParticle> particles = new HashMap<>();
+    private List<Long> deadParticleIndices = new ArrayList<>();
+    private Long newParticleId = 0L;
 
-    FireParticleSystem(PApplet parent, Vector3D source, Vector3D shootDir, int generationRate, int lifespan, int MAX_PARTICLES) {
+    FireParticleSystem(PApplet parent, Vector3D sourcePos, Vector3D shootDir, int generationRate, int lifespan, int MAX_PARTICLES) {
         this.parent = parent;
         this.MAX_PARTICLES = MAX_PARTICLES;
         this.generationRate = generationRate;
-        this.source = source;
+        this.sourcePos = sourcePos;
         this.shootDir = shootDir;
         this.lifespan = lifespan;
     }
@@ -38,7 +38,7 @@ public class FireParticleSystem {
             Vector3D acc = new Vector3D(0, -20, 0);
             particles.put(newParticleId, new FireParticle(
                     parent,
-                    source,
+                    sourcePos,
                     vel,
                     acc,
                     lifespan
