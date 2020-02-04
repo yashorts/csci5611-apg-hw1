@@ -21,8 +21,8 @@ public class FlameThrower extends PApplet {
         surface.setTitle("Processing");
         noStroke();
         cam = new QueasyCam(this);
-        cam.sensitivity = 0.5f;
-        cam.speed = 1f;
+        cam.sensitivity = 1f;
+        cam.speed = 2f;
         ground = new Ground(this,
                 new Vector3D(0, 0, 0), new Vector3D(0, 0, 1), new Vector3D(1, 0, 0),
                 2048, 2048,

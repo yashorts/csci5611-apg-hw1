@@ -32,7 +32,7 @@ public class FireParticleSystem {
             if (particles.size() >= MAX_PARTICLES) {
                 break;
             }
-            Vector3D generalVelocity = shootDir.scale(100);
+            Vector3D generalVelocity = shootDir.scale(70);
             Vector3D coneRandomness = new Vector3D(0, parent.random(-1, 1), 0).scale(20);
             Vector3D vel = generalVelocity.plus(coneRandomness);
             Vector3D acc = new Vector3D(0, -20, 0);
