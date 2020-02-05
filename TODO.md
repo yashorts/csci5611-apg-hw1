@@ -43,8 +43,7 @@
 # Additional Features
 - [x] (5) Write your own vector library (dot & cross prod, addition, multiplication, etc.) 
 - [ ] (10) Continuous user interaction with the system (mouse-based for full credit) 
-    - [ ] click on ground to produce tree
-    - [ ] translate and rotate the flame thrower in 2d
+    - [ ] weld the flame thrower to camera
 - [ ] (10) Continuous Collision Detection (must show a visible difference) 
 - [ ] (10) Simulation-driven audio (only partial points for short, simple sounds) 
 - [ ] (10) Multiple interacting particle systems (submit a separate video) 

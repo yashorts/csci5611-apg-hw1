@@ -11,7 +11,8 @@ public class FireParticleSystem {
     Vec3 origin;
     Vec3 aim;
     // flow
-    final int generationRate;
+    final int maxGenerationRate;
+    int generationRate;
     final int lifespan;
     final int maxParticles;
     Map<Long, FireParticle> particles = new HashMap<>();
@@ -32,7 +33,8 @@ public class FireParticleSystem {
         this.parent = parent;
         this.origin = origin;
         this.aim = aim;
-        this.generationRate = generationRate;
+        this.maxGenerationRate = generationRate;
+        this.generationRate = 0;
         this.lifespan = lifespan;
         this.maxParticles = maxParticles;
         Collections.shuffle(textureFiles);
@@ -46,7 +48,7 @@ public class FireParticleSystem {
                 break;
             }
             Vec3 sphereRandomness = Vec3.uniformRandomInUnitSphere();
-            Vec3 generalVelocity = aim.scale(50);
+            Vec3 generalVelocity = aim.scale(50f * generationRate / maxGenerationRate);
             Vec3 acc = Vec3.of(0, 0, 0);
             particles.put(newParticleId, new FireParticle(
                     parent,
@@ -76,6 +78,14 @@ public class FireParticleSystem {
         for (Map.Entry<Long, FireParticle> p : particles.entrySet()) {
             p.getValue().render();
         }
+    }
+
+    public void incrementGenRate(int dg) {
+        generationRate = Math.min(generationRate + dg, maxGenerationRate);
+    }
+
+    public void decrementGenRate(int dg) {
+        generationRate = Math.max(generationRate - dg, 0);
     }
 
 }

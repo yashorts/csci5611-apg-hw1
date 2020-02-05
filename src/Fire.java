@@ -1,5 +1,6 @@
 import processing.core.PApplet;
 import processing.core.PShape;
+import processing.event.KeyEvent;
 import queasycam.QueasyCam;
 
 public class Fire extends PApplet {
@@ -10,12 +11,10 @@ public class Fire extends PApplet {
     PShape tree;
     FlameThrower flameThrower;
 
-    @Override
     public void settings() {
         size(WIDTH, HEIGHT, P3D);
     }
 
-    @Override
     public void setup() {
         surface.setTitle("Processing");
         noStroke();
@@ -38,7 +37,6 @@ public class Fire extends PApplet {
                 100, 200, 35000, "LongPistol.obj");
     }
 
-    @Override
     public void draw() {
         if (keyPressed && keyCode == DOWN) {
             flameThrower.moveOrigin(Vec3.of(0, 0, 1));
@@ -76,7 +74,17 @@ public class Fire extends PApplet {
                 + " Phy: " + round(physicsEnd - frameStart) + "ms"
                 + " Ren: " + round(frameEnd - physicsEnd) + "ms"
                 + " #par: " + flameThrower.fireParticleSystem.particles.size()
+                + " #genrate: " + flameThrower.fireParticleSystem.generationRate
         );
+    }
+
+    public void keyPressed(KeyEvent event){
+        if (event.getKey() == '+') {
+            flameThrower.fireParticleSystem.incrementGenRate(10);
+        }
+        if (event.getKey() == '-') {
+            flameThrower.fireParticleSystem.decrementGenRate(10);
+        }
     }
 
     static public void main(String[] passedArgs) {
