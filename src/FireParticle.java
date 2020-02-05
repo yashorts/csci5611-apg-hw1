@@ -72,7 +72,7 @@ public class FireParticle {
                 position = position.plus(velocity.scale(dt)).plus(Vec3.uniformRandomInUnitSphere().scale(0.1f));
                 velocity = velocity.plus(acceleration.scale(dt));
                 color = gradientColor();
-                if (parent.random(1) < (0.54 - remainingLifespan / totalLifeSpan)) {
+                if (parent.random(1) < (0.5 - remainingLifespan / totalLifeSpan)) {
                     changeStageToSmoke();
                 } else {
 //                    float theta = parent.random(2 * parent.PI);
@@ -127,7 +127,7 @@ public class FireParticle {
                 case JET:
                     renderQuad(0.4f * (1.5f - remainingLifespan / totalLifeSpan) * Math.min(acceleration.abs(), 1), fireTexture, 255);
                 case BALL:
-                    renderQuad(1f * (1 - remainingLifespan / totalLifeSpan) * Math.min(acceleration.abs(), 1), fireTexture, 255);
+                    renderQuad(1f * (1.2f - remainingLifespan / totalLifeSpan) * Math.min(acceleration.abs(), 1), fireTexture, 255);
                     break;
                 case SMOKE:
                     renderQuad(1.5f * (1.1f - remainingLifespan / totalLifeSpan), smokeTexture, 0);
@@ -172,12 +172,12 @@ public class FireParticle {
         parent.pushMatrix();
 
         parent.fill(color.x, color.y, color.z);
-        parent.tint(255, alpha);
+        parent.tint(255, 0);
         parent.noStroke();
         parent.translate(position.x, position.y, position.z);
         parent.rotate(remainingLifespan / totalLifeSpan * parent.PI * 5, 0, 1, 0);
         parent.beginShape();
-        if (parent.random(1) < 0.01) {
+        if (parent.random(1) < 0) {
             parent.texture(texture);
             parent.vertex(-sideLen, -sideLen, 0, 0, 0);
             parent.vertex(sideLen, -sideLen, 0, texture.width, 0);
@@ -192,6 +192,8 @@ public class FireParticle {
         parent.endShape();
 
         parent.popMatrix();
+
+        parent.tint(255, 255);
     }
 
     private void renderPoint() {
