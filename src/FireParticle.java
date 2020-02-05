@@ -115,35 +115,22 @@ public class FireParticle {
     }
 
     public void render() {
-        switch (stage) {
-            case JET:
-                if (shape == Shape.BOX) {
+        if (shape == Shape.BOX) {
+            switch (stage) {
+                case JET:
                     renderQuad(0.4f * (1.5f - remainingLifespan / totalLifeSpan) * Math.min(acceleration.abs(), 1));
-                } else {
-                    renderPoint();
-                }
-                break;
-            case BALL:
-                if (shape == Shape.BOX) {
+                case BALL:
                     renderBox(1f * (1 - remainingLifespan / totalLifeSpan) * Math.min(acceleration.abs(), 1));
-                } else {
-                    renderPoint();
-                }
-                break;
-            case SMOG:
-                if (shape == Shape.BOX) {
+                    break;
+                case SMOG:
                     renderBox(0.75f * (1 - remainingLifespan / totalLifeSpan) * Math.min(acceleration.abs(), 1));
-                } else {
-                    renderPoint();
-                }
-                break;
-            default:
-                if (shape == Shape.BOX) {
+                    break;
+                default:
                     renderQuad(0.5f * (1.5f - remainingLifespan / totalLifeSpan) * Math.min(acceleration.abs(), 1));
-                } else {
-                    renderPoint();
-                }
-                break;
+                    break;
+            }
+        } else {
+            renderPoint();
         }
     }
 
@@ -155,8 +142,8 @@ public class FireParticle {
         // smog particles come out of jet and slow down due to high air resistance
         velocity = velocity.scale(parent.random(1));
         // their lifespan is increased to show their effects
-        remainingLifespan += 100;
-        totalLifeSpan += 100;
+        remainingLifespan += 70;
+        totalLifeSpan += 70;
         stage = Stage.SMOG;
         if (parent.random(1) < 0.1) {
             shape = Shape.BOX;
