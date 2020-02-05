@@ -25,7 +25,7 @@ public class Fire extends PApplet {
         // ground
         ground = new Ground(this,
                 Vec3.of(0, 0, 0), Vec3.of(0, 0, 1), Vec3.of(1, 0, 0),
-                1024, 1024,
+                2048, 2048,
                 loadImage("grass.jpg"));
         // tree
         tree = loadShape("BirchTree_Autumn_1.obj");
@@ -53,8 +53,7 @@ public class Fire extends PApplet {
 //        flameThrower.setOrigin(Vector3D.of(cam.position.x, cam.position.y, cam.position.z));
 
         // background
-        background(0);
-        lights();
+        background(85, 156, 185);
         // ground and tree
         pushMatrix();
         translate(300, 100, -40);

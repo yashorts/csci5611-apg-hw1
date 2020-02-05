@@ -108,7 +108,7 @@ public class FireParticle {
                 }
                 velocity.x += acceleration.x * dt;
                 velocity.z += acceleration.z * dt;
-                color = Vec3.of(parent.random(100, 200 + 55 * (1 - remainingLifespan / totalLifeSpan)));
+                color = Vec3.of(parent.random(0, 20 + 55 * (1 - remainingLifespan / totalLifeSpan)));
                 break;
             case DEAD:
                 return;
@@ -130,7 +130,7 @@ public class FireParticle {
                     renderQuad(1f * (1.2f - remainingLifespan / totalLifeSpan) * Math.min(acceleration.abs(), 1), fireTexture, 255);
                     break;
                 case SMOKE:
-                    renderQuad(1.4f * (1.1f - remainingLifespan / totalLifeSpan), smokeTexture, 0);
+                    renderQuad(1.4f * (1.5f - remainingLifespan / totalLifeSpan), smokeTexture, 150);
                     break;
                 default:
                     renderQuad(0.5f * (1.5f - remainingLifespan / totalLifeSpan) * Math.min(acceleration.abs(), 1), fireTexture, 255);
@@ -154,7 +154,7 @@ public class FireParticle {
         remainingLifespan = 100;
         totalLifeSpan = 100;
         stage = Stage.SMOKE;
-        if (parent.random(1) < 0.1) {
+        if (parent.random(1) < 0.5) {
             shape = Shape.BOX;
         }
     }
@@ -170,20 +170,20 @@ public class FireParticle {
 
     private void renderQuad(float sideLen, PImage texture, float alpha) {
         parent.pushMatrix();
-
-        parent.fill(color.x, color.y, color.z);
-        parent.tint(255);
-        parent.noStroke();
         parent.translate(position.x, position.y, position.z);
         parent.rotate(remainingLifespan / totalLifeSpan * parent.PI * 5, 0, 1, 0);
+
+        parent.noStroke();
         parent.beginShape();
         if (parent.random(1) < 0) {
+            parent.fill(color.x, color.y, color.z);
             parent.texture(texture);
             parent.vertex(-sideLen, -sideLen, 0, 0, 0);
             parent.vertex(sideLen, -sideLen, 0, texture.width, 0);
             parent.vertex(sideLen, sideLen, 0, texture.width, texture.height);
             parent.vertex(-sideLen, sideLen, 0, 0, texture.height);
         } else {
+            parent.fill(color.x, color.y, color.z, alpha);
             parent.vertex(-sideLen, -sideLen, 0);
             parent.vertex(sideLen, -sideLen, 0);
             parent.vertex(sideLen, sideLen, 0);
@@ -192,8 +192,6 @@ public class FireParticle {
         parent.endShape();
 
         parent.popMatrix();
-
-        parent.tint(255, 255);
     }
 
     private void renderPoint() {

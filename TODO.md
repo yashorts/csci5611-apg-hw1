@@ -29,9 +29,9 @@
     - [ ] collision detection, fired tree, smoke from tree, tree disappear
  
 # Rendering 
-- [ ] (5) Tails on particles and sparks 
-- [ ] (5) Translucent particles 
-- [ ] (5) Textured sprites for particles 
+- [ ] (5) Tails on particles and sparks
+- [ ] (5) Translucent particles
+- [ ] (5) Textured sprites for particles
  
 # Performance Benchmarking (cumulative) 
 ## Measure the speed of the faster of the two required simulations. Feel free test on a fast  computer such as the ones in the basement graphics lab (KH 1-254).  
@@ -43,7 +43,6 @@
 # Additional Features
 - [x] (5) Write your own vector library (dot & cross prod, addition, multiplication, etc.) 
 - [ ] (10) Continuous user interaction with the system (mouse-based for full credit) 
-    - [ ] weld the flame thrower to camera
 - [ ] (10) Continuous Collision Detection (must show a visible difference) 
 - [ ] (10) Simulation-driven audio (only partial points for short, simple sounds) 
 - [ ] (10) Multiple interacting particle systems (submit a separate video) 
