@@ -34,7 +34,7 @@ public class Fire extends PApplet {
         // flame thrower
         flameThrower = new FlameThrower(this,
                 Vec3.of(300, 0, 150), Vec3.of(0, 0, -1),
-                100, 200, 35000, "LongPistol.obj");
+                100, 200, 20100, "LongPistol.obj");
     }
 
     public void draw() {

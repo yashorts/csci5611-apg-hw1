@@ -33,7 +33,7 @@ public class FireParticleSystem {
         this.origin = origin;
         this.aim = aim;
         this.maxGenerationRate = generationRate;
-        this.generationRate = 0;
+        this.generationRate = generationRate;
         this.lifespan = lifespan;
         this.maxParticles = maxParticles;
         Collections.shuffle(textureFiles);
