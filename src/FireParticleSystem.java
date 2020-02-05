@@ -2,6 +2,8 @@ import processing.core.PApplet;
 import processing.core.PImage;
 
 import java.util.*;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 
 public class FireParticleSystem {
@@ -75,10 +77,7 @@ public class FireParticleSystem {
     }
 
     public void render() {
-        for (int i = 0; i < particles.size(); ++i) {
-            FireParticle p = particles.get(i);
-            p.render();
-        }
+        IntStream.range(0, particles.size()).forEach(i -> particles.get(i).render());
     }
 
     public void incrementGenRate(int dg) {
