@@ -15,9 +15,8 @@ public class FireParticleSystem {
     int generationRate;
     final int lifespan;
     final int maxParticles;
-    Map<Long, FireParticle> particles = new HashMap<>();
-    private List<Long> deadParticleIndices = new ArrayList<>();
-    private Long newParticleId = 0L;
+    List<FireParticle> particles = new ArrayList<>();
+    private List<Integer> deadParticleIndices = new ArrayList<>();
     // texture
     static List<String> textureFiles = new ArrayList<>();
     PImage texture;
@@ -50,7 +49,7 @@ public class FireParticleSystem {
             Vec3 sphereRandomness = Vec3.uniformRandomInUnitSphere();
             Vec3 generalVelocity = aim.scale(50f * generationRate / maxGenerationRate);
             Vec3 acc = Vec3.of(0, 0, 0);
-            particles.put(newParticleId, new FireParticle(
+            particles.add(new FireParticle(
                     parent,
                     origin.plus(sphereRandomness),
                     generalVelocity,
@@ -58,25 +57,27 @@ public class FireParticleSystem {
                     lifespan,
                     texture
             ));
-            newParticleId++;
         }
         // remove dead particles, update states of live particles
         deadParticleIndices.clear();
-        for (Map.Entry<Long, FireParticle> p : particles.entrySet()) {
-            if (p.getValue().stage == Stage.DEAD) {
-                deadParticleIndices.add(p.getKey());
+        for (int i = 0; i < particles.size(); ++i) {
+            FireParticle p = particles.get(i);
+            if (p.stage == Stage.DEAD) {
+                deadParticleIndices.add(i);
                 continue;
             }
-            p.getValue().physics(dt);
+            p.physics(dt);
         }
-        for (long deadParticlesIndex : deadParticleIndices) {
-            particles.remove(deadParticlesIndex);
+        for (int i = deadParticleIndices.size() - 1; i >= 0; --i) {
+            int index = deadParticleIndices.get(i);
+            particles.remove(index);
         }
     }
 
     public void render() {
-        for (Map.Entry<Long, FireParticle> p : particles.entrySet()) {
-            p.getValue().render();
+        for (int i = 0; i < particles.size(); ++i) {
+            FireParticle p = particles.get(i);
+            p.render();
         }
     }
 
