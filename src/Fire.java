@@ -56,7 +56,7 @@ public class Fire extends PApplet {
         background(0);
         // ground and tree
         pushMatrix();
-        translate(300, 100, 0);
+        translate(300, 100, -40);
         ground.render();
         shape(tree);
         popMatrix();

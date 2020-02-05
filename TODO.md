@@ -12,9 +12,10 @@
     - [x] spread of fireball, rotating sprites in fireball, black quads in fireball
     - [x] color change with lifespan for all particles
     - [x] point particles, spherical init position and acc,  slight upward acc
-    - [ ] better billowing motion
+    - [x] billowing motion
     - [ ] spark and trails
     - [ ] intelligent creation of particles
+    - [ ] polish motion
 - [ ] (30) Water simulation
     - [ ] more squished particles
     - [ ] color changes

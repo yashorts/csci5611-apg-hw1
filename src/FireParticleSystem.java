@@ -3,7 +3,6 @@ import processing.core.PImage;
 
 import java.util.*;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 
 public class FireParticleSystem {
@@ -20,15 +19,8 @@ public class FireParticleSystem {
     List<FireParticle> particles = new ArrayList<>();
     private List<Integer> deadParticleIndices = new ArrayList<>();
     // texture
-    static List<String> textureFiles = new ArrayList<>();
-    PImage texture;
-
-    static {
-        textureFiles.add("fire-yellow-1.jpg");
-        textureFiles.add("fire-red-4.jpg");
-        textureFiles.add("fire-red-5.jpg");
-        textureFiles.add("fire-red-6.png");
-    }
+    List<PImage> fireTextures = new ArrayList<>();
+    List<PImage> smokeTextures = new ArrayList<>();
 
     FireParticleSystem(PApplet parent, Vec3 origin, Vec3 aim, int generationRate, int lifespan, int maxParticles) {
         this.parent = parent;
@@ -38,8 +30,13 @@ public class FireParticleSystem {
         this.generationRate = generationRate;
         this.lifespan = lifespan;
         this.maxParticles = maxParticles;
-        Collections.shuffle(textureFiles);
-        this.texture = parent.loadImage(textureFiles.get(0));
+        fireTextures.add(parent.loadImage("fire-yellow-1.jpg"));
+        fireTextures.add(parent.loadImage("fire-red-4.jpg"));
+        fireTextures.add(parent.loadImage("fire-red-5.jpg"));
+        fireTextures.add(parent.loadImage("fire-red-6.png"));
+        smokeTextures.add(parent.loadImage("smoke1.jpg"));
+        smokeTextures.add(parent.loadImage("smoke2.jpg"));
+        smokeTextures.add(parent.loadImage("smoke3.png"));
     }
 
     public void physics(float dt) {
@@ -51,13 +48,16 @@ public class FireParticleSystem {
             Vec3 sphereRandomness = Vec3.uniformRandomInUnitSphere();
             Vec3 generalVelocity = aim.scale(50f * generationRate / maxGenerationRate);
             Vec3 acc = Vec3.of(0, 0, 0);
+            Collections.shuffle(fireTextures);
+            Collections.shuffle(smokeTextures);
             particles.add(new FireParticle(
                     parent,
                     origin.plus(sphereRandomness),
                     generalVelocity,
                     acc.plus(sphereRandomness.scale(2)),
                     lifespan,
-                    texture
+                    fireTextures.get(0),
+                    smokeTextures.get(0)
             ));
         }
         // remove dead particles, update states of live particles

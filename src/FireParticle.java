@@ -2,7 +2,7 @@ import processing.core.PApplet;
 import processing.core.PImage;
 
 enum Stage {
-    INIT, JET, JET_TO_BALL_OR_SMOG, BALL, SMOG, SMOKE, DEAD
+    INIT, JET, JET_TO_BALL_OR_SMOKE, BALL, SMOKE, DEAD
 }
 
 enum Shape {
@@ -14,25 +14,29 @@ public class FireParticle {
     Vec3 position;
     Vec3 velocity;
     Vec3 initialShootDir;
+    Vec3 initialVelocity;
     Vec3 acceleration;
     Vec3 color;
     float totalLifeSpan;
     int remainingLifespan;
     Stage stage;
     Shape shape;
-    final PImage texture;
+    final PImage fireTexture;
+    final PImage smokeTexture;
 
-    FireParticle(PApplet parent, Vec3 position, Vec3 velocity, Vec3 acceleration, int remainingLifespan, PImage texture) {
+    FireParticle(PApplet parent, Vec3 position, Vec3 velocity, Vec3 acceleration, int remainingLifespan, PImage fireTexture, PImage smokeTexture) {
         this.parent = parent;
         this.position = position;
         this.velocity = velocity;
+        this.initialVelocity = velocity;
         this.initialShootDir = velocity.unit();
         this.acceleration = acceleration;
         this.stage = Stage.INIT;
         this.shape = Shape.POINT;
         this.remainingLifespan = remainingLifespan;
         this.totalLifeSpan = remainingLifespan;
-        this.texture = texture;
+        this.fireTexture = fireTexture;
+        this.smokeTexture = smokeTexture;
         this.color = Vec3.of(0, 255, 0);
     }
 
@@ -55,21 +59,21 @@ public class FireParticle {
                     acceleration = acceleration.plus(initialShootDir.scale(50));
                 }
                 color = gradientColor();
-                // very small portion of initial particles turning into smog
+                // very small portion of initial particles turning into smoke
                 if (parent.random(1) < 0.0001) {
-                    changeStageToSmog();
+                    changeStageToSmoke();
                 }
                 // jet stage ends after some lifespan
                 if (remainingLifespan / totalLifeSpan <= 0.6) {
-                    stage = Stage.JET_TO_BALL_OR_SMOG;
+                    stage = Stage.JET_TO_BALL_OR_SMOKE;
                 }
                 break;
-            case JET_TO_BALL_OR_SMOG:
+            case JET_TO_BALL_OR_SMOKE:
                 position = position.plus(velocity.scale(dt)).plus(Vec3.uniformRandomInUnitSphere().scale(0.1f));
                 velocity = velocity.plus(acceleration.scale(dt));
                 color = gradientColor();
                 if (parent.random(1) < (0.54 - remainingLifespan / totalLifeSpan)) {
-                    changeStageToSmog();
+                    changeStageToSmoke();
                 } else {
 //                    float theta = parent.random(2 * parent.PI);
 //                    float radius = 0.5f * (float) Math.sqrt(parent.random(1));
@@ -90,18 +94,21 @@ public class FireParticle {
                 } else {
                     color = gradientColor();
                 }
-                // small portion of ball particles turning into smog
-                if (parent.random(1) < 0.002) {
-                    changeStageToSmog();
+                // small portion of ball particles turning into smoke
+                if (parent.random(1) < 0.02 && remainingLifespan / totalLifeSpan <= 0.5) {
+                    changeStageToSmoke();
                 }
                 break;
-            case SMOG:
-                position = position.plus(velocity.scale(dt)).plus(Vec3.uniformRandomInUnitSphere().scale((float) Math.pow((2 * (1 - remainingLifespan / totalLifeSpan)), 3)));
-                velocity = velocity.plus(acceleration.scale(dt));
-                acceleration = acceleration.plus(Vec3.of(parent.random(-1, 1), parent.random(-5, 2), 0));
-                color = Vec3.of(parent.random(100, 200 + 55 * (1 - remainingLifespan / totalLifeSpan)));
-                break;
             case SMOKE:
+                position = position.plus(velocity.scale(dt)).plus(Vec3.uniformRandomInUnitSphere());
+                if (remainingLifespan / totalLifeSpan >= 0.3 && remainingLifespan / totalLifeSpan <= 0.4) {
+                    velocity.y = -200 * parent.random(1f / (1.2f - remainingLifespan / totalLifeSpan));
+                } else {
+                    velocity.y = -100 * parent.random(1f / (1.3f - remainingLifespan / totalLifeSpan));
+                }
+                velocity.x += acceleration.x * dt;
+                velocity.z += acceleration.z * dt;
+                color = Vec3.of(parent.random(100, 200 + 55 * (1 - remainingLifespan / totalLifeSpan)));
                 break;
             case DEAD:
                 return;
@@ -118,15 +125,15 @@ public class FireParticle {
         if (shape == Shape.BOX) {
             switch (stage) {
                 case JET:
-                    renderQuad(0.4f * (1.5f - remainingLifespan / totalLifeSpan) * Math.min(acceleration.abs(), 1));
+                    renderQuad(0.4f * (1.5f - remainingLifespan / totalLifeSpan) * Math.min(acceleration.abs(), 1), fireTexture, 255);
                 case BALL:
-                    renderBox(1f * (1 - remainingLifespan / totalLifeSpan) * Math.min(acceleration.abs(), 1));
+                    renderQuad(1f * (1 - remainingLifespan / totalLifeSpan) * Math.min(acceleration.abs(), 1), fireTexture, 255);
                     break;
-                case SMOG:
-                    renderBox(0.75f * (1 - remainingLifespan / totalLifeSpan) * Math.min(acceleration.abs(), 1));
+                case SMOKE:
+                    renderQuad(1.5f * (1.1f - remainingLifespan / totalLifeSpan), smokeTexture, 0);
                     break;
                 default:
-                    renderQuad(0.5f * (1.5f - remainingLifespan / totalLifeSpan) * Math.min(acceleration.abs(), 1));
+                    renderQuad(0.5f * (1.5f - remainingLifespan / totalLifeSpan) * Math.min(acceleration.abs(), 1), fireTexture, 255);
                     break;
             }
         } else {
@@ -138,13 +145,15 @@ public class FireParticle {
         return Vec3.of(255, 255 * (remainingLifespan / totalLifeSpan), 255 * Math.max(2 * remainingLifespan / totalLifeSpan - 1, 0));
     }
 
-    private void changeStageToSmog() {
-        // smog particles come out of jet and slow down due to high air resistance
-        velocity = velocity.scale(parent.random(1));
+    private void changeStageToSmoke() {
+        // smoke particles come out of jet and slow down due to high air resistance
+        velocity = velocity.scale(parent.random(0.2f, 1)).minus(initialVelocity.scale(1.4f - remainingLifespan / totalLifeSpan));
+        acceleration = Vec3.of(100 * parent.random(-1, 1), 0, parent.random(-1, 1));
+        velocity = Vec3.of(-acceleration.x, velocity.y, -acceleration.z);
         // their lifespan is increased to show their effects
-        remainingLifespan += 70;
-        totalLifeSpan += 70;
-        stage = Stage.SMOG;
+        remainingLifespan = 100;
+        totalLifeSpan = 100;
+        stage = Stage.SMOKE;
         if (parent.random(1) < 0.1) {
             shape = Shape.BOX;
         }
@@ -152,26 +161,34 @@ public class FireParticle {
 
     private void renderBox(float size) {
         parent.fill(color.x, color.y, color.z);
-        parent.stroke(color.x, color.y, color.z);
+        parent.noStroke();
         parent.pushMatrix();
         parent.translate(position.x, position.y, position.z);
         parent.box(size);
         parent.popMatrix();
     }
 
-    private void renderQuad(float sideLen) {
-        parent.fill(color.x, color.y, color.z);
-        parent.stroke(color.x, color.y, color.z);
+    private void renderQuad(float sideLen, PImage texture, float alpha) {
         parent.pushMatrix();
 
+        parent.fill(color.x, color.y, color.z);
+        parent.tint(255, alpha);
+        parent.noStroke();
         parent.translate(position.x, position.y, position.z);
-        parent.rotate(remainingLifespan / totalLifeSpan * parent.PI * 20, 0, 1, 0);
+        parent.rotate(remainingLifespan / totalLifeSpan * parent.PI * 5, 0, 1, 0);
         parent.beginShape();
-        parent.texture(texture);
-        parent.vertex(-sideLen, -sideLen, 0, 0, 0);
-        parent.vertex(sideLen, -sideLen, 0, texture.width, 0);
-        parent.vertex(sideLen, sideLen, 0, texture.width, texture.height);
-        parent.vertex(-sideLen, sideLen, 0, 0, texture.height);
+        if (parent.random(1) < 0.01) {
+            parent.texture(texture);
+            parent.vertex(-sideLen, -sideLen, 0, 0, 0);
+            parent.vertex(sideLen, -sideLen, 0, texture.width, 0);
+            parent.vertex(sideLen, sideLen, 0, texture.width, texture.height);
+            parent.vertex(-sideLen, sideLen, 0, 0, texture.height);
+        } else {
+            parent.vertex(-sideLen, -sideLen, 0);
+            parent.vertex(sideLen, -sideLen, 0);
+            parent.vertex(sideLen, sideLen, 0);
+            parent.vertex(-sideLen, sideLen, 0);
+        }
         parent.endShape();
 
         parent.popMatrix();
