@@ -22,7 +22,7 @@ public class FlameThrower {
 
     public void render() {
         parent.pushMatrix();
-        parent.translate(fireParticleSystem.origin.x, fireParticleSystem.origin.y + 10, fireParticleSystem.origin.z + 100);
+        parent.translate(fireParticleSystem.origin.x, fireParticleSystem.origin.y + 10, fireParticleSystem.origin.z + 110);
         parent.shape(object);
         parent.popMatrix();
         fireParticleSystem.render();

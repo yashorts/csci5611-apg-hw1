@@ -2,7 +2,14 @@
 - [x] checkin
 
 # Central
-- [x] Decide simulation contexts (waterfall & flamethrower)
+- [ ] (30) Water simulation
+    - [ ] more squished particles
+    - [ ] color changes
+    - [ ] change water direction using
+    - [ ] interact with objects
+    - [ ] context
+    - [ ] speed
+- [x] Decide simulation contexts (water hose & flamethrower)
 - [ ] (30) Fire simulation
     - [x] particle with lifespan, stages, generation rate
     - [x] some highly accelerated particles in jet, some randomized jerks in jet
@@ -13,16 +20,8 @@
     - [x] color change with lifespan for all particles
     - [x] point particles, spherical init position and acc,  slight upward acc
     - [x] billowing motion
-    - [ ] spark and trails
     - [ ] intelligent creation of particles
     - [ ] polish motion
-- [ ] (30) Water simulation
-    - [ ] more squished particles
-    - [ ] color changes
-    - [ ] change water direction using
-    - [ ] interact with objects
-    - [ ] context
-    - [ ] speed
  
 # Other Required Features 
 - [x] (5) 3D user-controlled camera (must allow rotation and translation) 
@@ -30,9 +29,9 @@
     - [ ] collision detection, fired tree, smoke from tree, tree disappear
  
 # Rendering 
-- [ ] (5) Tails on particles 
+- [ ] (5) Tails on particles and sparks 
 - [ ] (5) Translucent particles 
-- [x] (5) Textured sprites for particles 
+- [ ] (5) Textured sprites for particles 
  
 # Performance Benchmarking (cumulative) 
 ## Measure the speed of the faster of the two required simulations. Feel free test on a fast  computer such as the ones in the basement graphics lab (KH 1-254).  

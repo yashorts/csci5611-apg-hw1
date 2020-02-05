@@ -130,7 +130,7 @@ public class FireParticle {
                     renderQuad(1f * (1.2f - remainingLifespan / totalLifeSpan) * Math.min(acceleration.abs(), 1), fireTexture, 255);
                     break;
                 case SMOKE:
-                    renderQuad(1.5f * (1.1f - remainingLifespan / totalLifeSpan), smokeTexture, 0);
+                    renderQuad(1.4f * (1.1f - remainingLifespan / totalLifeSpan), smokeTexture, 0);
                     break;
                 default:
                     renderQuad(0.5f * (1.5f - remainingLifespan / totalLifeSpan) * Math.min(acceleration.abs(), 1), fireTexture, 255);
@@ -147,9 +147,9 @@ public class FireParticle {
 
     private void changeStageToSmoke() {
         // smoke particles come out of jet and slow down due to high air resistance
-        velocity = velocity.scale(parent.random(0.2f, 1)).minus(initialVelocity.scale(1.4f - remainingLifespan / totalLifeSpan));
+        velocity = velocity.scale(parent.random(0.2f, 1)).plus(initialShootDir.scale(2.5f * remainingLifespan / totalLifeSpan));
         acceleration = Vec3.of(100 * parent.random(-1, 1), 0, parent.random(-1, 1));
-        velocity = Vec3.of(-acceleration.x, velocity.y, -acceleration.z);
+        velocity.x = -acceleration.x;
         // their lifespan is increased to show their effects
         remainingLifespan = 100;
         totalLifeSpan = 100;
@@ -172,7 +172,7 @@ public class FireParticle {
         parent.pushMatrix();
 
         parent.fill(color.x, color.y, color.z);
-        parent.tint(255, 0);
+        parent.tint(255);
         parent.noStroke();
         parent.translate(position.x, position.y, position.z);
         parent.rotate(remainingLifespan / totalLifeSpan * parent.PI * 5, 0, 1, 0);

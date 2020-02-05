@@ -39,16 +39,16 @@ public class Fire extends PApplet {
 
     public void draw() {
         if (keyPressed && keyCode == DOWN) {
-            flameThrower.moveOrigin(Vec3.of(0, 0, 1));
+            flameThrower.moveOrigin(Vec3.of(0, 0, 0.5));
         }
         if (keyPressed && keyCode == UP) {
-            flameThrower.moveOrigin(Vec3.of(0, 0, -1));
+            flameThrower.moveOrigin(Vec3.of(0, 0, -0.5));
         }
         if (keyPressed && keyCode == RIGHT) {
-            flameThrower.moveOrigin(Vec3.of(1, 0, 0));
+            flameThrower.moveOrigin(Vec3.of(0.5, 0, 0));
         }
         if (keyPressed && keyCode == LEFT) {
-            flameThrower.moveOrigin(Vec3.of(-1, 0, 0));
+            flameThrower.moveOrigin(Vec3.of(-0.5, 0, 0));
         }
 //        flameThrower.setOrigin(Vector3D.of(cam.position.x, cam.position.y, cam.position.z));
 
