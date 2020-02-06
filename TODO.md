@@ -28,7 +28,6 @@
 - [ ] (5) Fire simulation
     - [ ] polish motion
     - [ ] intelligent creation of particles
-- [ ] (5) Art contest
 - [ ] (30) Water simulation
     - [ ] more squished particles
     - [ ] color changes
@@ -36,6 +35,9 @@
     - [ ] interact with objects
     - [ ] context
     - [ ] speed
+- [ ] (5) Art contest
+- [ ] make videos and images
+- [ ] write web page
 
 # todo
 - [ ] (10) Benchmark-4: 100,000 particles simulated and rendered at over 30 FPS 
