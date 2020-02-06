@@ -1,5 +1,4 @@
 import processing.core.PApplet;
-import processing.core.PImage;
 import processing.core.PShape;
 import processing.event.KeyEvent;
 import queasycam.QueasyCam;
@@ -87,6 +86,13 @@ public class Fire extends PApplet {
         for (Rock rock : rocks) {
             rock.render();
         }
+        popMatrix();
+
+        // sphere
+        pushMatrix();
+        fill(100, 20, 120);
+        translate(cam.position.x + 100, cam.position.y, cam.position.z);
+        sphere(5);
         popMatrix();
 
         int frameStart = millis();
