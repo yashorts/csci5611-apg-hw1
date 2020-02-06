@@ -9,8 +9,9 @@ public class FlameThrower {
     public FlameThrower(PApplet parent, Vec3 origin, Vec3 aim, int generationRate, int lifeSpan, int maxParticles, String objFile) {
         this.parent = parent;
         this.object = parent.loadShape(objFile);
-        object.scale(12);
-        object.rotate(parent.PI, 0, 0, 1);
+        object.scale(100);
+        object.rotate(parent.PI / 2, 1, 0, 0);
+        object.rotate(parent.PI * 0.54f, 0, 1, 0);
         object.setFill(parent.color(0, 0, 255));
 
         fireParticleSystem = new FireParticleSystem(parent, origin, aim, generationRate, lifeSpan, maxParticles);
@@ -22,7 +23,7 @@ public class FlameThrower {
 
     public void render() {
         parent.pushMatrix();
-        parent.translate(fireParticleSystem.origin.x, fireParticleSystem.origin.y + 10, fireParticleSystem.origin.z + 110);
+        parent.translate(fireParticleSystem.origin.x + 14, fireParticleSystem.origin.y + 95, fireParticleSystem.origin.z + 55);
         parent.shape(object);
         parent.popMatrix();
         fireParticleSystem.render();

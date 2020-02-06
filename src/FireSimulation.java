@@ -1,5 +1,4 @@
 import processing.core.PApplet;
-import processing.core.PShape;
 import processing.core.PVector;
 import processing.event.KeyEvent;
 import queasycam.QueasyCam;
@@ -25,7 +24,7 @@ class CollisionSphere {
     public void render() {
         parent.pushMatrix();
         parent.noStroke();
-        parent.fill(100, 20, 120);
+        parent.fill(255);
         parent.translate(center.x, center.y, center.z);
         parent.sphere(radius);
         parent.popMatrix();
@@ -66,10 +65,10 @@ public class FireSimulation extends PApplet {
                 Vec3.of(200, 0, 50),
                 Vec3.of(0, 0, -1),
                 100, 200, 20100,
-                "SniperRifle.obj");
+                "14074_WWII_Soldier_with_Flamethrower_v1_l1.obj");
         // collision sphere
         PVector aim = cam.getAim(200);
-        collisionSphere = new CollisionSphere(this, Vec3.of(aim.x, aim.y, aim.z), 20);
+        collisionSphere = new CollisionSphere(this, Vec3.of(aim.x, aim.y, aim.z), 5);
     }
 
     public void draw() {
