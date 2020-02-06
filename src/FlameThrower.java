@@ -12,7 +12,6 @@ public class FlameThrower {
         object.scale(100);
         object.rotate(parent.PI / 2, 1, 0, 0);
         object.rotate(parent.PI * 0.54f, 0, 1, 0);
-        object.setFill(parent.color(0, 0, 255));
 
         fireParticleSystem = new FireParticleSystem(parent, origin, aim, generationRate, lifeSpan, maxParticles);
     }
