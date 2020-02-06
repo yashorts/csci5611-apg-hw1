@@ -22,12 +22,12 @@ public class FireParticleSystem {
     List<PImage> fireTextures = new ArrayList<>();
     List<PImage> smokeTextures = new ArrayList<>();
 
-    FireParticleSystem(PApplet parent, Vec3 origin, Vec3 aim, int generationRate, int lifespan, int maxParticles) {
+    FireParticleSystem(PApplet parent, Vec3 origin, Vec3 aim, int maxGenerationRate, int lifespan, int maxParticles) {
         this.parent = parent;
         this.origin = origin;
         this.aim = aim;
-        this.maxGenerationRate = generationRate;
-        this.generationRate = generationRate;
+        this.maxGenerationRate = maxGenerationRate;
+        this.generationRate = maxGenerationRate / 2;
         this.lifespan = lifespan;
         this.maxParticles = maxParticles;
         fireTextures.add(parent.loadImage("fire-yellow-1.jpg"));
@@ -81,11 +81,15 @@ public class FireParticleSystem {
 
     public float incrementGenRate(int dg) {
         generationRate = Math.min(generationRate + dg, maxGenerationRate);
-        return (float) generationRate / maxGenerationRate;
+        return normalizedRate();
     }
 
     public float decrementGenRate(int dg) {
         generationRate = Math.max(generationRate - dg, 0);
+        return normalizedRate();
+    }
+
+    public float normalizedRate() {
         return (float) generationRate / maxGenerationRate;
     }
 

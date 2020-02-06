@@ -3,7 +3,6 @@ import ddf.minim.Minim;
 import processing.core.PApplet;
 import processing.core.PVector;
 import processing.event.KeyEvent;
-import processing.sound.*;
 import queasycam.QueasyCam;
 
 import java.util.ArrayList;
@@ -25,8 +24,8 @@ public class FireSimulation extends PApplet {
     static CollisionSphere collisionSphere;
     static ContinuousCollisionWall continuousCollisionWall;
     Minim minim;
-    AudioPlayer player;
-    private static final float MAX_SOUND_DB = 0;
+    static AudioPlayer flameSoundPlayer;
+    private static final float MAX_SOUND_DB = 15;
     private static final float MIN_SOUND_DB = -40;
 
     public void settings() {
@@ -65,10 +64,9 @@ public class FireSimulation extends PApplet {
                 loadImage("wall.jpg"));
         // sound
         minim = new Minim(this);
-        String song_location = "flame.mp3";
-        player = minim.loadFile(song_location, 2048);
-        player.loop();
-        player.shiftGain(player.getGain(), MAX_SOUND_DB, 100);
+        flameSoundPlayer = minim.loadFile("flame.mp3", 2048);
+        flameSoundPlayer.loop();
+        flameSoundPlayer.shiftGain(flameSoundPlayer.getGain(), flameThrower.fireParticleSystem.normalizedRate() * (MAX_SOUND_DB - MIN_SOUND_DB) + MIN_SOUND_DB, 100);
     }
 
     public void draw() {
@@ -120,11 +118,11 @@ public class FireSimulation extends PApplet {
         // flame control
         if (event.getKey() == '+') {
             float normalizedRate = flameThrower.fireParticleSystem.incrementGenRate(10);
-            player.shiftGain(player.getGain(), normalizedRate * (MAX_SOUND_DB - MIN_SOUND_DB) + MIN_SOUND_DB, 100);
+            flameSoundPlayer.shiftGain(flameSoundPlayer.getGain(), normalizedRate * (MAX_SOUND_DB - MIN_SOUND_DB) + MIN_SOUND_DB, 100);
         }
         if (event.getKey() == '-') {
             float normalizedRate = flameThrower.fireParticleSystem.decrementGenRate(10);
-            player.shiftGain(player.getGain(), normalizedRate * (MAX_SOUND_DB - MIN_SOUND_DB) + MIN_SOUND_DB, 100);
+            flameSoundPlayer.shiftGain(flameSoundPlayer.getGain(), normalizedRate * (MAX_SOUND_DB - MIN_SOUND_DB) + MIN_SOUND_DB, 100);
         }
         // sphere control
         if (event.getKey() == 'l') {
