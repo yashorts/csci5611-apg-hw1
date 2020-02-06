@@ -10,7 +10,9 @@ public class FireSimulation extends PApplet {
     private static final int MAX_PARTICLES = 20100;
     private static final int GENERATION_RATE = 100;
     private static final int LIFE_SPAN = 200;
-    private static final int SPHERE_RADIUS = 10;
+    private static final int COLLISION_SPHERE_RADIUS = 10;
+    private static final int CONTINUOUS_COLLISION_WALL_Z = -300;
+    private static final float CONTINUOUS_COLLISION_WALL_THICKNESS = 0.5f;
     private static final int WIDTH = 1000;
     private static final int HEIGHT = 700;
     QueasyCam cam;
@@ -18,6 +20,7 @@ public class FireSimulation extends PApplet {
     List<StaticGroundObject> staticGroundObjects = new ArrayList<>();
     FlameThrower flameThrower;
     static CollisionSphere collisionSphere;
+    static ContinuousCollisionWall continuousCollisionWall;
 
     public void settings() {
         size(WIDTH, HEIGHT, P3D);
@@ -47,23 +50,29 @@ public class FireSimulation extends PApplet {
                 "14074_WWII_Soldier_with_Flamethrower_v1_l1.obj");
         // collision sphere
         PVector aim = cam.getAim(200);
-        collisionSphere = new CollisionSphere(this, Vec3.of(aim.x, aim.y, aim.z), SPHERE_RADIUS);
+        collisionSphere = new CollisionSphere(this, Vec3.of(aim.x, aim.y, aim.z), COLLISION_SPHERE_RADIUS);
+        // ground
+        continuousCollisionWall = new ContinuousCollisionWall(this,
+                Vec3.of(0, 0, CONTINUOUS_COLLISION_WALL_Z), CONTINUOUS_COLLISION_WALL_THICKNESS,
+                Vec3.of(0, 1, 0), Vec3.of(1, 0, 0),
+                800, 1024,
+                loadImage("brickwall.jpg"));
     }
 
     public void draw() {
         // flame thrower movement
         if (keyPressed && keyCode == DOWN) {
-            flameThrower.moveOrigin(Vec3.of(0, 0, 0.5));
+            flameThrower.moveOrigin(Vec3.of(0, 0, 1));
         }
         if (keyPressed && keyCode == UP) {
-            flameThrower.moveOrigin(Vec3.of(0, 0, -0.5));
+            flameThrower.moveOrigin(Vec3.of(0, 0, -1));
         }
-        if (keyPressed && keyCode == RIGHT) {
-            flameThrower.moveOrigin(Vec3.of(0.5, 0, 0));
-        }
-        if (keyPressed && keyCode == LEFT) {
-            flameThrower.moveOrigin(Vec3.of(-0.5, 0, 0));
-        }
+//        if (keyPressed && keyCode == RIGHT) {
+//            flameThrower.moveOrigin(Vec3.of(0.5, 0, 0));
+//        }
+//        if (keyPressed && keyCode == LEFT) {
+//            flameThrower.moveOrigin(Vec3.of(-0.5, 0, 0));
+//        }
         // background
         background(85, 156, 185);
         // ground
@@ -76,6 +85,8 @@ public class FireSimulation extends PApplet {
         PVector aim = cam.getAim(200);
         collisionSphere.move(Vec3.of(aim.x, aim.y, aim.z));
         collisionSphere.render();
+        // continuous collision wall
+        continuousCollisionWall.render();
         // flamethrower
         int frameStart = millis();
         flameThrower.physics(0.015f);
@@ -94,14 +105,26 @@ public class FireSimulation extends PApplet {
     }
 
     public void keyPressed(KeyEvent event) {
+        // flame control
         if (event.getKey() == '+') {
             flameThrower.fireParticleSystem.incrementGenRate(10);
         }
+        if (event.getKey() == '-') {
+            flameThrower.fireParticleSystem.decrementGenRate(10);
+        }
+        // sphere control
         if (event.getKey() == 'l') {
             collisionSphere.lockedToCamera = !collisionSphere.lockedToCamera;
         }
-        if (event.getKey() == '-') {
-            flameThrower.fireParticleSystem.decrementGenRate(10);
+        // wall control
+        if (event.getKey() == 'i') {
+            continuousCollisionWall.mode = WallCollisionMode.NO_COLLISION;
+        }
+        if (event.getKey() == 'o') {
+            continuousCollisionWall.mode = WallCollisionMode.DISCRETE_COLLISION;
+        }
+        if (event.getKey() == 'p') {
+            continuousCollisionWall.mode = WallCollisionMode.CONTINUOUS_COLLISION;
         }
     }
 

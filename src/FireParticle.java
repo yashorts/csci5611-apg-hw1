@@ -42,6 +42,7 @@ public class FireParticle {
     }
 
     public void physics(float dt) {
+        // collision with the sphere
         Vec3 normal = position.minus(FireSimulation.collisionSphere.center);
         float distFromCenter = normal.abs();
         Vec3 normalizedNormal = normal.unit();
@@ -49,6 +50,15 @@ public class FireParticle {
             position = position.plus(normal.unit().scale(FireSimulation.collisionSphere.radius - distFromCenter + 2));
             velocity = velocity.minus(normalizedNormal.scale(2 * velocity.dot(normalizedNormal)));
             FireSimulation.collisionSphere.hit();
+        }
+
+        // collision with the wall
+        if (FireSimulation.continuousCollisionWall.mode == WallCollisionMode.DISCRETE_COLLISION) {
+            if (position.z < FireSimulation.continuousCollisionWall.center.z &&
+                    position.z > FireSimulation.continuousCollisionWall.center.z - FireSimulation.continuousCollisionWall.thickness) {
+                position.z = FireSimulation.continuousCollisionWall.center.z + 2;
+                velocity.z = -velocity.z;
+            }
         }
 
         switch (stage) {

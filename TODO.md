@@ -11,6 +11,7 @@
     - [x] color change with lifespan for all particles
     - [x] point particles, spherical init position and acc,  slight upward acc
     - [x] billowing motion
+    - [x] inc dec flame thrower rate
 - [x] (5) 3D user-controlled camera (must allow rotation and translation) 
 - [x] (5) Benchmark-1*: 1,000 particles simulated and rendered at over 20 FPS 
 - [x] (5) Benchmark-2: 5,000 particles simulated and rendered at over 30 FPS 
@@ -36,7 +37,7 @@
     - [ ] context
     - [ ] speed
 - [ ] (5) Art contest
-- [ ] make videos and images
+- [ ] make cool videos and images
 - [ ] write web page
 
 # todo
