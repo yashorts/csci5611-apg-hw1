@@ -100,6 +100,7 @@ public class FireSimulation extends PApplet {
         // collision sphere
         PVector aim = cam.getAim(200);
         collisionSphere.move(Vec3.of(aim.x, aim.y, aim.z));
+        collisionSphere.render();
         // flamethrower
         int frameStart = millis();
         flameThrower.physics(0.015f);
