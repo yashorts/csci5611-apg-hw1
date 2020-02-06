@@ -26,7 +26,8 @@ public class Ground {
 
     void render() {
         parent.beginShape();
-        parent.texture(texture);
+        parent.fill(0, 255, 0);
+//        parent.texture(texture);
         parent.vertex(ul.x, ul.y, ul.z, 0, 0);
         parent.vertex(ll.x, ll.y, ll.z, 0, texture.height);
         parent.vertex(lr.x, lr.y, lr.z, texture.width, texture.height);

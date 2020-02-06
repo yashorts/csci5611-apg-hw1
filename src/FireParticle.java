@@ -7,7 +7,7 @@ enum Stage {
 }
 
 enum Shape {
-    POINT, BOX
+    POINT, QUAD, SPRITE
 }
 
 public class FireParticle {
@@ -45,7 +45,7 @@ public class FireParticle {
         switch (stage) {
             case INIT:
                 if (parent.random(1) < 0.005) {
-                    shape = Shape.BOX;
+                    shape = Shape.QUAD;
                 }
                 stage = Stage.JET;
                 color = gradientColor();
@@ -82,7 +82,7 @@ public class FireParticle {
 //                    velocity = velocity.plus(coneRandomness);
                     stage = Stage.BALL;
                     if (parent.random(1) < 0.1) {
-                        shape = Shape.BOX;
+                        shape = Shape.QUAD;
                     }
                 }
                 break;
@@ -123,7 +123,7 @@ public class FireParticle {
     }
 
     public void render() {
-        if (shape == Shape.BOX) {
+        if (shape == Shape.QUAD) {
             switch (stage) {
                 case JET:
                     renderQuad(0.4f * (1.5f - remainingLifespan / totalLifeSpan) * Math.min(acceleration.abs(), 1), fireTexture, 255);
@@ -131,10 +131,18 @@ public class FireParticle {
                     renderQuad(1f * (1.2f - remainingLifespan / totalLifeSpan) * Math.min(acceleration.abs(), 1), fireTexture, 255);
                     break;
                 case SMOKE:
-                    renderQuad(1.4f * (1.5f - remainingLifespan / totalLifeSpan), smokeTexture, 180);
+                    renderQuad(1.4f * (1.5f - remainingLifespan / totalLifeSpan), smokeTexture, 200);
                     break;
                 default:
                     renderQuad(0.5f * (1.5f - remainingLifespan / totalLifeSpan) * Math.min(acceleration.abs(), 1), fireTexture, 255);
+                    break;
+            }
+        } else if (shape == Shape.SPRITE) {
+            switch (stage) {
+                case SMOKE:
+                    renderSprite(2 * (1.1f - remainingLifespan / totalLifeSpan), smokeTexture, 180);
+                    break;
+                default:
                     break;
             }
         } else {
@@ -155,17 +163,30 @@ public class FireParticle {
         remainingLifespan = 100;
         totalLifeSpan = 100;
         stage = Stage.SMOKE;
-        if (parent.random(1) < 0.5) {
-            shape = Shape.BOX;
+        float sample = parent.random(1);
+        if (sample < 0.5) {
+            shape = Shape.QUAD;
+        } else if (sample < 0.6) {
+            shape = Shape.SPRITE;
         }
     }
 
-    private void renderBox(float size) {
-        parent.fill(color.x, color.y, color.z);
-        parent.noStroke();
+    private void renderSprite(float sideLen, PImage texture, float alpha) {
         parent.pushMatrix();
         parent.translate(position.x, position.y, position.z);
-        parent.box(size);
+        parent.rotate(remainingLifespan / totalLifeSpan * parent.PI * 5, 0, 1, 0);
+        parent.noStroke();
+        parent.tint(255, alpha);
+        parent.texture(texture);
+
+        parent.beginShape(PConstants.QUADS);
+        parent.vertex(-sideLen, -sideLen, 0, 0, 0);
+        parent.vertex(sideLen, -sideLen, 0, texture.width, 0);
+        parent.vertex(sideLen, sideLen, 0, texture.width, texture.height);
+        parent.vertex(-sideLen, sideLen, 0, 0, texture.height);
+        parent.endShape();
+
+
         parent.popMatrix();
     }
 
