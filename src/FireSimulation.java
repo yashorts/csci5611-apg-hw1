@@ -1,38 +1,16 @@
 import processing.core.PApplet;
-import processing.core.PShape;
 import processing.event.KeyEvent;
 import queasycam.QueasyCam;
 
 import java.util.ArrayList;
 import java.util.List;
 
-class Rock {
-    PApplet parent;
-    PShape shape;
-    Vec3 position;
-
-    public Rock(PApplet parent, PShape shape, Vec3 position) {
-        this.parent = parent;
-        this.shape = shape;
-        this.position = position;
-        shape.rotate(parent.PI, 0, 0, 1);
-        shape.scale(60);
-    }
-
-    public void render() {
-        parent.pushMatrix();
-        parent.translate(position.x, position.y, position.z);
-        parent.shape(shape);
-        parent.popMatrix();
-    }
-}
-
-public class Fire extends PApplet {
+public class FireSimulation extends PApplet {
     final int WIDTH = 1000;
     final int HEIGHT = 700;
     QueasyCam cam;
     Ground ground;
-    List<Rock> rocks = new ArrayList<>();
+    List<StaticGroundObject> staticGroundObjects = new ArrayList<>();
     FlameThrower flameThrower;
 
     public void settings() {
@@ -51,14 +29,19 @@ public class Fire extends PApplet {
                 Vec3.of(0, 0, 0), Vec3.of(0, 0, 1), Vec3.of(1, 0, 0),
                 1024, 1024,
                 loadImage("grass.jpg"));
-        // rocks
+        // rocks and trees
         for (int i = 0; i < 50; ++i) {
-            rocks.add(new Rock(this, loadShape("Rock_" + (int) random(1, 8) + ".obj"), Vec3.of(random(-500, 500), 0, random(-500, 500))));
+            staticGroundObjects.add(new StaticGroundObject(this, loadShape("Rock_" + (int) random(1, 8) + ".obj"), Vec3.of(random(-500, 500), 0, random(-500, 500))));
+        }
+        for (int i = 0; i < 3; ++i) {
+            staticGroundObjects.add(new StaticGroundObject(this, loadShape("BirchTree_" + (int) random(1, 6) + ".obj"), Vec3.of(random(-500, 500), 0, random(-500, 500))));
         }
         // flame thrower
         flameThrower = new FlameThrower(this,
-                Vec3.of(300, 0, 150), Vec3.of(0, 0, -1),
-                100, 200, 20100, "Sniper rifle.obj");
+                Vec3.of(300, 0, 150),
+                Vec3.of(0, 0, -1),
+                100, 200, 20100,
+                "SniperRifle.obj");
     }
 
     public void draw() {
@@ -83,8 +66,8 @@ public class Fire extends PApplet {
         translate(300, 100, -40);
         ground.render();
 
-        for (Rock rock : rocks) {
-            rock.render();
+        for (StaticGroundObject staticGroundObject : staticGroundObjects) {
+            staticGroundObject.render();
         }
         popMatrix();
 
@@ -122,7 +105,7 @@ public class Fire extends PApplet {
     }
 
     static public void main(String[] passedArgs) {
-        String[] appletArgs = new String[]{"Fire"};
+        String[] appletArgs = new String[]{"FireSimulation"};
         if (passedArgs != null) {
             PApplet.main(concat(appletArgs, passedArgs));
         } else {
