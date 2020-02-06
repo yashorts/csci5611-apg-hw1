@@ -1,4 +1,5 @@
 import processing.core.PApplet;
+import processing.core.PConstants;
 import processing.core.PImage;
 
 enum Stage {
@@ -174,8 +175,8 @@ public class FireParticle {
         parent.rotate(remainingLifespan / totalLifeSpan * parent.PI * 5, 0, 1, 0);
 
         parent.noStroke();
-        parent.beginShape();
         if (parent.random(1) < 0) {
+            parent.beginShape();
             parent.fill(color.x, color.y, color.z);
             parent.texture(texture);
             parent.vertex(-sideLen, -sideLen, 0, 0, 0);
@@ -183,11 +184,13 @@ public class FireParticle {
             parent.vertex(sideLen, sideLen, 0, texture.width, texture.height);
             parent.vertex(-sideLen, sideLen, 0, 0, texture.height);
         } else if (parent.random(1) < 0.8) {
+            parent.beginShape(PConstants.TRIANGLE);
             parent.fill(color.x, color.y, color.z, alpha);
             parent.vertex(-sideLen, -sideLen, 0);
             parent.vertex(sideLen, -sideLen, 0);
             parent.vertex(sideLen, sideLen, 0);
         } else {
+            parent.beginShape(PConstants.QUADS);
             parent.fill(color.x, color.y, color.z, alpha);
             parent.vertex(-sideLen, -sideLen, 0);
             parent.vertex(sideLen, -sideLen, 0);
