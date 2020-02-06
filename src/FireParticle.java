@@ -61,7 +61,7 @@ public class FireParticle {
                 }
                 color = gradientColor();
                 // very small portion of initial particles turning into smoke
-                if (parent.random(1) < 0.0001) {
+                if (parent.random(1) < 0.00001) {
                     changeStageToSmoke();
                 }
                 // jet stage ends after some lifespan
@@ -73,7 +73,7 @@ public class FireParticle {
                 position = position.plus(velocity.scale(dt)).plus(Vec3.uniformRandomInUnitSphere().scale(0.1f));
                 velocity = velocity.plus(acceleration.scale(dt));
                 color = gradientColor();
-                if (parent.random(1) < (0.5 - remainingLifespan / totalLifeSpan)) {
+                if (parent.random(1) < (0.3 - remainingLifespan / totalLifeSpan)) {
                     changeStageToSmoke();
                 } else {
 //                    float theta = parent.random(2 * parent.PI);
@@ -96,7 +96,7 @@ public class FireParticle {
                     color = gradientColor();
                 }
                 // small portion of ball particles turning into smoke
-                if (parent.random(1) < 0.02 && remainingLifespan / totalLifeSpan <= 0.5) {
+                if (parent.random(1) < 0.02 && remainingLifespan / totalLifeSpan <= 0.2) {
                     changeStageToSmoke();
                 }
                 break;
