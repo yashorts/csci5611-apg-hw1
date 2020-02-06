@@ -1,6 +1,9 @@
+import ddf.minim.AudioPlayer;
+import ddf.minim.Minim;
 import processing.core.PApplet;
 import processing.core.PVector;
 import processing.event.KeyEvent;
+import processing.sound.*;
 import queasycam.QueasyCam;
 
 import java.util.ArrayList;
@@ -21,6 +24,8 @@ public class FireSimulation extends PApplet {
     FlameThrower flameThrower;
     static CollisionSphere collisionSphere;
     static ContinuousCollisionWall continuousCollisionWall;
+    Minim minim;
+    AudioPlayer player;
 
     public void settings() {
         size(WIDTH, HEIGHT, P3D);
@@ -50,15 +55,23 @@ public class FireSimulation extends PApplet {
                 "14074_WWII_Soldier_with_Flamethrower_v1_l1.obj");
         // collision sphere
         collisionSphere = new CollisionSphere(this, Vec3.of(-1000, -1000, 1000), COLLISION_SPHERE_RADIUS);
-        // ground
+        // continuous colliusion wall
         continuousCollisionWall = new ContinuousCollisionWall(this,
                 Vec3.of(0, -200, CONTINUOUS_COLLISION_WALL_Z), CONTINUOUS_COLLISION_WALL_THICKNESS,
                 Vec3.of(0, -1, 0), Vec3.of(1, 0, 0),
                 400, 1024,
                 loadImage("wall.jpg"));
+        // sound
+        minim = new Minim(this);
+        String song_location = "flame.mp3";
+        player = minim.loadFile(song_location, 2048);
+        player.play();  // this plays in the background
     }
 
     public void draw() {
+        if (!player.isPlaying()) {
+            player.loop();
+        }
         // flame thrower movement
         if (keyPressed && keyCode == DOWN) {
             flameThrower.moveOrigin(Vec3.of(0, 0, 1));
