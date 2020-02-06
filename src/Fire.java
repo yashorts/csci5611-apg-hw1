@@ -50,7 +50,7 @@ public class Fire extends PApplet {
         // ground
         ground = new Ground(this,
                 Vec3.of(0, 0, 0), Vec3.of(0, 0, 1), Vec3.of(1, 0, 0),
-                2048, 2048,
+                1024, 1024,
                 loadImage("grass.jpg"));
         // rocks
         for (int i = 0; i < 50; ++i) {

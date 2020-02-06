@@ -34,9 +34,8 @@ public class FireParticleSystem {
         fireTextures.add(parent.loadImage("fire-red-4.jpg"));
         fireTextures.add(parent.loadImage("fire-red-5.jpg"));
         fireTextures.add(parent.loadImage("fire-red-6.png"));
-        smokeTextures.add(parent.loadImage("smoke1.jpg"));
-        smokeTextures.add(parent.loadImage("smoke2.jpg"));
-        smokeTextures.add(parent.loadImage("smoke3.png"));
+        smokeTextures.add(parent.loadImage("smoke1.png"));
+        smokeTextures.add(parent.loadImage("smoke2.png"));
     }
 
     public void physics(float dt) {

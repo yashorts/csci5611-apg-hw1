@@ -109,7 +109,7 @@ public class FireParticle {
                 }
                 velocity.x += acceleration.x * dt;
                 velocity.z += acceleration.z * dt;
-                color = Vec3.of(parent.random(0, 20 + 55 * (1 - remainingLifespan / totalLifeSpan)));
+                color = Vec3.of(parent.random(0, 50 + 55 * (1 - remainingLifespan / totalLifeSpan)));
                 break;
             case DEAD:
                 return;
@@ -131,7 +131,7 @@ public class FireParticle {
                     renderQuad(1f * (1.2f - remainingLifespan / totalLifeSpan) * Math.min(acceleration.abs(), 1), fireTexture, 255);
                     break;
                 case SMOKE:
-                    renderQuad(1.4f * (1.5f - remainingLifespan / totalLifeSpan), smokeTexture, 150);
+                    renderQuad(1.4f * (1.5f - remainingLifespan / totalLifeSpan), smokeTexture, 180);
                     break;
                 default:
                     renderQuad(0.5f * (1.5f - remainingLifespan / totalLifeSpan) * Math.min(acceleration.abs(), 1), fireTexture, 255);
@@ -175,9 +175,9 @@ public class FireParticle {
         parent.rotate(remainingLifespan / totalLifeSpan * parent.PI * 5, 0, 1, 0);
 
         parent.noStroke();
-        if (parent.random(1) < 0) {
-            parent.beginShape();
-            parent.fill(color.x, color.y, color.z);
+        if (parent.random(1) < 0.1) {
+            parent.tint(255, alpha);
+            parent.beginShape(PConstants.QUADS);
             parent.texture(texture);
             parent.vertex(-sideLen, -sideLen, 0, 0, 0);
             parent.vertex(sideLen, -sideLen, 0, texture.width, 0);

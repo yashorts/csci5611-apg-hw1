@@ -35,9 +35,9 @@
  
 # Performance Benchmarking (cumulative) 
 ## Measure the speed of the faster of the two required simulations. Feel free test on a fast  computer such as the ones in the basement graphics lab (KH 1-254).  
-- [ ] (5) Benchmark-1*: 1,000 particles simulated and rendered at over 20 FPS 
-- [ ] (5) Benchmark-2: 5,000 particles simulated and rendered at over 30 FPS 
-- [ ] (5) Benchmark-3: 20,000 particles simulated and rendered at over 30 FPS 
+- [x] (5) Benchmark-1*: 1,000 particles simulated and rendered at over 20 FPS 
+- [x] (5) Benchmark-2: 5,000 particles simulated and rendered at over 30 FPS 
+- [x] (5) Benchmark-3: 20,000 particles simulated and rendered at over 30 FPS 
 - [ ] (10) Benchmark-4: 100,000 particles simulated and rendered at over 30 FPS 
  
 # Additional Features
