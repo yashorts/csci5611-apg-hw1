@@ -61,9 +61,6 @@ public class FireSimulation extends PApplet {
         for (int i = 0; i < 50; ++i) {
             staticGroundObjects.add(new StaticGroundObject(this, loadShape("Rock_" + (int) random(1, 8) + ".obj"), Vec3.of(random(-500, 500), 100, random(-500, 500))));
         }
-        for (int i = 0; i < 1; ++i) {
-            staticGroundObjects.add(new StaticGroundObject(this, loadShape("BirchTree_" + (int) random(1, 6) + ".obj"), Vec3.of(random(-500, 500), 100, random(-500, 500))));
-        }
         // flame thrower
         flameThrower = new FlameThrower(this,
                 Vec3.of(200, 0, 50),

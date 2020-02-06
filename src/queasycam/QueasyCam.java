@@ -69,7 +69,7 @@ public class QueasyCam {
 		controllable = true;
 		speed = 3f;
 		sensitivity = 2f;
-		position = new PVector(-200f, -300f, 0f);
+		position = new PVector(-200f, 0f, 0f);
 		up = new PVector(0f, 1f, 0f);
 		right = new PVector(1f, 0f, 0f);
 		forward = new PVector(0f, 0f, 1f);
