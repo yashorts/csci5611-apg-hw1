@@ -164,6 +164,10 @@ public class FireParticle {
             position = position.plus(normal.unit().scale(FireSimulation.collisionSphere.radius - distFromCenter + 2));
             velocity = velocity.minus(normalizedNormal.scale(2 * velocity.dot(normalizedNormal)));
             FireSimulation.collisionSphere.hit();
+            if (parent.random(1) < 0.1) {
+                remainingLifespan = (int) (totalLifeSpan * parent.random(0.1f, 0.2f));
+                stage = Stage.SPARK;
+            }
         }
 
         // collision with the wall
