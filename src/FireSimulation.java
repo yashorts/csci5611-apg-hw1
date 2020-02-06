@@ -49,8 +49,7 @@ public class FireSimulation extends PApplet {
                 GENERATION_RATE, LIFE_SPAN, MAX_PARTICLES,
                 "14074_WWII_Soldier_with_Flamethrower_v1_l1.obj");
         // collision sphere
-        PVector aim = cam.getAim(200);
-        collisionSphere = new CollisionSphere(this, Vec3.of(aim.x, aim.y, aim.z), COLLISION_SPHERE_RADIUS);
+        collisionSphere = new CollisionSphere(this, Vec3.of(-1000, -1000, 1000), COLLISION_SPHERE_RADIUS);
         // ground
         continuousCollisionWall = new ContinuousCollisionWall(this,
                 Vec3.of(0, 0, CONTINUOUS_COLLISION_WALL_Z), CONTINUOUS_COLLISION_WALL_THICKNESS,

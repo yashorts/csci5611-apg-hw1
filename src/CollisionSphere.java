@@ -12,7 +12,7 @@ public class CollisionSphere {
         this.center = center;
         this.radius = radius;
         this.color = Vec3.of(255);
-        this.lockedToCamera = true;
+        this.lockedToCamera = false;
     }
 
     public void move(Vec3 newCenter) {

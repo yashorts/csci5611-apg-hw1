@@ -20,12 +20,12 @@
 - [x] (5) Write your own vector library (dot & cross prod, addition, multiplication, etc.) 
 - [x] (10) Continuous user interaction with the system (mouse-based for full credit) 
 - [x] (5) Particle-obstacle interactions besides the floor (in at least one simulation) 
-70
+- [x] (5) Tails on particles and sparks
+75
 # next
-- [ ] (10) Continuous Collision Detection (must show a visible difference) 
-- [ ] (10) Simulation-driven audio (only partial points for short, simple sounds) 
-- [ ] (5) Tails on particles and sparks
+- [x] (10) Continuous Collision Detection (must show a visible difference) 
 - [ ] (5) Textured sprites for particles
+- [ ] (10) Simulation-driven audio (only partial points for short, simple sounds) 
 - [ ] (5) Fire simulation
     - [ ] polish motion
     - [ ] intelligent creation of particles

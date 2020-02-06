@@ -2,8 +2,11 @@ import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PImage;
 
+import java.util.ArrayList;
+import java.util.List;
+
 enum Stage {
-    INIT, JET, JET_TO_BALL_OR_SMOKE, BALL, SMOKE, DEAD
+    INIT, JET, JET_TO_BALL_OR_SMOKE, BALL, SMOKE, SPARK, DEAD
 }
 
 enum Shape {
@@ -13,6 +16,7 @@ enum Shape {
 public class FireParticle {
     final PApplet parent;
     Vec3 position;
+    List<Vec3> history = new ArrayList<>();
     Vec3 velocity;
     Vec3 initialShootDir;
     Vec3 initialVelocity;
@@ -52,6 +56,12 @@ public class FireParticle {
                 if (parent.random(1) < 0.005) {
                     shape = Shape.QUAD;
                 }
+                if (parent.random(1) < 0.001) {
+                    velocity = Vec3.uniformRandomInUnitSphere().scale(10);
+                    remainingLifespan = (int) (totalLifeSpan * 0.5f);
+                    stage = Stage.SPARK;
+                    break;
+                }
                 stage = Stage.JET;
                 color = gradientColor();
                 break;
@@ -78,6 +88,13 @@ public class FireParticle {
                 position = position.plus(velocity.scale(dt)).plus(Vec3.uniformRandomInUnitSphere().scale(0.1f));
                 velocity = velocity.plus(acceleration.scale(dt));
                 color = gradientColor();
+                if (parent.random(1) < 0.0005) {
+                    velocity.y += parent.random(10);
+                    velocity.z *= 1.2;
+                    acceleration.y = 1;
+                    stage = Stage.SPARK;
+                    break;
+                }
                 if (parent.random(1) < (0.3 - remainingLifespan / totalLifeSpan)) {
                     changeStageToSmoke();
                 } else {
@@ -103,7 +120,20 @@ public class FireParticle {
                 // small portion of ball particles turning into smoke
                 if (parent.random(1) < 0.02 && remainingLifespan / totalLifeSpan <= 0.2) {
                     changeStageToSmoke();
+                    break;
                 }
+                if (parent.random(1) < 0.0001 && remainingLifespan / totalLifeSpan <= 0.3) {
+                    velocity.y += parent.random(10);
+                    velocity.z *= 1.2;
+                    acceleration.y = 1;
+                    stage = Stage.SPARK;
+                    break;
+                }
+                break;
+            case SPARK:
+                position = position.plus(velocity.scale(dt)).plus(Vec3.uniformRandomInUnitSphere());
+                history.add(position);
+                velocity = velocity.plus(acceleration.scale(dt));
                 break;
             case SMOKE:
                 position = position.plus(velocity.scale(dt)).plus(Vec3.uniformRandomInUnitSphere());
@@ -152,6 +182,10 @@ public class FireParticle {
     }
 
     public void render() {
+        if (stage == Stage.SPARK) {
+            renderSpark(0.75f * (1.1f - remainingLifespan / totalLifeSpan), fireTexture, 200);
+        }
+
         if (shape == Shape.QUAD) {
             switch (stage) {
                 case JET:
@@ -250,6 +284,32 @@ public class FireParticle {
         parent.endShape();
 
         parent.popMatrix();
+    }
+
+    private void renderSpark(float sideLen, PImage texture, float alpha) {
+        for (int i = 0; i < history.size(); ++i) {
+            Vec3 pos = history.get(i);
+            parent.pushMatrix();
+            parent.translate(pos.x, pos.y, pos.z);
+            parent.rotate(remainingLifespan / totalLifeSpan * parent.PI * 5, 0, 1, 0);
+            if (i < history.size() * 0.3f) {
+                color = Vec3.of(255, 255, 255);
+            } else if (i < history.size() * 0.8f) {
+                color = Vec3.of(255, 255, 0);
+            } else {
+                color = Vec3.of(255, 128, 0);
+            }
+
+            parent.noStroke();
+            parent.beginShape(PConstants.QUADS);
+            parent.fill(color.x, color.y, color.z, alpha);
+            parent.vertex(-sideLen, -sideLen, 0);
+            parent.vertex(sideLen, -sideLen, 0);
+            parent.vertex(sideLen, sideLen, 0);
+            parent.vertex(-sideLen, sideLen, 0);
+            parent.endShape();
+            parent.popMatrix();
+        }
     }
 
     private void renderPoint() {
