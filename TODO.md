@@ -27,7 +27,7 @@
 - [ ] (5) Textured sprites for particles
 - [ ] (10) Simulation-driven audio (only partial points for short, simple sounds) 
 - [ ] (5) Fire simulation
-    - [ ] polish motion
+    - [ ] polish motion, remove stutters
     - [ ] intelligent creation of particles
 
 - [ ] (30) Water simulation

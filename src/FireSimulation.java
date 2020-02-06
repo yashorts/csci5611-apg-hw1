@@ -52,10 +52,10 @@ public class FireSimulation extends PApplet {
         collisionSphere = new CollisionSphere(this, Vec3.of(-1000, -1000, 1000), COLLISION_SPHERE_RADIUS);
         // ground
         continuousCollisionWall = new ContinuousCollisionWall(this,
-                Vec3.of(0, 0, CONTINUOUS_COLLISION_WALL_Z), CONTINUOUS_COLLISION_WALL_THICKNESS,
-                Vec3.of(0, 1, 0), Vec3.of(1, 0, 0),
-                800, 1024,
-                loadImage("brickwall.jpg"));
+                Vec3.of(0, -200, CONTINUOUS_COLLISION_WALL_Z), CONTINUOUS_COLLISION_WALL_THICKNESS,
+                Vec3.of(0, -1, 0), Vec3.of(1, 0, 0),
+                400, 1024,
+                loadImage("wall.jpg"));
     }
 
     public void draw() {
