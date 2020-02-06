@@ -21,11 +21,13 @@
 - [x] (10) Continuous user interaction with the system (mouse-based for full credit) 
 - [x] (5) Particle-obstacle interactions besides the floor (in at least one simulation) 
 - [x] (5) Tails on particles and sparks
-75
-# next
+- [x] (10) Simulation-driven audio (only partial points for short, simple sounds) 
+    - [x] inc/ dec volume with gen rate
+    - [x] inc volume on collision with sphere
 - [x] (10) Continuous Collision Detection (must show a visible difference) 
+95
+# next
 - [ ] (5) Textured sprites for particles
-- [ ] (10) Simulation-driven audio (only partial points for short, simple sounds) 
 - [ ] (5) Fire simulation
     - [ ] polish motion, remove stutters
     - [ ] intelligent creation of particles

@@ -168,6 +168,9 @@ public class FireParticle {
                 remainingLifespan = (int) (totalLifeSpan * parent.random(0.1f, 0.2f));
                 stage = Stage.SPARK;
             }
+            if (parent.random(1) < 0.01) {
+                FireSimulation.flameSoundPlayer.shiftGain(FireSimulation.flameSoundPlayer.getGain(), 2f * FireSimulation.MAX_SOUND_DB, 100);
+            }
         }
 
         // collision with the wall

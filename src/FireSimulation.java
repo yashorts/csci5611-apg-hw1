@@ -20,13 +20,13 @@ public class FireSimulation extends PApplet {
     QueasyCam cam;
     Ground ground;
     List<StaticGroundObject> staticGroundObjects = new ArrayList<>();
-    FlameThrower flameThrower;
+    static FlameThrower flameThrower;
     static CollisionSphere collisionSphere;
     static ContinuousCollisionWall continuousCollisionWall;
     Minim minim;
     static AudioPlayer flameSoundPlayer;
-    private static final float MAX_SOUND_DB = 15;
-    private static final float MIN_SOUND_DB = -40;
+    static final float MAX_SOUND_DB = 15;
+    static final float MIN_SOUND_DB = -40;
 
     public void settings() {
         size(WIDTH, HEIGHT, P3D);
@@ -61,7 +61,7 @@ public class FireSimulation extends PApplet {
                 Vec3.of(0, -200, CONTINUOUS_COLLISION_WALL_Z), CONTINUOUS_COLLISION_WALL_THICKNESS,
                 Vec3.of(0, -1, 0), Vec3.of(1, 0, 0),
                 400, 1024,
-                loadImage("wall.jpg"));
+                loadImage("wall3.jpg"));
         // sound
         minim = new Minim(this);
         flameSoundPlayer = minim.loadFile("flame.mp3", 2048);
@@ -70,6 +70,8 @@ public class FireSimulation extends PApplet {
     }
 
     public void draw() {
+        // sound
+        flameSoundPlayer.shiftGain(flameSoundPlayer.getGain(), flameThrower.fireParticleSystem.normalizedRate() * (MAX_SOUND_DB - MIN_SOUND_DB) + MIN_SOUND_DB, 1000);
         // flame thrower movement
         if (keyPressed && keyCode == DOWN) {
             flameThrower.moveOrigin(Vec3.of(0, 0, 1));
