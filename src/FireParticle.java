@@ -182,6 +182,11 @@ public class FireParticle {
             parent.vertex(sideLen, -sideLen, 0, texture.width, 0);
             parent.vertex(sideLen, sideLen, 0, texture.width, texture.height);
             parent.vertex(-sideLen, sideLen, 0, 0, texture.height);
+        } else if (parent.random(1) < 0.8) {
+            parent.fill(color.x, color.y, color.z, alpha);
+            parent.vertex(-sideLen, -sideLen, 0);
+            parent.vertex(sideLen, -sideLen, 0);
+            parent.vertex(sideLen, sideLen, 0);
         } else {
             parent.fill(color.x, color.y, color.z, alpha);
             parent.vertex(-sideLen, -sideLen, 0);

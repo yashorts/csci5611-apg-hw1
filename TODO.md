@@ -30,7 +30,7 @@
  
 # Rendering 
 - [ ] (5) Tails on particles and sparks
-- [ ] (5) Translucent particles
+- [x] (5) Translucent particles
 - [ ] (5) Textured sprites for particles
  
 # Performance Benchmarking (cumulative) 

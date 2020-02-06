@@ -1,14 +1,39 @@
 import processing.core.PApplet;
+import processing.core.PImage;
 import processing.core.PShape;
 import processing.event.KeyEvent;
 import queasycam.QueasyCam;
+
+import java.util.ArrayList;
+import java.util.List;
+
+class Rock {
+    PApplet parent;
+    PShape shape;
+    Vec3 position;
+
+    public Rock(PApplet parent, PShape shape, Vec3 position) {
+        this.parent = parent;
+        this.shape = shape;
+        this.position = position;
+        shape.rotate(parent.PI, 0, 0, 1);
+        shape.scale(60);
+    }
+
+    public void render() {
+        parent.pushMatrix();
+        parent.translate(position.x, position.y, position.z);
+        parent.shape(shape);
+        parent.popMatrix();
+    }
+}
 
 public class Fire extends PApplet {
     final int WIDTH = 1000;
     final int HEIGHT = 700;
     QueasyCam cam;
     Ground ground;
-    PShape tree;
+    List<Rock> rocks = new ArrayList<>();
     FlameThrower flameThrower;
 
     public void settings() {
@@ -27,10 +52,10 @@ public class Fire extends PApplet {
                 Vec3.of(0, 0, 0), Vec3.of(0, 0, 1), Vec3.of(1, 0, 0),
                 2048, 2048,
                 loadImage("grass.jpg"));
-        // tree
-        tree = loadShape("BirchTree_Autumn_1.obj");
-        tree.rotate(PI, 0, 0, 1);
-        tree.scale(60);
+        // rocks
+        for (int i = 0; i < 50; ++i) {
+            rocks.add(new Rock(this, loadShape("Rock_" + (int) random(1, 8) + ".obj"), Vec3.of(random(-500, 500), 0, random(-500, 500))));
+        }
         // flame thrower
         flameThrower = new FlameThrower(this,
                 Vec3.of(300, 0, 150), Vec3.of(0, 0, -1),
@@ -54,11 +79,14 @@ public class Fire extends PApplet {
 
         // background
         background(85, 156, 185);
-        // ground and tree
+        // ground and rocks
         pushMatrix();
         translate(300, 100, -40);
         ground.render();
-        shape(tree);
+
+        for (Rock rock : rocks) {
+            rock.render();
+        }
         popMatrix();
 
         int frameStart = millis();
@@ -78,7 +106,7 @@ public class Fire extends PApplet {
         );
     }
 
-    public void keyPressed(KeyEvent event){
+    public void keyPressed(KeyEvent event) {
         if (event.getKey() == '+') {
             flameThrower.fireParticleSystem.incrementGenRate(10);
         }
