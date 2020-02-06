@@ -5,16 +5,20 @@ public class CollisionSphere {
     Vec3 center;
     Vec3 color;
     int radius;
+    boolean lockedToCamera;
 
     public CollisionSphere(PApplet parent, Vec3 center, int radius) {
         this.parent = parent;
         this.center = center;
         this.radius = radius;
         this.color = Vec3.of(255);
+        this.lockedToCamera = true;
     }
 
     public void move(Vec3 newCenter) {
-        center = newCenter;
+        if (lockedToCamera) {
+            center = newCenter;
+        }
     }
 
     public void render() {

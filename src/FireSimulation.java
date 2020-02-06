@@ -97,6 +97,9 @@ public class FireSimulation extends PApplet {
         if (event.getKey() == '+') {
             flameThrower.fireParticleSystem.incrementGenRate(10);
         }
+        if (event.getKey() == 'l') {
+            collisionSphere.lockedToCamera = !collisionSphere.lockedToCamera;
+        }
         if (event.getKey() == '-') {
             flameThrower.fireParticleSystem.decrementGenRate(10);
         }
