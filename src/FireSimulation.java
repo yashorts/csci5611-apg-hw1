@@ -1,9 +1,36 @@
 import processing.core.PApplet;
+import processing.core.PShape;
+import processing.core.PVector;
 import processing.event.KeyEvent;
 import queasycam.QueasyCam;
 
 import java.util.ArrayList;
 import java.util.List;
+
+class CollisionSphere {
+    PApplet parent;
+    Vec3 center;
+    int radius;
+
+    public CollisionSphere(PApplet parent, Vec3 center, int radius) {
+        this.parent = parent;
+        this.center = center;
+        this.radius = radius;
+    }
+
+    public void move(Vec3 newCenter) {
+        center = newCenter;
+    }
+
+    public void render() {
+        parent.pushMatrix();
+        parent.noStroke();
+        parent.fill(100, 20, 120);
+        parent.translate(center.x, center.y, center.z);
+        parent.sphere(radius);
+        parent.popMatrix();
+    }
+}
 
 public class FireSimulation extends PApplet {
     final int WIDTH = 1000;
@@ -12,6 +39,7 @@ public class FireSimulation extends PApplet {
     Ground ground;
     List<StaticGroundObject> staticGroundObjects = new ArrayList<>();
     FlameThrower flameThrower;
+    CollisionSphere collisionSphere;
 
     public void settings() {
         size(WIDTH, HEIGHT, P3D);
@@ -31,20 +59,24 @@ public class FireSimulation extends PApplet {
                 loadImage("grass.jpg"));
         // rocks and trees
         for (int i = 0; i < 50; ++i) {
-            staticGroundObjects.add(new StaticGroundObject(this, loadShape("Rock_" + (int) random(1, 8) + ".obj"), Vec3.of(random(-500, 500), 0, random(-500, 500))));
+            staticGroundObjects.add(new StaticGroundObject(this, loadShape("Rock_" + (int) random(1, 8) + ".obj"), Vec3.of(random(-500, 500), 100, random(-500, 500))));
         }
         for (int i = 0; i < 3; ++i) {
-            staticGroundObjects.add(new StaticGroundObject(this, loadShape("BirchTree_" + (int) random(1, 6) + ".obj"), Vec3.of(random(-500, 500), 0, random(-500, 500))));
+            staticGroundObjects.add(new StaticGroundObject(this, loadShape("BirchTree_" + (int) random(1, 6) + ".obj"), Vec3.of(random(-500, 500), 100, random(-500, 500))));
         }
         // flame thrower
         flameThrower = new FlameThrower(this,
-                Vec3.of(300, 0, 150),
+                Vec3.of(200, 0, 50),
                 Vec3.of(0, 0, -1),
                 100, 200, 20100,
                 "SniperRifle.obj");
+        // collision sphere
+        PVector aim = cam.getAim(200);
+        collisionSphere = new CollisionSphere(this, Vec3.of(aim.x, aim.y, aim.z), 20);
     }
 
     public void draw() {
+        // flame thrower movement
         if (keyPressed && keyCode == DOWN) {
             flameThrower.moveOrigin(Vec3.of(0, 0, 0.5));
         }
@@ -57,32 +89,21 @@ public class FireSimulation extends PApplet {
         if (keyPressed && keyCode == LEFT) {
             flameThrower.moveOrigin(Vec3.of(-0.5, 0, 0));
         }
-//        flameThrower.setOrigin(Vector3D.of(cam.position.x, cam.position.y, cam.position.z));
-
         // background
         background(85, 156, 185);
-        // ground and rocks
-        pushMatrix();
-        translate(300, 100, -40);
+        // ground
         ground.render();
-
+        // rocks and trees
         for (StaticGroundObject staticGroundObject : staticGroundObjects) {
             staticGroundObject.render();
         }
-        popMatrix();
-
-        // sphere
-        pushMatrix();
-        fill(100, 20, 120);
-        translate(cam.position.x + 100, cam.position.y, cam.position.z);
-        sphere(5);
-        popMatrix();
-
+        // collision sphere
+        PVector aim = cam.getAim(200);
+        collisionSphere.move(Vec3.of(aim.x, aim.y, aim.z));
+        // flamethrower
         int frameStart = millis();
-        // flamethrower physics
         flameThrower.physics(0.015f);
         int physicsEnd = millis();
-        // flamethrower rendering
         flameThrower.render();
         int frameEnd = millis();
         // text overlay

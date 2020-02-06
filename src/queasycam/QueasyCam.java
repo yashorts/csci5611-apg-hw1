@@ -69,7 +69,7 @@ public class QueasyCam {
 		controllable = true;
 		speed = 3f;
 		sensitivity = 2f;
-		position = new PVector(0f, 0f, 0f);
+		position = new PVector(-200f, -300f, 0f);
 		up = new PVector(0f, 1f, 0f);
 		right = new PVector(1f, 0f, 0f);
 		forward = new PVector(0f, 0f, 1f);
@@ -77,7 +77,7 @@ public class QueasyCam {
 		pan = 0f;
 		tilt = 0f;
 		friction = 0.75f;
-		keys = new HashMap<Character, Boolean>();
+		keys = new HashMap<>();
 
 		applet.perspective(PConstants.PI/3f, (float)applet.width/(float)applet.height, 0.01f, 1000f);
 	}
@@ -169,6 +169,10 @@ public class QueasyCam {
 	
 	public PVector getRight(){
 		return right;
+	}
+
+	public PVector getAim(float dist) {
+		return PVector.add(position, PVector.mult(forward, dist));
 	}
 }
 

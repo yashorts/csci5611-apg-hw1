@@ -11,6 +11,7 @@ public class StaticGroundObject {
         this.shape = shape;
         this.position = position;
         shape.rotate(parent.PI, 0, 0, 1);
+        shape.rotate(parent.PI * parent.random(1), 0, 1, 0);
         shape.scale(60);
     }
 

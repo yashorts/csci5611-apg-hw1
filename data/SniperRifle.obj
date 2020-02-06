@@ -1,6 +1,6 @@
 # Blender v2.79 (sub 0) OBJ File: 'Sniper rifle.blend'
 # www.blender.org
-mtllib Sniper rifle.mtl
+mtllib SniperRifle.mtl
 o SniperRifle_Cube
 v -0.110886 -0.934085 1.900770
 v -0.130534 0.219403 2.203529
