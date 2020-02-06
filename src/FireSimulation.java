@@ -26,6 +26,8 @@ public class FireSimulation extends PApplet {
     static ContinuousCollisionWall continuousCollisionWall;
     Minim minim;
     AudioPlayer player;
+    private static final float MAX_SOUND_DB = 0;
+    private static final float MIN_SOUND_DB = -40;
 
     public void settings() {
         size(WIDTH, HEIGHT, P3D);
@@ -65,13 +67,11 @@ public class FireSimulation extends PApplet {
         minim = new Minim(this);
         String song_location = "flame.mp3";
         player = minim.loadFile(song_location, 2048);
-        player.play();  // this plays in the background
+        player.loop();
+        player.shiftGain(player.getGain(), MAX_SOUND_DB, 100);
     }
 
     public void draw() {
-        if (!player.isPlaying()) {
-            player.loop();
-        }
         // flame thrower movement
         if (keyPressed && keyCode == DOWN) {
             flameThrower.moveOrigin(Vec3.of(0, 0, 1));
@@ -119,10 +119,12 @@ public class FireSimulation extends PApplet {
     public void keyPressed(KeyEvent event) {
         // flame control
         if (event.getKey() == '+') {
-            flameThrower.fireParticleSystem.incrementGenRate(10);
+            float normalizedRate = flameThrower.fireParticleSystem.incrementGenRate(10);
+            player.shiftGain(player.getGain(), normalizedRate * (MAX_SOUND_DB - MIN_SOUND_DB) + MIN_SOUND_DB, 100);
         }
         if (event.getKey() == '-') {
-            flameThrower.fireParticleSystem.decrementGenRate(10);
+            float normalizedRate = flameThrower.fireParticleSystem.decrementGenRate(10);
+            player.shiftGain(player.getGain(), normalizedRate * (MAX_SOUND_DB - MIN_SOUND_DB) + MIN_SOUND_DB, 100);
         }
         // sphere control
         if (event.getKey() == 'l') {

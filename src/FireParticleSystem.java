@@ -79,12 +79,14 @@ public class FireParticleSystem {
         IntStream.range(0, particles.size()).forEach(i -> particles.get(i).render());
     }
 
-    public void incrementGenRate(int dg) {
+    public float incrementGenRate(int dg) {
         generationRate = Math.min(generationRate + dg, maxGenerationRate);
+        return (float) generationRate / maxGenerationRate;
     }
 
-    public void decrementGenRate(int dg) {
+    public float decrementGenRate(int dg) {
         generationRate = Math.max(generationRate - dg, 0);
+        return (float) generationRate / maxGenerationRate;
     }
 
 }
