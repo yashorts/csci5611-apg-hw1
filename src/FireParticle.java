@@ -42,6 +42,15 @@ public class FireParticle {
     }
 
     public void physics(float dt) {
+        Vec3 normal = position.minus(FireSimulation.collisionSphere.center);
+        float distFromCenter = normal.abs();
+        Vec3 normalizedNormal = normal.unit();
+        if (distFromCenter < FireSimulation.collisionSphere.radius) {
+            position = position.plus(normal.unit().scale(FireSimulation.collisionSphere.radius - distFromCenter + 2));
+            velocity = velocity.minus(normalizedNormal.scale(2 * velocity.dot(normalizedNormal)));
+            FireSimulation.collisionSphere.hit();
+        }
+
         switch (stage) {
             case INIT:
                 if (parent.random(1) < 0.005) {
@@ -61,7 +70,7 @@ public class FireParticle {
                 }
                 color = gradientColor();
                 // very small portion of initial particles turning into smoke
-                if (parent.random(1) < 0.00001) {
+                if (parent.random(1) < 0.00005) {
                     changeStageToSmoke();
                 }
                 // jet stage ends after some lifespan

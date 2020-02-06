@@ -7,13 +7,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FireSimulation extends PApplet {
-    final int WIDTH = 1000;
-    final int HEIGHT = 700;
+    private static final int MAX_PARTICLES = 20100;
+    private static final int GENERATION_RATE = 100;
+    private static final int LIFE_SPAN = 200;
+    private static final int SPHERE_RADIUS = 10;
+    private static final int WIDTH = 1000;
+    private static final int HEIGHT = 700;
     QueasyCam cam;
     Ground ground;
     List<StaticGroundObject> staticGroundObjects = new ArrayList<>();
     FlameThrower flameThrower;
-    CollisionSphere collisionSphere;
+    static CollisionSphere collisionSphere;
 
     public void settings() {
         size(WIDTH, HEIGHT, P3D);
@@ -39,11 +43,11 @@ public class FireSimulation extends PApplet {
         flameThrower = new FlameThrower(this,
                 Vec3.of(200, 0, 50),
                 Vec3.of(0, 0, -1),
-                100, 200, 20100,
+                GENERATION_RATE, LIFE_SPAN, MAX_PARTICLES,
                 "14074_WWII_Soldier_with_Flamethrower_v1_l1.obj");
         // collision sphere
         PVector aim = cam.getAim(200);
-        collisionSphere = new CollisionSphere(this, Vec3.of(aim.x, aim.y, aim.z), 5);
+        collisionSphere = new CollisionSphere(this, Vec3.of(aim.x, aim.y, aim.z), SPHERE_RADIUS);
     }
 
     public void draw() {
@@ -86,6 +90,7 @@ public class FireSimulation extends PApplet {
                 + " #par: " + flameThrower.fireParticleSystem.particles.size()
                 + " #genrate: " + flameThrower.fireParticleSystem.generationRate
         );
+        FireSimulation.collisionSphere.miss();
     }
 
     public void keyPressed(KeyEvent event) {
