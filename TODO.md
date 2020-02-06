@@ -29,6 +29,7 @@
 - [ ] (5) Fire simulation
     - [ ] polish motion
     - [ ] intelligent creation of particles
+
 - [ ] (30) Water simulation
     - [ ] more squished particles
     - [ ] color changes
@@ -36,6 +37,7 @@
     - [ ] interact with objects
     - [ ] context
     - [ ] speed
+
 - [ ] (5) Art contest
 - [ ] make cool videos and images
 - [ ] write web page
