@@ -37,7 +37,7 @@ public class ContinuousCollisionWall {
         parent.translate(0, 100, 0);
         parent.beginShape();
         parent.fill(255);
-        parent.texture(texture);
+//        parent.texture(texture);
         parent.vertex(ul.x, ul.y, ul.z, 0, 0);
         parent.vertex(ll.x, ll.y, ll.z, 0, texture.height);
         parent.vertex(lr.x, lr.y, lr.z, texture.width, texture.height);

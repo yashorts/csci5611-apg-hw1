@@ -31,10 +31,9 @@
     - [x] interact with objects
     - [x] speed
     - [x] context
-130
+- [x] (5) Textured sprites for particles
+120 - 135
 # next
-
-- [ ] (5) Textured sprites for particles
 - [ ] Fire simulation
     - [ ] polish motion, remove stutters
     - [ ] intelligent creation of particles

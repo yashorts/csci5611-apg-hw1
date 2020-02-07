@@ -201,7 +201,7 @@ public class FireParticle {
                     renderQuad(1f * (1.2f - remainingLifespan / totalLifeSpan) * Math.min(acceleration.abs(), 1), fireTexture, 255);
                     break;
                 case SMOKE:
-                    renderQuad(1.4f * (1.5f - remainingLifespan / totalLifeSpan), smokeTexture, 200);
+                    renderQuad(1.4f * (1.5f - remainingLifespan / totalLifeSpan), smokeTexture, 100);
                     break;
                 default:
                     renderQuad(0.5f * (1.5f - remainingLifespan / totalLifeSpan) * Math.min(acceleration.abs(), 1), fireTexture, 255);
