@@ -25,20 +25,19 @@
     - [x] inc/ dec volume with gen rate
     - [x] inc volume on collision with sphere
 - [x] (10) Continuous Collision Detection (must show a visible difference) 
-95
+- [x] (30) Water simulation
+    - [x] more squished particles
+    - [x] color changes
+    - [x] interact with objects
+    - [x] speed
+    - [x] context
+130
 # next
+
 - [ ] (5) Textured sprites for particles
-- [ ] (5) Fire simulation
+- [ ] Fire simulation
     - [ ] polish motion, remove stutters
     - [ ] intelligent creation of particles
-
-- [ ] (30) Water simulation
-    - [ ] more squished particles
-    - [ ] color changes
-    - [ ] change water direction using
-    - [ ] interact with objects
-    - [ ] context
-    - [ ] speed
 
 - [ ] (5) Art contest
 - [ ] make cool videos and images
