@@ -3,6 +3,7 @@
 ## description
 - Simple algorithms for simulating particle systems like fire, water, snow, sparks ...
 - The goal is to create an interactive, real-time and good looking simulations.
+- This project illustrates how simple mathematical equations can create good looking simulations and how important parameter tuning is.
 
 ## roadmap
 - Problems solved until now are listed in demonstration section.
@@ -71,13 +72,10 @@
 [![](http://img.youtube.com/vi/h7LS4IjoH9s/0.jpg)](https://www.youtube.com/watch?v=h7LS4IjoH9s)
 - 20,000 particles simulated and rendered at over 30 FPS
 
-### Translucent quads and particles
+### Translucent quads
 #### videos
 [![](http://img.youtube.com/vi/WvYUFo1l8Ow/0.jpg)](https://www.youtube.com/watch?v=WvYUFo1l8Ow)
-- Spinning quads with color are used to add a bit of texture.
-
-#### images
-![](./github/translucent.png)
+- Translucent spinning quads with color are used to add a bit of texture.
 
 ### Spark tails and interaction with objects
 #### videos
@@ -112,3 +110,10 @@
 | | |
 | --- | --- |
 | ![](./github/discrete.png) | ![](./github/continuous.png) |
+
+## references
+- [Reflecting a vector](https://math.stackexchange.com/questions/13261/how-to-get-a-reflection-vector)
+- [Using ArrayList to hold multiple particle objects.](https://natureofcode.com/book/chapter-4-particle-systems/)
+- [Minim player tutorial.](https://gist.github.com/shiffman/7603264)
+- [Minim player debugging.](https://forum.processing.org/one/topic/why-does-minim-audioplayer-sound-choppy.html)
+- [Minim player volume control.](https://discourse.processing.org/t/minim-setting-volume-of-an-audioplayer/3596/4)
