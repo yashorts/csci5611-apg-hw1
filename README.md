@@ -17,6 +17,13 @@
         - `minim` is used as a sound library.
     - `data/` contains resources such as images, obj, mtl files.
 
+### references
+- [Reflecting a vector](https://math.stackexchange.com/questions/13261/how-to-get-a-reflection-vector)
+- [Using ArrayList to hold multiple particle objects.](https://natureofcode.com/book/chapter-4-particle-systems/)
+- [Minim player tutorial.](https://gist.github.com/shiffman/7603264)
+- [Minim player debugging.](https://forum.processing.org/one/topic/why-does-minim-audioplayer-sound-choppy.html)
+- [Minim player volume control.](https://discourse.processing.org/t/minim-setting-volume-of-an-audioplayer/3596/4)
+
 ## documentation
 - For most of the code, the documentation is itself.
 
@@ -110,10 +117,3 @@
 | | |
 | --- | --- |
 | ![](./github/discrete.png) | ![](./github/continuous.png) |
-
-## references
-- [Reflecting a vector](https://math.stackexchange.com/questions/13261/how-to-get-a-reflection-vector)
-- [Using ArrayList to hold multiple particle objects.](https://natureofcode.com/book/chapter-4-particle-systems/)
-- [Minim player tutorial.](https://gist.github.com/shiffman/7603264)
-- [Minim player debugging.](https://forum.processing.org/one/topic/why-does-minim-audioplayer-sound-choppy.html)
-- [Minim player volume control.](https://discourse.processing.org/t/minim-setting-volume-of-an-audioplayer/3596/4)
